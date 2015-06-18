@@ -26,7 +26,10 @@ class Ajax extends MY_Controller{
 				$offset = $this->input->post("offset");
 				$category_id = $this->input->post("category_id");
 				$order = $this->input->post("order");
-				$filter = $this->input->post("filter");
+				$filter = array();
+				if ($this->input->post("firm")) {
+					$filter["product_firm"] = $this->input->post("firm");
+				}
 				$this->ajax_model->catalog_show_more($num,$offset,$category_id,$order,$filter);
 			}else{
 				$this->output->set_output(json_encode(array(false)));

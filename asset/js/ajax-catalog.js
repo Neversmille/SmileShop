@@ -51,7 +51,7 @@ var Catalog = {
 			var category_id = $(".breadcrumb .category").attr('data-category');
 			var next_page = $(".paging .current").next("a").text();
 			var order = $(".catalog-order").attr('data-order');
-			var filter = $(".catalog-firms .active").text();
+			var firm = $(".catalog-firms .active").text();
 			var offset = $(".breadcrumb").attr("data-product");
 
 			var msg = {};
@@ -61,13 +61,13 @@ var Catalog = {
 			msg.per_page = per_page;
 			msg.offset = +offset+per_page;
 			msg.order = order;
-			msg.filter = filter;
+			msg.firm = firm;
 
 			console.log(" msg.category_id", msg.category_id);
 			console.log("msg.per_page",msg.per_page);
 			console.log("msg.offset",msg.offset);
 			console.log("msg.order",msg.order);
-			console.log("msg.filter",msg.filter);
+			console.log("msg.firm",msg.firm);
 
 	         $.ajax({
 	            type: 'POST',
