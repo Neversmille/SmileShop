@@ -8,7 +8,7 @@ a:hover{
 	color: #f25758;
 }
 
-.color{
+.color, #nav li ul li a.active{
 	color: #f25758;
 }
 
@@ -44,7 +44,7 @@ border: 1px solid #df4c4d;
 }
 
 .navbar .nav{
-  border-left: 1px solid #df4c4d;	
+  border-left: 1px solid #df4c4d;
 }
 
 .navbar .nav > li > a{
@@ -61,11 +61,11 @@ border: 1px solid #df4c4d;
 }
 
 .dropdown-toggle{
-	background: #f25758 !important;	
+	background: #f25758 !important;
 }
 
 .nav-collapse .nav > li > a{
-	background: #f25758 !important;	
+	background: #f25758 !important;
 }
 
 .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
@@ -74,13 +74,13 @@ border: 1px solid #df4c4d;
 
 /* Sidebar nav */
 
-#nav > li > a { 
+#nav > li > a {
  border-left: 3px solid #f25758;
 }
 
 /* Sidebar page navigation */
 
-#navi > li > a { 
+#navi > li > a {
  border-left: 3px solid #f25758;
 }
 

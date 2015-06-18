@@ -1625,3 +1625,34 @@ header .hlinks > span.vk {
 .continue-order {
 	margin: 12px 0px 10px 0px;
 }
+
+.catalog-show-more {
+	text-align: center;
+}
+
+.catalog-show-more:hover {
+	color: #f25758;
+	cursor: pointer;
+}
+
+.catalog-show-more-icon {
+	font-size: 7em;
+	text-align: center;
+
+}
+
+.catalog-show-more-text {
+	text-align: center;
+	font-size: 1.4em;
+	margin-top: 5px;
+}
+
+.catalog-show-more .item, .catalog-show-more .item:hover {
+	border: none;
+	box-shadow: none;
+	display: inline-block;
+	max-height: initial;
+	min-height: initial;
+	height: 30%;
+	margin-top: 20%;
+}

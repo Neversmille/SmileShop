@@ -104,5 +104,21 @@ class Ajax_model extends CI_Model {
 
 	}
 
+    /*
+    *   Получение доп записей в каталоге
+    *   @param int $num - количество товаров отображаемого на странице
+    *   @param $offset - позиция указателя страница в url
+    *   @param int $category_id
+    *   @param string $order - способ сортировки
+    *   @param array $filter - массив фильтров
+    *   @return array $products - список товаров
+    */
+    function catalog_show_more($num,$offset,$category_id,$order,$filter){
+            $products = $this->catalog_model->get_products_by_category($num,$offset,$category_id,$order,$filter);
+            $total_rows = $this->catalog_model->get_products_count_by_category($category_id,$filter);
+            $this->output->set_output(json_encode(array("products" => $products, "total_rows" => $total_rows)));
+            return true;
+    }
+
 
 }

@@ -74,10 +74,10 @@
 			  <div class="col-md-9 col-sm-9">
 
 				<!-- Breadcrumb -->
-				<ul class="breadcrumb">
+				<ul class="breadcrumb" data-product=<?=$product;?>>
 				  <li><a href="<?=base_url();?>">Главная</a></li>
 				  <li><a href="<?=base_url().'catalog';?>">Каталог</a></li>
-				  <li class="active"><a href="<?=base_url().'catalog/'.$category;?>"><?=$category_name;?></a></li>
+				  <li class="active category" data-category="<?=$category_id;?>"><a href="<?=base_url().'catalog/'.$category;?>"><?=$category_name;?></a></li>
 				</ul>
 
 									<!-- Title -->
@@ -85,18 +85,17 @@
 
 												  <!-- Sorting -->
 													<div class="form-group pull-right">
-														<select class="form-control" onchange="window.location.href=$(this).val()">
-															<option>Сортировать</option>
-															<option value="<?=$url_for_order.'order=new';?>">Новинки</option>
-															<option value="<?=$url_for_order.'order=name';?>">По имени</option>
-															<option value="<?=$url_for_order.'order=pricemin';?>">От дешевых к дорогим</option>
-															<option value="<?=$url_for_order.'order=pricemax';?>">От дорогих к дешевому</option>
+														<select data-order="<?=$order;?>" class="form-control catalog-order" onchange="window.location.href=$(this).val()">
+															<option <?php if ($order=="new") echo ' selected ' ?>value="<?=$url_for_order.'order=new';?>">Новинки</option>
+															<option <?php if ($order=="name") echo ' selected ' ?>value="<?=$url_for_order.'order=name';?>">По имени</option>
+															<option <?php if ($order=="pricemin") echo ' selected ' ?>value="<?=$url_for_order.'order=pricemin';?>">От дешевых к дорогим</option>
+															<option <?php if ($order=="pricemax") echo ' selected ' ?>value="<?=$url_for_order.'order=pricemax';?>">От дорогих к дешевому</option>
 														</select>
 													</div>
 
 								  <div class="clearfix"></div>
 
-					  <div class="row">
+					  <div class="row catalogItems">
 
 						<!-- Item CODEIGNITER -->
 						<?php foreach ($products as $value):?>
@@ -137,6 +136,9 @@
 					        </div>
 						<?php endforeach;?>
 
+					  </div>
+
+					<div class="row">
 						<div class="col-md-9 col-sm-9">
 											<!-- Pagination -->
 											<div class="paging">
@@ -144,8 +146,7 @@
 											</div>
 
 						</div>
-
-					  </div>
+					</div>
 
 
 					</div>

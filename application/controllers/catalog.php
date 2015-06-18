@@ -37,6 +37,7 @@ class Catalog extends MY_Controller{
 	*	@param array $args - массив входящих параметров
 	*/
 	public function index($alias,$args=''){
+		// var_dump($args);
 		$this->output->enable_profiler(TRUE);
 		// echo "index_method";
 		// var_dump($this->uri);
@@ -55,7 +56,7 @@ class Catalog extends MY_Controller{
 			show_404();
 		}
 
-		$page = $parametrs["page"];
+		$product = $parametrs["product"];
 		$order = $parametrs["order"];
 		$filter = $parametrs["filter"];
 
@@ -71,15 +72,15 @@ class Catalog extends MY_Controller{
 
 		//Устанавливаем количество товаров на странице и получаем общее
 		//количество товаров данной категории
-		$per_page = 3;
+		$per_page = 2;
 		$total_rows = $this->catalog_model->get_products_count_by_category($category_id,$filter);
 
 
 		//Передаем на отображение название текущей категории, и массив товаров
-		$products = $this->catalog_model->get_products_by_category($per_page,$page,$category_id,$order,$filter);
+		$products = $this->catalog_model->get_products_by_category($per_page,$product,$category_id,$order,$filter);
 
 		//Формируем массив опций для пагинатора и инициализируем его
-		$config = $this->catalog_model->set_pagination($this->uri,$per_page,$total_rows,$page);
+		$config = $this->catalog_model->set_pagination($this->uri,$per_page,$total_rows,$product);
 		$this->load->library('pagination');
 		$this->pagination->initialize($config);
 
@@ -99,8 +100,13 @@ class Catalog extends MY_Controller{
 		$this->data["firm_list"] = $this->catalog_model->get_category_firm_list($category_id);
 		$this->data["category"] = $alias;
 		$this->data["category_name"] = $category_info["category_name"];
+		$this->data["category_id"] = $category_id;
+		$this->data["order"] = $order;
+		$this->data["filter"] = $filter;
+		$this->data["product"] = $product;
 		$this->data["firms"] = $this->load->view("catalog/firms",$this->data,true);
 		$this->data["title"] = "Каталог товаров: ".$category_info['category_name'];
+		array_push($this->js, 'ajax-catalog.js');
 		$this->middle = 'catalog/products';
 		$this->layout();
 

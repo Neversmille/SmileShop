@@ -4,6 +4,9 @@ class MY_Controller extends CI_Controller{
 
     public $data;
     public $template  = array();
+    //Базовый набор css, js;
+    public $css = array('style.css','owl.carousel.css','bootstrap.min.css','flexslider.css','flexslider.css','font-awesome.min.css','red.css','sidebar-nav.css');
+    public $js = array('jquery.js','bootstrap.min.js','owl.carousel.min.js','filter.js','nav.js','jquery.flexslider-min.js','respond.min.js','html5shiv.js','custom.js','ajax-basket.js');
 
     public function __construct(){
 
@@ -22,8 +25,8 @@ class MY_Controller extends CI_Controller{
     *   Загрузка layout
     */
     public function layout() {
-         $this->data["css"] = array('style.css','owl.carousel.css','bootstrap.min.css','flexslider.css','flexslider.css','font-awesome.min.css','red.css','sidebar-nav.css');
-         $this->data["js"] = array('jquery.js','bootstrap.min.js','owl.carousel.min.js','filter.js','nav.js','jquery.flexslider-min.js','respond.min.js','html5shiv.js','custom.js','ajax-basket.js');
+         $this->data["css"] = $this->css;
+         $this->data["js"] = $this->js;
          $this->data['user_widget']   = $this->load->view('layouts/user_widget', $this->data, true);
          $this->template['header']   = $this->load->view('layouts/header', $this->data, true);
          $this->template['menu']   = $this->load->view('layouts/menu', $this->data, true);

@@ -136,15 +136,15 @@ class Catalog_model extends CI_Model {
     /*
 	*	Разбор get параметров в ассоциативный массив
 	*	@param $array - входящий массив get параметров
-	*						 url адресса вида order=pricemax/page=3
+	*						 url адресса вида order=pricemax/product=3
 	*	@return array $result - ассоциативный массив
-	*								["page" => 3, "order" => "pricemax"]
+	*								["product" => 3, "order" => "pricemax"]
      *     @return array () - при неправильном формате get параметров
 	*/
 	function get_params($array) {
 		$result = array();
 		$result["order"] = "new";
-		$result["page"] = null;
+		$result["product"] = null;
          $result["filter"] = array();
 		if (empty($array)) {
 			return $result;
@@ -158,7 +158,7 @@ class Catalog_model extends CI_Model {
 					$parametr_key = $parametr[0];
 					$parametr_value = $parametr[1];
                         /*Отфильтровуем переданные параметры*/
-                        if ($parametr_key =="order" || $parametr_key == "page"){
+                        if ($parametr_key =="order" || $parametr_key == "product"){
                             $result[$parametr_key] = $parametr_value;
                         }else{
                             if ($parametr_key=="firm") {
@@ -195,18 +195,17 @@ class Catalog_model extends CI_Model {
     *	@param object $uri - обьект класса Uri для текущей страницы
     *	@param int $per_page - количество товара на странице
     *	@param int $total_rows - количество товаров данной категории
-    *	@param int $page - номер текущей страницы
+    *	@param int $product - номер текущей страницы
     *    @return array $config - массив опций для инициализации класса Pagination
     */
-    public function set_pagination($uri,$per_page,$total_rows,$page) {
+    public function set_pagination($uri,$per_page,$total_rows,$product) {
 
         //Количество сегментов в текущем url
         $uri_segment = count($uri->segments);
 
         //Формируем url текущей страницы без сегмента с номером страницы
-        $search = preg_split("/(page=\d+$)+/",$uri->uri_string);
+        $search = preg_split("/(product=\d+$)+/",$uri->uri_string);
         $url = $search[0];
-
         //Массив опций для конфигурации класса Pagination
         $config['base_url'] = base_url().$url;
         $config['total_rows'] = $total_rows;
@@ -216,9 +215,10 @@ class Catalog_model extends CI_Model {
         $config['cur_tag_close'] = '</span>';
         $config['first_link'] = 'Вначало';
         $config['last_link'] = 'Последняя';
-        $config['cur_page'] = $page;
+        // $config['use_page_numbers'] = TRUE;
+        $config['cur_page'] = $product;
         $config['uri_segment'] = $uri_segment;
-        $config['prefix'] = 'page=';
+        $config['prefix'] = 'product=';
         return $config;
 
     }
@@ -229,7 +229,7 @@ class Catalog_model extends CI_Model {
     *   @return string - текущий url без данных пагинатора
     */
     public function get_url_for_order($current_url){
-        $array = preg_split("/(\/page=\w+$)/",$current_url);
+        $array = preg_split("/(\/product=\w+$)/",$current_url);
         return(base_url().$array[0]."/");
     }
 
