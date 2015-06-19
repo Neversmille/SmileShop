@@ -20,5 +20,21 @@ class Product_model extends CI_Model {
 	}
 
 
+	/*
+	*	Обновление  последних 10 просмотренных товаров
+	*	@param array $product_info - информация о просмотренном товаре
+	*/
+	public function update_recent_items($product_info){
+		$recent_items =  $this->session->userdata('recent_items');
+		if(!$recent_items) {
+			$recent_items = array();
+		}
+		array_push($recent_items, $product_info);
+		if (count($recent_items)>10) {
+			array_shift($recent_items);
+		}
+		$this->session->set_userdata(array("recent_items"=>$recent_items));
+	}
+
 
 }

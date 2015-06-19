@@ -17,7 +17,7 @@ class MY_Controller extends CI_Controller{
         $this->data["login_status"] = $this->set_login_status();
         $this->data["title"] = "тайтл";
         $this->data["basket_count"] = $this->get_basket_count();
-
+        $this->data["recent_items"] = $this->get_recent_items();
     }
 
 
@@ -34,6 +34,7 @@ class MY_Controller extends CI_Controller{
          $this->template['newsletter'] = $this->load->view('layouts/newsletter', $this->data, true);
          $this->template['footer'] = $this->load->view('layouts/footer', $this->data, true);
          $this->template['product_add'] = $this->load->view('modals/product_add',$this->data,true);
+         $this->template['recent_items'] = $this->load->view('layouts/recent_items',$this->data,true);
          $this->load->view('layouts/index', $this->template);
    }
 
@@ -49,6 +50,9 @@ class MY_Controller extends CI_Controller{
        }
    }
 
+   /*
+   *    Установка статуса авторизации
+   */
    private function set_login_status(){
        if ($this->session->userdata('account')) {
            $this->data["user_info"] = $this->session->userdata('account');
@@ -56,6 +60,13 @@ class MY_Controller extends CI_Controller{
        }else{
            return false;
        }
+   }
+
+   /*
+   *	Получение последних 10 просмотренных товаров
+   */
+   public function get_recent_items(){
+       return  $this->session->userdata('recent_items');
    }
 
 }

@@ -17,7 +17,6 @@ class Product extends MY_Controller{
 
 		$product_info = $this->product_model->get_product_info_by_url($url);
 
-
 		if (empty($product_info)) {
 			show_404();
 		}
@@ -26,6 +25,8 @@ class Product extends MY_Controller{
 		if (empty($category_info)) {
 			show_404();
 		}
+
+		$this->product_model->update_recent_items($product_info);
 		$this->data["title"] = "SmileShop ".$product_info['product_name'];
 		$this->data["category"] = $category_info["category_alias"];
 		$this->data["category_name"] = $category_info["category_name"];
