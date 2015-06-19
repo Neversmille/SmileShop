@@ -3,14 +3,14 @@ $(document).ready(function () {
 	setCatalogMore();
 	showMoreEvent();
 	//Фиксируем сколько товаров отображается на одной странице
-	window.per_page =  $(".catalogItems").find(".item").length-1;
+	window.per_page =  $(".catalogItems").find(".item").length;
 });
 
 //Установка кнопки "Показать еще"
 function setCatalogMore(){
 
 	showmore = '<div class="col-md-4 col-sm-6 catalog-show-more ">'+
-						'<div class="item">'+
+						'<div class="more-item">'+
 							'<div class="catalog-show-more-icon">'+
 								'<i class="fa fa-refresh"></i>'+
 							'</div>'+

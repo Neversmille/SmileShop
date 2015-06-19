@@ -1647,7 +1647,7 @@ header .hlinks > span.vk {
 	margin-top: 5px;
 }
 
-.catalog-show-more .item, .catalog-show-more .item:hover {
+.catalog-show-more .more-item, .catalog-show-more .more-item:hover {
 	border: none;
 	box-shadow: none;
 	display: inline-block;
