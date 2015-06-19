@@ -14,13 +14,18 @@
 					<div id="owl-recent" class="owl-carousel">
 						<?php foreach ($recent_items as $item):?>
 						<!-- Item -->
-						<div class="item">
-							<a href="#"><img src="/asset/upload/catalog/<?=$item["product_img"];?>" alt="" class="img-responsive" /></a>
+						<div class="item clearfix">
+							<a href="<?=base_url().'product/'.$item['product_url'];?>"><img src="/asset/upload/catalog/<?=$item["product_img"];?>" alt="" class="img-responsive" /></a>
 							<!-- Heading -->
-							<h4><a href="<?=base_url().'product/'.$item['product_url'];?>"><?=$item['product_name'];?><span class="pull-right"><?=$item["product_price"];?> грн.</span></a></h4>
+							<h4><a href="<?=base_url().'product/'.$item['product_url'];?>"><?=$item['product_name'];?></a></h4>
 							<div class="clearfix"></div>
 							<!-- Paragraph -->
 							<p><?=$item["product_description"];?></p>
+							<div class="item-price pull-left"><?=$item["product_price"];?> грн.</div>
+							<div class="button pull-right product-add-to-order">
+								<input class="product-amount" type="hidden" value="1">
+					                <a class="itemsAdd product-add" href="javascript:void( 0 )" data-id="<?=$item['product_id'];?>">В корзину</a>
+					        </div>
 						</div>
 
 						<?php endforeach;?>
