@@ -657,8 +657,8 @@ header form input, header form button{
 }
 
 .items .item{
-	min-height: 280px;
-	max-height: 320px;
+	min-height: 320px;
+	max-height: 340px;
 	max-width: 250px;
 	margin: 10px auto;
 	padding: 10px 10px;
@@ -1655,4 +1655,22 @@ header .hlinks > span.vk {
 	min-height: initial;
 	height: 30%;
 	margin-top: 20%;
+}
+
+.reviews-show-more {
+	text-align: center;
+}
+
+.reviews-show-more:hover .reviews-show-more-text.btn {
+	color: #f25758;
+	cursor: pointer;
+}
+
+.reviews-show-more-text.btn {
+	display: inline-block;
+	font-size: 1.2em;
+}
+
+.reviews-show-more-text i {
+	margin-right: 8px;
 }

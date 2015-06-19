@@ -114,10 +114,25 @@ class Ajax_model extends CI_Model {
     *   @return array $products - список товаров
     */
     function catalog_show_more($num,$offset,$category_id,$order,$filter){
+
             $products = $this->catalog_model->get_products_by_category($num,$offset,$category_id,$order,$filter);
             $total_rows = $this->catalog_model->get_products_count_by_category($category_id,$filter);
             $this->output->set_output(json_encode(array("products" => $products, "total_rows" => $total_rows)));
             return true;
+    }
+
+    /*
+    *   Получение доп записей в комментариях
+    *   @param $num - количество комментариев на каждой странице
+    *   @param $offset - смещение
+    *   @return $reviews - доп записи с комментариями
+    *   @return $reviews_count  общее количество комментарие в базе 
+    */
+    function reviews_show_more($num,$offset) {
+            $this->load->model('reviews_model');
+            $reviews = $this->reviews_model->get_reviews($num,$offset);
+            $reviews_count = $this->reviews_model->get_reviews_count();
+            $this->output->set_output(json_encode(array("reviews" => $reviews, "reviews_count" => $reviews_count)));
     }
 
 

@@ -62,6 +62,7 @@ class Reviews extends MY_Controller{
 		$this->data["form"] = $this->load->view("reviews/form_add_review",$this->data,true);
 		$this->data["reviews"] = $reviews;
 		$this->data["title"] = "Отзывы";
+		array_push($this->js, 'ajax-reviews.js');
 		$this->middle = 'reviews/index';
 		$this->layout();
 	}
