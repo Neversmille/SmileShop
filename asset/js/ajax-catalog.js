@@ -9,8 +9,8 @@ $(document).ready(function () {
 //Установка кнопки "Показать еще"
 function setCatalogMore(){
 
-	showmore = '<div class="col-md-4 col-sm-6 catalog-show-more ">'+
-						'<div class="more-item">'+
+	showmore = '<div class="col-md-4 col-sm-6 catalog-show-more">'+
+						'<div class="more-item ">'+
 							'<div class="catalog-show-more-icon">'+
 								'<i class="fa fa-refresh"></i>'+
 							'</div>'+
@@ -137,9 +137,6 @@ var Catalog = {
 	            },
 	            error:  function(xhr, str){
 	                console.log('Возникла ошибка: ' + xhr.responseCode);
-
-					//Отрисовуем кнопку с ошибкой
-					setCatalogMore();
 					$(".catalog-show-more-text").text('произошла ошибка =(');
 					$('.catalog-show-more-icon i').removeClass("fa-spin");
 					$(".catalog-show-more-text, .catalog-show-more-icon").addClass("color");
