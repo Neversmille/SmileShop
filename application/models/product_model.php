@@ -29,7 +29,7 @@ class Product_model extends CI_Model {
 		if(!$recent_items) {
 			$recent_items = array();
 		}
-		array_push($recent_items, $product_info);
+		$recent_items[$product_info["product_id"]] = $product_info;
 		if (count($recent_items)>10) {
 			array_shift($recent_items);
 		}

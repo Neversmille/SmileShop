@@ -73,7 +73,7 @@ class Account_model extends CI_Model {
 	*	$client_data[client_id,client_name,client_lastname,client_email,
 	*				    client_phone,client_password, client_type,client_soc_id]
 	*/
-	private function client_set_auth($client_data) {
+	public function client_set_auth($client_data) {
 		$this->session->set_userdata(array("account" => $client_data));
 	}
 
@@ -141,6 +141,22 @@ class Account_model extends CI_Model {
         }else{
             return false;
         }
+    }
+
+    /*
+    *   Обновление данных клиента
+    *   @param int $client_id - id пользователя
+    *   @param array $client_data - массив обновляеммых данных ["поле"  => "значение"]
+    */
+    public function update_client($client_id, $client_data){
+        $result = $this->db->where('client_id', $client_id)
+                     ->update('clients', $client_data);
+        if ($result) {
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
 }

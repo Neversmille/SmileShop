@@ -240,7 +240,7 @@ text-decoration:none;
 	z-index: 104400;
 }
 
-.totop a, .totop a:visited{
+.totop a, .totop a:visited, .totop a .fa, .totop a:visited .fa{
 	display: block;
 	width: 30px;
 	height: 30px;
@@ -1673,4 +1673,46 @@ header .hlinks > span.vk {
 
 .reviews-show-more-text i {
 	margin-right: 8px;
+}
+
+#nav > li.color > a {
+	color: #f25758;
+}
+
+.order-info {
+	background: #F2F2F2;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border: 1px solid #ccc;
+}
+
+.order-info:hover {
+	cursor: pointer;
+	background: #D3D3D3;
+	-webkit-transition:background 1s ease;
+	-moz-transition:background 1s ease;
+	-o-transition:background 1s ease;
+	transition:background 1s ease;
+}
+
+.order-info span {
+	font-size: 1.1em;
+	margin-right: 5px;
+}
+
+.order-info i {
+	margin-right: 6px;
+}
+
+.order-detail {
+	display: none;
+}
+
+.order-detail-item {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.green {
+	color: #16803B;
 }

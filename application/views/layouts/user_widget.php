@@ -9,7 +9,7 @@
         <br>
         <?php if(($login_status)):?>
 			<div class="hlinks">
-	            <span>Здравствуйте <a href="/myaccount" style="border-bottom: 1px dotted #fff;"><?=$user_info["client_name"];?></a></span>
+	            <span>Здравствуйте <a href="<?=base_url().'profile';?>" style="border-bottom: 1px dotted #fff;"><?=$user_info["client_name"];?></a></span>
 	            <span class="lr"><a href="/logout">Выйти</a></span>
 			</div>
         <?php else:?>
