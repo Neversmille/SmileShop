@@ -27,7 +27,7 @@ class Account_model extends CI_Model {
 		$status = $this->db->select('client_email')
                                             ->where('client_email',$email)
 									  ->count_all_results('clients');
-        if ($status){
+        if ($status === 0){
 			return true;
 		}else{
 			return false;

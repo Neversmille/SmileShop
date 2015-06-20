@@ -38,7 +38,7 @@ class Catalog extends MY_Controller{
 	*/
 	public function index($alias,$args=''){
 		// var_dump($args);
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 		// echo "index_method";
 		// var_dump($this->uri);
 		// var_dump($order_base_url); die();

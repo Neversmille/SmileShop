@@ -12,12 +12,11 @@ class Order extends MY_Controller{
 			$client_email = $this->data["client_info"]["client_email"];
 			$this->load->library('form_validation');
 			$this->load->model('rules_model');
-			$this->form_validation->set_rules($this->rules_model->order_rules);
 			$this->form_validation->set_rules($this->rules_model->order_errors());
 			$this->data["order_block"] = $this->load->view("order/order_form",$this->data,true);
 
 			if(null!==$this->input->post('order')){
-				$check = $this->form_validation->run();
+				$check = $this->form_validation->run('order');
 				if($check){
 						// die("проверка");
 						$this->load->model('order_model');

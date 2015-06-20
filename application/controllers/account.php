@@ -6,10 +6,12 @@ class Account extends MY_Controller{
     {
         parent::__construct();
 	   $this->load->library('passwordhash');
+		$this->load->library('form_validation');
+		$this->load->model('account_model');
     }
 
 	public function index(){
-
+		show_404();
 	}
 
 	/*
@@ -17,22 +19,19 @@ class Account extends MY_Controller{
 	*/
 	public function register(){
 
-
 		//Проверяем авторизирован ли пользователь
 		if ($this->data["login_status"]) {
 			$this->data["continue_order"] = $this->session->userdata("basket");
 			$this->data["form"] = $this->load->view("account/already_auth",$this->data,true);
 		}else{
-			$this->load->model('account_model');
-
+			
 			//Проверяем нажата ли кнопка регистрации
 			if(null!==$this->input->post('register')){
 
-				$this->load->library('form_validation');
 				$this->load->model('rules_model');
-				$this->form_validation->set_rules($this->rules_model->register_rules);
 				$this->form_validation->set_rules($this->rules_model->register_errors());
-				$check = $this->form_validation->run();
+				// $this->form_validation->set_rules('email','eMail','callback_unique_email');
+				$check = $this->form_validation->run('register');
 
 				//Проверям валидацию
 				if($check){
@@ -41,15 +40,11 @@ class Account extends MY_Controller{
 					$client_data["client_email"] = $this->input->post('email');
 					$client_data["client_password"] = $this->passwordhash->HashPassword($this->input->post('password'));
 
-					//Проверяем не занята ли почта
-					if($this->account_model->check_email($client_data["client_email"])){
-						$this->data["mail_error"] = "<p class='color'>Пользователь с таким email уже существует<p>";
-					}else{
-						$this->account_model->add_client($client_data);
-						$this->account_model->client_auth($client_data["client_email"],$this->input->post('password'));
-						$this->account_model->send_email($client_data["client_email"],$this->input->post('password'));
-						redirect($this->uri->uri_string());
-					}
+					$this->account_model->add_client($client_data);
+					$this->account_model->client_auth($client_data["client_email"],$this->input->post('password'));
+					$this->account_model->send_email($client_data["client_email"],$this->input->post('password'));
+					redirect($this->uri->uri_string());
+
 				}
 			}
 
@@ -75,17 +70,14 @@ class Account extends MY_Controller{
 
 			//Проверяем нажата ли кнопка авторизации
 			if(null!==$this->input->post('login')){
-				$this->load->library('form_validation');
 				$this->load->model('rules_model');
-				$this->form_validation->set_rules($this->rules_model->login_rules);
 				$this->form_validation->set_rules($this->rules_model->login_erorrs());
-				$check = $this->form_validation->run();
+				$check = $this->form_validation->run('login');
 
 				//Проверяем успешность валидации
 				if($check){
 					$client_email = $this->input->post('email');
 					$client_password = $this->input->post('password');
-					$this->load->model('account_model');
 
 					//Пытаемся авторизировать
 					if($this->account_model->client_auth($client_email,$client_password)){
@@ -126,8 +118,6 @@ class Account extends MY_Controller{
 		$getToken = $this->vk->getToken();
 		$userInfo = $this->vk->getData($getToken);
 
-		$this->load->model('account_model');
-
 		//Проверяем существует ли пользователь с таким  id
 		if($this->account_model->check_soc_id($getToken->user_id)){
 			$auth = $this->account_model->soc_client_auth($getToken->user_id);
@@ -161,6 +151,18 @@ class Account extends MY_Controller{
 		$this->session->unset_userdata("account");
 		redirect(base_url(),'refresh');
 
+	}
+
+	/*
+	*	callback функция проверки уникальности email
+	*/
+	public function unique_email($email){
+		if($this->account_model->check_email($email)) {
+			return true;
+		}else{
+			$this->form_validation->set_message('unique_email', 'Пользователь с таким eMail уже зарегистрирован');
+			return false;
+		}
 	}
 
 }

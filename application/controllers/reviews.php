@@ -14,9 +14,8 @@ class Reviews extends MY_Controller{
 
 			$this->load->library('form_validation');
 			$this->load->model('rules_model');
-			$this->form_validation->set_rules($this->rules_model->reviews_rules);
 			$this->form_validation->set_rules($this->rules_model->reviews_errors());
-			$check = $this->form_validation->run();
+			$check = $this->form_validation->run('reviews');
 
 
 			//Если поля прошли валидацию, то пытаемся добавить запись в бд, если валидация

@@ -3,19 +3,19 @@
 	<div class="form-group">
 	<label class="control-label col-md-3" for="name">Имя:</label>
 	<div class="col-md-7">
-		<input type="text" class="form-control" name="name" value="<?=set_value('name');?>"><?=form_error("name");?>
+		<input type="text" class="form-control" name="name" value="<?=set_value('name','');?>"><?=form_error("name");?>
 	</div>
 	</div>
 	<div class="form-group">
 	<label class="control-label col-md-3" for="lastname">Фамилия:</label>
 	<div class="col-md-7">
-		<input type="text" class="form-control" name="lastname" value="<?=set_value('lastname');?>"><?=form_error("lastname");?>
+		<input type="text" class="form-control" name="lastname" value="<?=set_value('lastname','');?>"><?=form_error("lastname");?>
 	</div>
 	</div>
 	<div class="form-group">
 	<label class="control-label col-md-3" for="email">eMail:</label>
 	<div class="col-md-7">
-		<input type="text" class="form-control" name="email" value="<?=set_value('email');?>"><?=form_error("email");?><?php if(isset($mail_error)) echo $mail_error; ?>
+		<input type="text" class="form-control" name="email" value="<?=set_value('email','');?>"><?=form_error("email");?><?php if(isset($mail_error)) echo $mail_error; ?>
 	</div>
 	</div>
 	<div class="form-group">

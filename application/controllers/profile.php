@@ -12,9 +12,8 @@ class Profile extends MY_Controller{
 
 			$this->load->library('form_validation');
 			$this->load->model('rules_model');
-			$this->form_validation->set_rules($this->rules_model->profile_rules);
 			$this->form_validation->set_rules($this->rules_model->profile_errors());
-			$check = $this->form_validation->run();
+			$check = $this->form_validation->run('profile');
 
 			//Проверям валидацию
 			if($check){
