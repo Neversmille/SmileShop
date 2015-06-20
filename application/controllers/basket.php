@@ -6,15 +6,15 @@ class Basket extends MY_Controller {
         parent::__construct();
     }
 
-	public function index(){
-		$this->load->model('basket_model');
-		$this->data["basket"] = $this->session->userdata('basket');
-		// $this->data["basket"] = array();
-		$this->data["title"] = "Корзина покупателя SmileShop";
-		$this->middle = 'basket/index';
-		$this->layout();
-	}
-
-
+    public function index(){
+        $basket = $this->session->userdata('basket');
+        if(!$basket){
+            $basket = array();
+        }
+        $this->data["basket"] = $basket;
+        $this->data["title"] = "Корзина покупателя SmileShop";
+        $this->middle = 'basket/index';
+        $this->layout();
+    }
 
 }

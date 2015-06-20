@@ -5,7 +5,6 @@ class Order_model extends CI_Model {
     {
         parent::__construct();
 		$this->load->model('catalog_model');
-          $this->load->model('basket_model');
     }
 
     /*
