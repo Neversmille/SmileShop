@@ -27,6 +27,7 @@ class Catalog_model extends CI_Model {
     *   @param string $category_id
     */
     function get_category_info_by_id($category_id){
+        $category_id = intval($category_id);
         if(!is_int($category_id)){
             return array("error" => "аргумент должен быть типа int");
         }
