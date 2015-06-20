@@ -64,6 +64,23 @@ $config = array(
 			'label' => 'Фамилия',
 			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]'
 		)
-	)
+	),
+    'changepass' => array(
+        array(
+			'field' => 'oldpass',
+			'label' => 'Пароль',
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]|callback_check_pass'
+		),
+        array(
+			'field' => 'newpass',
+			'label' => 'Пароль',
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]|matches[confpass]'
+		),
+        array(
+			'field' => 'confpass',
+			'label' => 'Пароль',
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
+		)
+    )
 
 );

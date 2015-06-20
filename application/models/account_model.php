@@ -172,4 +172,48 @@ class Account_model extends CI_Model {
 
     }
 
+	/*
+    *   Проверка пароля
+    *   @param int $client_id
+	*	@param string - пароль
+    */
+    public function check_client_pass($client_id,$password) {
+
+        $client_id = intval($client_id);
+        $client_data = $this->db->where("client_id",$client_id)
+                        				->get('clients')
+                        				->result_array();
+        if(empty($client_data)){
+            return array("error" => "пользователя с таким id нет");
+        }else {
+			$db_pass = $client_data[0]["client_password"];
+			$this->load->library('passwordhash');
+			if($this->passwordhash->CheckPassword($password,$db_pass)){
+				return array("data" => true);
+			}else{
+				return array("error" => "неверный пароль");
+			}
+        }
+    }
+
+	/*
+	*	Обновление пароля пользователя
+	*   @param int $client_id
+	*	@param string - пароль
+	*/
+	public function update_client_pass($client_id,$password){
+		$client_id = intval($client_id);
+		$this->load->library('passwordhash');
+		$newpass = $this->passwordhash->HashPassword($password);
+
+		$update = $this->db->where('client_id', $client_id)
+					->update('clients',array('client_password' => $newpass));
+
+		if($update){
+			return array("data" => "пароль обновлен");
+		}else{
+			return array("error" => "ошибка обновления данных");
+		}
+	}
+
 }

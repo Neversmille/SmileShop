@@ -9,7 +9,6 @@ class Profile extends MY_Controller{
 		$client_info =  $this->session->userdata("account");
 		//Проверяем нажата ли кнопка регистрации
 		if(null!==$this->input->post('update')){
-
 			$this->load->library('form_validation');
 			$this->load->model('rules_model');
 			$this->form_validation->set_rules($this->rules_model->profile_errors());
@@ -34,15 +33,44 @@ class Profile extends MY_Controller{
 			}
 		}
 
-		$this->data["form"] = $this->load->view("account/form_register",$this->data,true);
-
-
 		$this->data["client_info"] = $client_info;
 		$this->data["profile_page"] = $this->load->view('profile/form_edit_profile',$this->data,TRUE);
 		$this->data["current"] = "info";
 		$this->data["title"] = "Личный кабинет";
 		$this->middle = 'profile/index';
 		$this->layout();
+	}
+
+	public function security(){
+		$this->check_auth();
+		$client_info =  $this->session->userdata("account");
+
+		if(null!==$this->input->post('changepass')){
+			$this->load->library('form_validation');
+			$this->load->model('rules_model');
+			$this->form_validation->set_rules($this->rules_model->changepass_errors());
+			$check = $this->form_validation->run('changepass');
+			//Проверям валидацию
+			if($check){
+				$this->load->model('account_model');
+				$newpass = $this->input->post('newpass');
+				$update_client = $this->account_model->update_client_pass($client_info["client_id"], $newpass);
+				if(isset($update_client_pass["error"])){
+					show_404("ошибка обновления пароля");
+				}
+				$this->account_model->send_email($client_info["client_email"],$newpass);
+				$this->data["changepass"] = true;
+				// redirect($this->uri->uri_string());
+			}
+		}
+
+		$this->data["client_info"] = $client_info;
+		$this->data["profile_page"] = $this->load->view('profile/form_change_pass',$this->data,TRUE);
+		$this->data["current"] = "security";
+		$this->data["title"] = "Личный кабинет";
+		$this->middle = 'profile/index';
+		$this->layout();
+
 	}
 
 	/*
@@ -75,6 +103,8 @@ class Profile extends MY_Controller{
 
 	}
 
+
+
 	//Проверка авторизации пользователя
 	private function check_auth(){
 		if (!$this->data["login_status"]) {
@@ -83,6 +113,22 @@ class Profile extends MY_Controller{
 			$this->layout();
 		}else{
 			return true;
+		}
+	}
+
+	/*
+	*	callback функция валидации уникальности email
+	*/
+	public function check_pass($pass){
+		$client_info =  $this->session->userdata("account");
+		$client_id = $client_info["client_id"];
+		$this->load->model("account_model");
+		$check = $this->account_model-> check_client_pass($client_id,$pass);
+		if(isset($check["data"])) {
+			return true;
+		}else{
+			$this->form_validation->set_message('check_pass', 'Неверный пароль');
+			return false;
 		}
 	}
 
