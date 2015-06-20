@@ -3,7 +3,7 @@
 class Profile extends MY_Controller{
 
 
-	public function index($arg=''){
+	public function index(){
 
 		$this->check_auth();
 		$client_info =  $this->session->userdata("account");
@@ -21,9 +21,15 @@ class Profile extends MY_Controller{
 				$client_info["client_lastname"] = $this->input->post('lastname');
 				$client_id = $client_info["client_id"];
 				$this->load->model('account_model');
-				$this->account_model->update_client($client_id, $client_info);
+				$update_client = $this->account_model->update_client($client_id, $client_info);
+				if(isset($update_client["error"])){
+					show_404("ошибка обновления данных");
+				}
 				// обновляем данные сессии пользователя
-				$this->account_model->client_set_auth($client_info);
+				$client_set_auth = $this->account_model->client_set_auth($client_info);
+				if(isset($client_set_auth["error"])){
+					show_404("ошибка обновления данных");
+				}
 				redirect($this->uri->uri_string());
 			}
 		}
@@ -39,13 +45,22 @@ class Profile extends MY_Controller{
 		$this->layout();
 	}
 
+	/*
+	*	Страница истории заказов
+	*/
 	public function history(){
 		$this->check_auth();
 		$client_info =  $this->session->userdata("account");
 		$client_id = $client_info["client_id"];
 		$this->load->model('profile_model');
 		$orders = $this->profile_model->get_orders_history($client_id);
+		if (isset($orders["error"])){
+			$orders = array();
+		}
 		$orders_details = $this->profile_model->get_orders_detail($orders);
+		if(isset($orders_details["error"])){
+			$orders_details = array();
+		}
 		$this->data["orders_history"] = $orders_details;
 		$this->data["orders"] =$orders;
 		$this->data["current"] = "history";
@@ -56,6 +71,7 @@ class Profile extends MY_Controller{
 
 	}
 
+	//Проверка авторизации пользователя
 	private function check_auth(){
 		if (!$this->data["login_status"]) {
 			$this->data["title"] = "Личный кабинет";

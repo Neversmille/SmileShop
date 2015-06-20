@@ -1,30 +1,35 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Profile_model extends CI_Model {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-
+    /*
+    *   Получение истории заказов клиента
+    *   @param int $client_id
+    */
     public function get_orders_history($client_id) {
-
+        $client_id = intval($client_id);
         //Получение массива информации о заказах с client_id указнного клиента
         $orders = $this->db->where('order_client_id',$client_id)
                         ->order_by('order_id','desc')
                         ->get('orders')
                         ->result_array();
-
         if (empty($orders)) {
-            return array();
+            return array("error" => "по запросу ничего не найдено");
         }else{
-            return $orders;
+            return array("data" => $orders);
         }
 
     }
 
+    /*
+    *   Получение подробных данных заказаов
+    *   @param array $orders - массив заказов пользователя
+    */
     public function get_orders_detail($orders) {
+        if (!is_array($orders)){
+            return array("error" => "аргумент должен быть типа array");
+        }
         if (empty($orders)){
-            return array();
+            return array("error" => "нет заказов");
         }
         //Формирование массива из order_id
         foreach ($orders as $value) {
@@ -37,12 +42,9 @@ class Profile_model extends CI_Model {
                                             ->get('orderItems')
                                             ->result_array();
 
-        // $orderItems = $this->db->where_in('orderItem_order_id',$orders_id)
-        //                                  ->get('orderItems')
-        //                                 ->result_array();
 
         if (empty($orderItems)) {
-            return array();
+            return array("error" => "информации по заказам отсутствует");
         }
 
         //Формирование массива ["order_id" => array(orderItems1,orderItems2,....)]
@@ -56,9 +58,9 @@ class Profile_model extends CI_Model {
         }
 
         if(empty($all_info)) {
-            return array();
+            return array("error" => "по запросу ничего не найдено");
         }else{
-            return  $all_info;
+            return  array("data" => $all_info);
         }
     }
 

@@ -97,8 +97,10 @@ class Catalog extends MY_Controller{
 		$firm_list = $this->catalog_model->get_category_firm_list($category_id);
 		if (isset($firm_list["error"])){
 			$firm_list = array();
+		}else{
+			$firm_list = $firm_list["data"];
 		}
-		$firm_list = $firm_list["data"];
+
 
 		//Записываем необходимые данные в отображение и выводим его
 		if(isset($filter["product_firm"])){

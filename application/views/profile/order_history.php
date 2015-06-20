@@ -1,6 +1,6 @@
 <h5 class="title">История заказов</h5>
 <div class="row orders">
-	<?php if (empty($orders)):?>
+	<?php if (empty($orders)|| empty($orders_history)):?>
 		<div class="col-md-12">Вы не делали не одной покупки</div>
 	<?php else:?>
 		<?php foreach ($orders as $order): ?>
