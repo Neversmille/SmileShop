@@ -158,7 +158,8 @@ class Account_model extends CI_Model {
     *   @param array $client_data - массив обновляеммых данных ["поле"  => "значение"]
     */
     public function update_client($client_id, $client_data){
-        if(!is_int($client_id)||!is_array($client_data)){
+		$client_id = intval($client_id);
+        if(!is_array($client_data)){
             return array("error" => "неверный тип аргументов");
         }
         $result = $this->db->where('client_id', $client_id)

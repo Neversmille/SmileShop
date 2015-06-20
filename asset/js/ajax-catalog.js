@@ -125,7 +125,7 @@ var Catalog = {
 
 				//Дорисовуем полученные продукты
 				$(".catalogItems").append(products);
-
+				setProductEvents();
 				//Проверяем не выходит ле следующее смещение за пределы кол-ва товара
 				if (msg.offset+per_page< data.total_rows) {
 					setCatalogMore();
