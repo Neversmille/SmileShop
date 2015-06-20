@@ -56,10 +56,14 @@ class Profile extends MY_Controller{
 		$orders = $this->profile_model->get_orders_history($client_id);
 		if (isset($orders["error"])){
 			$orders = array();
+		}else{
+			$orders = $orders["data"];
 		}
 		$orders_details = $this->profile_model->get_orders_detail($orders);
 		if(isset($orders_details["error"])){
 			$orders_details = array();
+		}else{
+			$orders_details = $orders_details["data"];
 		}
 		$this->data["orders_history"] = $orders_details;
 		$this->data["orders"] =$orders;

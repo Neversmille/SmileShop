@@ -16,7 +16,7 @@ class Order_model extends CI_Model {
     */
     public function add_order($basket,$client_id,$client_email,$phone,$text){
         $client_id = intval($client_id);
-        if(!is_array($basket) || !is_string($phone) || !is_string($client_email) || !is_string($array)){
+        if(!is_array($basket) || !is_string($phone) || !is_string($client_email) || !is_string($text)){
             return array("error" => "неверный тип аргументов");
         }
         //Фомируем массив id товаров в корзине
@@ -173,7 +173,7 @@ class Order_model extends CI_Model {
     */
     public function send_order_email($email,$totalCost){
         if(!is_string($email)){
-            return array("error" => "неверный формат почтовой почты"); 
+            return array("error" => "неверный формат почтовой почты");
         }
 
         $subject = "Интернет магазин SmileShop";
