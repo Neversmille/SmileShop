@@ -1,36 +1,40 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Account_model extends CI_Model {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-
 	/*
 	*	Добавление учетной записи пользователя
 	*	@param array $client_data
-	*	@          string $client_data["client_name"] - Имя
-	*	@          string $client_data["client_email"] - Почта
-	*	@          string $client_data["password"] - Почтовый ящик
+	*	          string $client_data["client_name"] - Имя
+	*	          string $client_data["client_email"] - Почта
+	*	          string $client_data["password"] - Почтовый ящик
 	*/
 	public function add_client($client_data){
-		    $this->db->insert('clients', $client_data);
-	}
+        if (!is_array($client_data)){
+            return array("error" => "аргумент должен быть массивом");
+        }
+        if ($this->db->insert('clients', $client_data)) {
+            return array("data" => true);
+        }else{
+            return array("error" => "ошибка выполнения запроса");
+        }
+
+    }
 
 	/*
 	*	Проверка существования почты в БД
 	*	@param string $email - почтовая почта
-	*	@return boolean true-почта существуе
-	*	@return boolean false - почта не существует
 	*/
 	public function check_email($email){
-		$status = $this->db->select('client_email')
-                                            ->where('client_email',$email)
-									  ->count_all_results('clients');
+        if(!is_string($email)){
+            return array("error" => "аргумент должен быть строкой");
+        }
+        $status = $this->db->select('client_email')
+                                    ->where('client_email',$email)
+                                    ->count_all_results('clients');
         if ($status === 0){
-			return true;
+			return  array("data" => true);
 		}else{
-			return false;
+			return array("error" => "пользователь с таким email уже существует");
 		}
 
 	}
@@ -39,19 +43,19 @@ class Account_model extends CI_Model {
 	*	Авторизация пользователя
 	*	@param string $email - почтовый ящик
 	*	@param string $password - пароль
-	*	@return boolean true - авторизация успешна
-	*	@return boolean false - авторизация неудачна
 	*	@set session name,lastname,email,phone,id
 	*/
 	public function client_auth($email, $password){
+        if(!is_string($email) || !is_string($password)){
+            return array("error" => "аргументы должны быть строками");
+        }
 
-		$client_data = $this->db->where('client_email',$email)
+        $client_data = $this->db->where('client_email',$email)
 								->get('clients')
 								->result_array();
 
-         //Проверяем существует ли пользователь с такой почтой
 		if(empty($client_data)){
-			return false;
+			return array("error" => "пользователя с таким email не существует");
 		}else{
             $client_data = $client_data[0];
             $db_pass = $client_data["client_password"];
@@ -60,9 +64,9 @@ class Account_model extends CI_Model {
             //Проверяем правильность ввденного пароля
             if ($this->passwordhash->CheckPassword($password,$db_pass)){
                 $this->client_set_auth($client_data);
-                return true;
+                return array("data" => true);
             }else {
-                return false;
+                return array("error" => "неверный пароль");
             }
         }
 	}
@@ -70,45 +74,50 @@ class Account_model extends CI_Model {
 	/*
 	*	Установка сессии после успешной авторизации
 	*	@param array $client_data - информация о пользователе
-	*	$client_data[client_id,client_name,client_lastname,client_email,
-	*				    client_phone,client_password, client_type,client_soc_id]
 	*/
 	public function client_set_auth($client_data) {
-		$this->session->set_userdata(array("account" => $client_data));
+        if (!is_array($client_data)){
+            return array("error" => "аргумент должен быть массивом");
+        }
+
+        $this->session->set_userdata(array("account" => $client_data));
+        return array("data" => true);
 	}
 
     /*
     *   Авторизация пользователя через соц сеть
     *   @param int $client_soc_id - id пользователя в соц сети
-    *   @return boolean true - авторизирован
-    *   @return boolean false - ошибка авторизации
     */
     public function soc_client_auth($client_soc_id) {
+        if(!is_int($client_soc_id)){
+            return array("error" => "аргумент должен быть типа int");
+        }
         $client_data = $this->db->where("client_soc_id",$client_soc_id)
                         ->get('clients')
                         ->result_array();
         if(empty($client_data)){
-            return false;
+            return array("error" => "такого пользователя не существует");
         }else {
             $this->client_set_auth($client_data[0]);
-            return true;
+            return array("data" => true);
         }
     }
 
     /*
     *   Проверка существования пользователя с таким соц ид в БД
     *   @param int $client_soc_id - id пользователя в соц сети
-    *   @return boolean true - пользователь сущестует
-    *   @return boolean false - пользователь не существует
     */
     public function check_soc_id($client_soc_id){
-		$status = $this->db->select('client_soc_id')
+        if(!is_int($client_soc_id)){
+            return array("error" => "аргумент должен быть типа int");
+        }
+        $status = $this->db->select('client_soc_id')
                                             ->where('client_soc_id',$client_soc_id)
 									  ->count_all_results('clients');
-        if ($status){
-			return true;
+        if ($status===1){
+			return array("data" => true);
 		}else{
-			return false;
+			return array("error" => "пользователя с таким соц id не существует");
 		}
     }
 
@@ -116,11 +125,11 @@ class Account_model extends CI_Model {
     *   Отправка почты с регистрационными данными
     *   @param string $email - пользовательская почта
     *   @param string $pass - пароль
-    *   @return boolean true - почта отправлена
-    *   @return boolean false - ошибка отправки почты
     */
     public function send_email($email,$pass){
-
+        if(!is_string($email)||!is_string($pass)){
+            return array("error" => "аргументы должны быть типа string");
+        }
         $subject = "Интернет магазин SmileShop";
         $message = "Поздравляем с успешной регистрацией.\rДанные для входа на сайт: login: ${email} pass:${pass}";
 
@@ -137,9 +146,9 @@ class Account_model extends CI_Model {
         $this->email->message($message);
 
         if($this->email->send()){
-            return true;
+            return array("data" => true);
         }else{
-            return false;
+            return array("error" => "ошибка отправки почты");
         }
     }
 
@@ -149,12 +158,15 @@ class Account_model extends CI_Model {
     *   @param array $client_data - массив обновляеммых данных ["поле"  => "значение"]
     */
     public function update_client($client_id, $client_data){
+        if(!is_int($client_id)||!is_array($client_data)){
+            return array("error" => "неверный тип аргументов");
+        }
         $result = $this->db->where('client_id', $client_id)
                      ->update('clients', $client_data);
         if ($result) {
-            return true;
+            return array("data" => true);
         }else {
-            return false;
+            return array("error" => "ошибка обновления данных");
         }
 
     }

@@ -7,11 +7,12 @@ class my404 extends MY_Controller
         parent::__construct();
     }
 
-    public function index()
+    public function index($error = "Запрашиваемая Вами страница не найдена")
     {
-		$this->output->set_status_header('404');
-		$this->middle = '404.php';
-		$this->layout();
+        $this->output->set_status_header('404');
+        $this->data["error"] = $error;
+        $this->middle = '404.php';
+        $this->layout();
     }
 }
 ?>

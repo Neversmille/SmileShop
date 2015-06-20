@@ -5,12 +5,12 @@ $config = array(
 		array(
 			'field' => 'name',
 			'label' => 'Имя',
-			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]|'
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]'
 		),
 		array(
 			'field' => 'lastname',
 			'label' => 'Фамилия',
-			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]|'
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]'
 		),
 		array(
 			'field' => 'email',
@@ -20,7 +20,7 @@ $config = array(
 		array(
 			'field' => 'password',
 			'label' => 'Пароль',
-			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]|trim'
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
 		)
     ),
 	'login' => array(
@@ -32,7 +32,7 @@ $config = array(
 		array(
 			'field' => 'password',
 			'label' => 'Пароль',
-			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]|trim'
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
 		)
 	),
 	'reviews' => array(
@@ -58,11 +58,11 @@ $config = array(
 		array(
 			'field' => 'name',
 			'label' => 'Имя',
-			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]|'
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]'
 		),array(
 			'field' => 'lastname',
 			'label' => 'Фамилия',
-			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]|'
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]'
 		)
 	)
 

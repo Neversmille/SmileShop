@@ -2,16 +2,20 @@
 
 class Account extends MY_Controller{
 
-	function __construct()
-    {
-        parent::__construct();
-	   $this->load->library('passwordhash');
+	function __construct(){
+
+		parent::__construct();
+		$this->load->library('passwordhash');
 		$this->load->library('form_validation');
 		$this->load->model('account_model');
-    }
+		$this->load->model('rules_model');
+
+	}
 
 	public function index(){
+
 		show_404();
+
 	}
 
 	/*
@@ -20,35 +24,39 @@ class Account extends MY_Controller{
 	public function register(){
 
 		//Проверяем авторизирован ли пользователь
-		if ($this->data["login_status"]) {
-			$this->data["continue_order"] = $this->session->userdata("basket");
-			$this->data["form"] = $this->load->view("account/already_auth",$this->data,true);
-		}else{
-			
-			//Проверяем нажата ли кнопка регистрации
-			if(null!==$this->input->post('register')){
+		if (!$this->check_login_status()) {
 
-				$this->load->model('rules_model');
+			//Проверяем отправлен ли запрос на регистрацию
+			if(null!==$this->input->post('register')){
+				//Устанавливаем сообщения для валидация
 				$this->form_validation->set_rules($this->rules_model->register_errors());
-				// $this->form_validation->set_rules('email','eMail','callback_unique_email');
 				$check = $this->form_validation->run('register');
 
 				//Проверям валидацию
 				if($check){
+					//Формируем массив клиентских данных, прошедшых валидацию и фильтры
 					$client_data["client_name"] = $this->input->post('name');
 					$client_data["client_lastname"] = $this->input->post('lastname');
 					$client_data["client_email"] = $this->input->post('email');
 					$client_data["client_password"] = $this->passwordhash->HashPassword($this->input->post('password'));
 
-					$this->account_model->add_client($client_data);
-					$this->account_model->client_auth($client_data["client_email"],$this->input->post('password'));
+					//Вносим пользователя в БД, авторизируем его и отправляем письмо с данными регистрации
+					$add_client = $this->account_model->add_client($client_data);
+					if (isset($add_client["error"])){
+						show_404("Ошибка регистрации аккаунта");
+					}
+					$client_auth = $this->account_model->client_auth($client_data["client_email"],$this->input->post('password'));
+					if (isset($client_auth["error"])){
+						show_404("Ошибка авторизации");
+					}
 					$this->account_model->send_email($client_data["client_email"],$this->input->post('password'));
 					redirect($this->uri->uri_string());
-
 				}
+
 			}
 
 			$this->data["form"] = $this->load->view("account/form_register",$this->data,true);
+
 		}
 
 		$this->data["title"] = "Регистрация";
@@ -63,28 +71,27 @@ class Account extends MY_Controller{
 	public function login() {
 
 		//Проверяем авторизован ли пользователь
-		if ($this->data["login_status"]) {
-			$this->data["continue_order"] =$this->session->userdata("basket");
-			$this->data["form"] = $this->load->view("account/already_auth",$this->data,true);
-		}else{
+		if (!$this->check_login_status()) {
 
-			//Проверяем нажата ли кнопка авторизации
+			//Проверяем нажата отправлен ли запрос на авторизацию
 			if(null!==$this->input->post('login')){
-				$this->load->model('rules_model');
 				$this->form_validation->set_rules($this->rules_model->login_erorrs());
 				$check = $this->form_validation->run('login');
 
 				//Проверяем успешность валидации
 				if($check){
+					//Получаем введенные пользователем данные прошедшие валидацию и фильтры
 					$client_email = $this->input->post('email');
 					$client_password = $this->input->post('password');
 
 					//Пытаемся авторизировать
-					if($this->account_model->client_auth($client_email,$client_password)){
+					$client_auth = $this->account_model->client_auth($client_email,$client_password);
+					if(isset($client_auth["data"])){
 						redirect($this->uri->uri_string());
 					}else{
 						$this->data["auth_error"] = "<p class='color'>Неверный логин или пароль";
 					}
+
 				}
 
 			}
@@ -102,7 +109,8 @@ class Account extends MY_Controller{
 	*	Авторизация пользователя через социальну сеть Вконтакте
 	*/
 	public function vk() {
-		$code = $this->input->get('code');
+
+		$code = $this->input->get('code',true);
 
 		//Данные приложения Вконтакте
 		$client_id='4937786';
@@ -119,14 +127,18 @@ class Account extends MY_Controller{
 		$userInfo = $this->vk->getData($getToken);
 
 		//Проверяем существует ли пользователь с таким  id
-		if($this->account_model->check_soc_id($getToken->user_id)){
+		$check_soc_id = $this->account_model->check_soc_id($getToken->user_id);
+		if(isset($check_soc_id["data"])){
 			$auth = $this->account_model->soc_client_auth($getToken->user_id);
+			if(isset($auth["error"])){
+				show_404("Ошибка авторизации");
+			}
 		}else{
 			//Генерируем пароль при помощь собственной функции
 			$this->load->helper('passgenerate');
 			$password = generatePassword();
 
-			//Формируем данные пользователя
+			//Формируем массив с данными пользователя
 			$client_data["client_name"] = $userInfo->first_name;
 			$client_data["client_lastname"] = $userInfo->last_name;
 			$client_data["client_email"] = $getToken->email;
@@ -134,9 +146,15 @@ class Account extends MY_Controller{
 			$client_data["client_type"] = "social";
 			$client_data["client_soc_id"] = $getToken->user_id;
 
-			//Регистрируем пользователя
-			$this->account_model->add_client($client_data);
+			//Регистрируем, авторизируем пользователя и отправляем данные о регистрации на его почту
+			$add_client = $this->account_model->add_client($client_data);
+			if (isset($add_client["error"])){
+				show_404("Ошибка добавления пользователя с таким vk");
+			}
 			$auth = $this->account_model->soc_client_auth($getToken->user_id);
+			if (isset($auth["error"])){
+				show_404("Ошибка авторизации пользователя");
+			}
 			$this->account_model->send_email($client_data["client_email"],$password);
 		}
 
@@ -154,10 +172,28 @@ class Account extends MY_Controller{
 	}
 
 	/*
-	*	callback функция проверки уникальности email
+	*	Проверка статуса авторизации и наличия товара в корзине
+	*/
+	private function check_login_status(){
+		if ($this->data["login_status"]) {
+			if ($this->session->userdata("basket")){
+				$this->data["continue_order"] = true;
+			}else{
+				$this->data["continue_order"] = false;
+			}
+			$this->data["form"] = $this->load->view("account/already_auth",$this->data,true);
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	/*
+	*	callback функция валидации уникальности email
 	*/
 	public function unique_email($email){
-		if($this->account_model->check_email($email)) {
+		$check = $this->account_model->check_email($email);
+		if(isset($check["data"])) {
 			return true;
 		}else{
 			$this->form_validation->set_message('unique_email', 'Пользователь с таким eMail уже зарегистрирован');

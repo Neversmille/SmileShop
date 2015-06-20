@@ -8,7 +8,7 @@
       </div>
       <div class="col-md-5 col-sm-5 col-sm-offset-1 col-md-offset-1">
         <h2><span class="color">Во беда =( !!!</span></h2>
-        <h4>Запрашиваемая Вами страница не найдена</h4>
+        <h4><?=$error;?></h4>
         <hr />
         <!-- Some site links -->
         <div class="horizontal-links">
