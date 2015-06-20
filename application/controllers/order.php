@@ -2,11 +2,9 @@
 
 class Order extends MY_Controller{
 
-
 	public function index(){
 		//Проверяем статус авторизации
 		if ($this->data["login_status"]) {
-
 			$this->data["client_info"] = $this->session->userdata("account");
 			$client_id = $this->data["client_info"]["client_id"];
 			$client_email = $this->data["client_info"]["client_email"];
@@ -17,23 +15,26 @@ class Order extends MY_Controller{
 
 			if(null!==$this->input->post('order')){
 				$check = $this->form_validation->run('order');
+
 				if($check){
-						// die("проверка");
 						$this->load->model('order_model');
 						$basket = $this->session->userdata('basket');
-						if($this->order_model->add_order($basket,$client_id,$client_email,$this->input->post('phone'),$this->input->post('text'))){
+
+						$add_order = $this->order_model->add_order($basket,$client_id,$client_email,$this->input->post('phone'),$this->input->post('text'));
+						if (isset($add_order["error"])){
+							$this->data["order_message"] = "Во время оформления заказа произошла ошибка =(";
+						}else{
 							$this->data["order_message"] = "Ваш заказ принят";
 							$this->session->unset_userdata('basket');
-						}else{
-							$this->data["order_message"] = "Во время оформления заказа произошла ошибка =(";
 						}
+
 						$this->data["order_block"] = $this->load->view("order/order_complete",$this->data,true);
+
 					}else{
 						$this->data["order_block"] = $this->load->view("order/order_form",$this->data,true);
 					}
 
 			}
-
 
 		}else{
 			$this->data["order_message"] = true;

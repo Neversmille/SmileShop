@@ -10,21 +10,22 @@ class Order_model extends CI_Model {
     /*
     *   Добавление заказа в бд
     *   @param array $client_id - id клиента
+    *   @param string $client_email - почта клиента
     *   @param string $phone - введенный при оформлении заказа телефон
     *   @param string $text - дополнительные пожелания по заказу
-    *   @return boolean true - в случае успеха
-    *   @return boolean false - в случае ошибки
     */
     public function add_order($basket,$client_id,$client_email,$phone,$text){
-
+        $client_id = intval($client_id);
+        if(!is_array($basket) || !is_string($phone) || !is_string($client_email) || !is_string($array)){
+            return array("error" => "неверный тип аргументов");
+        }
         //Фомируем массив id товаров в корзине
         $products_id = array_keys($basket);
         $products_price = $this->get_all_products_price($products_id);
-
-        //Если цены не получены
-        if (!$products_price){
-            return false;
+        if(isset($products_price["error"])){
+            return array("error" => "ошибка получения цен");
         }
+        $products_price = $products_price["data"];
 
         //Заполняем массив корзины ценами из базы данных
         foreach ($products_price as $value) {
@@ -32,25 +33,25 @@ class Order_model extends CI_Model {
             $basket[$id]["product_price"] = $value["product_price"];
         }
 
-        // var_dump($basket);
-        // die("basket");
 
         $totalCost = $this->count_total_cost($basket);
-        if (!$totalCost) {
-            return false;
+        if(isset($totalCost["error"])){
+            return array("error" => "ошибка подсчета общей суммы");
         }
-        // var_dump($totalCost);
+        $totalCost = $totalCost["data"];
 
         $order_id = $this->order_record($totalCost,$client_id,$text,$phone);
-        if (!$order_id){
-            return false;
+        if (isset($order_id["error"])){
+            return array("error" => "ошибка добавления заказа");
         }
+        $order_id = $order_id["data"];
 
-        if($this->add_order_products($basket,$order_id)){
+        $add_order_products = $this->add_order_products($basket,$order_id);
+        if (isset($add_order_products["error"])){
+            return array("error" => "ошибка добавления товаров в заказ");
+        }else{
             $this->send_order_email($client_email,$totalCost);
-            return true;
-        }else {
-            return false;
+            return array("data" => true);
         }
 
     }
@@ -60,7 +61,9 @@ class Order_model extends CI_Model {
     *   @param array $basket
     */
     public function count_total_cost($basket){
-
+        if(!is_array($basket)){
+            return array("error" => "аргумент должен быть типа array");
+        }
         $totalCost = 0;
 
         foreach ($basket as  $value) {
@@ -68,21 +71,21 @@ class Order_model extends CI_Model {
         }
 
         if($totalCost>0){
-            return $totalCost;
+            return array("data" => $totalCost);
         }else{
-            return false;
+            return array("error" => "некорректная общая стоимость");
         }
 
     }
 
     /*
-    *   Поулчение массива цен товаров по массиву их id
+    *   Получение массива цен товаров по массиву их id
     *   @param array $products_id - массив id товара
-    *   @return array - массив цен
-    *   @return array() - в случае ошибки
     */
     public function get_all_products_price($products_id){
-
+        if(!is_array($products_id)){
+            return array("error" => "аргумент должен быть типа array");
+        }
         $prices = $this->db->select('product_id, product_price')
                             ->where_in('product_id',$products_id)
                             ->get('products')
@@ -90,9 +93,9 @@ class Order_model extends CI_Model {
 
         //Проверяем для всех ли товаров была найдена цена
         if($prices&&(count($prices)==count($products_id))){
-            return $prices;
+            return array("data" => $prices);
         }else {
-            return array();
+            return array("error" => "ошибка получения цен");
         }
 
     }
@@ -103,18 +106,20 @@ class Order_model extends CI_Model {
     *   @param int $client_id - id клиента
     *   @param string $text - дополнительная информация по заказу
     *   @param $order_phone - номер телефона в заказе
-    *   @return int - id заказа
-    *   @return boolean false - ошибка добавления заказа
     */
     public function order_record($order_price,$client_id,$order_text,$order_phone){
-        if(!$this->check_client_id($client_id)){
-            return false;
+        $client_id = intval($client_id);
+
+        $id_check = $this->check_client_id($client_id);
+        if (isset($id_check["error"])){
+            return array("error" => "нет клиента с таким id");
         }
+
         $data = array("order_price" => $order_price, "order_client_id" => $client_id, "order_text" => $order_text, "order_phone" => $order_phone);
         if($this->db->insert('orders',$data)){
-            return $this->db->insert_id();
+            return array("data" => $this->db->insert_id());
         }else {
-            return false;
+            return array("error" => "ошибка добавления зака");
         }
 
     }
@@ -122,16 +127,15 @@ class Order_model extends CI_Model {
     /*
     *   Проверка существования клиента по id
     *   @param int $client_id
-    *   @return boolean true - клиент есть
-    *   @return boolean false - клиента нет
     */
     public function check_client_id($client_id){
+        $client_id = intval($client_id);
         $client = $this->db->where('client_id',$client_id)
                                     ->count_all_results('clients');
-        if($client){
-            return true;
+        if($client===1){
+            return array("data" => true);
         }else{
-            return false;
+            return array("error" => "нет клиента с таким id");
         }
     }
 
@@ -139,23 +143,24 @@ class Order_model extends CI_Model {
     *   Добавление товаров к заказу
     *   @param array $basket - данные о заказе
     *   @param int $order_id - id заказа
-    *   @return boolean true - данные добавлены
-    *   @return boolean false - ошибка добавления данных
     */
     function add_order_products($basket,$order_id){
-        $data = array();
+        $order_id = intval($order_id);
+        if(!is_array($basket)){
+            return array("error" => "неверный тип аргумента");
+        }
         foreach ($basket as $key => $value) {
             $array = array("orderItem_order_id" => $order_id,
                                 "orderItem_product_id" => $key,
                                  "orderItem_amount" => $value["amount"],
                                  "orderItem_price" => $value["product_price"]);
-            array_push($data, $array);
+            $data[] = $array;
         }
 
         if($this->db->insert_batch('orderItems',$data)){
-            return true;
+            return array("data" => true);
         }else{
-            return false;
+            return array("error" => "ошибка добавления товаров в заказ");
         }
 
     }
@@ -165,10 +170,11 @@ class Order_model extends CI_Model {
     *   Отправка почты с регистрационными данными
     *   @param string $email - пользовательская почта
     *   @param float $totalCost - общая сумма заказа
-    *   @return boolean true - почта отправлена
-    *   @return boolean false - ошибка отправки почты
     */
     public function send_order_email($email,$totalCost){
+        if(!is_string($email)){
+            return array("error" => "неверный формат почтовой почты"); 
+        }
 
         $subject = "Интернет магазин SmileShop";
         $message = "Ваш заказ успешно принят! Общая сумма заказа: ${totalCost} грн. В ближайшее время наш оператор свяжется с вами";
@@ -185,9 +191,9 @@ class Order_model extends CI_Model {
         $this->email->subject($subject);
         $this->email->message($message);
         if($this->email->send()){
-            return true;
+            return array("data" => true);
         }else{
-            return false;
+            return array("error" => "ошибка отправки почты");
         }
     }
 
