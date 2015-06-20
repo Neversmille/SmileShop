@@ -1,26 +1,23 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Catalog_model extends CI_Model {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-
     /*
     *   Получение информации о  категории по alias
     *   @param string $category_alias
-    *   @return array
     */
     function get_category_info($category_alias){
+        if(!is_string($category_alias)){
+            return array("error" => "аргумент должен быть массивом");
+        }
         $category_info = $this->db->select('category_id,category_name')
                                             ->where('category_alias',$category_alias)
                                             ->get('categories')
                                             ->result_array();
-                                            // var_dump($category_info);die();
-        if(!empty($category_info[0])){
-            return $category_info[0];
+
+        if(empty($category_info[0])){
+            return array("error" => "категории не существует");
         }else{
-            return array();
+            return array("data" => $category_info[0]);
         }
 
     }
@@ -28,17 +25,19 @@ class Catalog_model extends CI_Model {
     /*
     *   Получение информации о  категории по id
     *   @param string $category_id
-    *   @return array
     */
     function get_category_info_by_id($category_id){
+        if(!is_int($category_id)){
+            return array("error" => "аргумент должен быть типа int");
+        }
         $category_info = $this->db->where('category_id',$category_id)
                                             ->get('categories')
                                             ->result_array();
-                                            // var_dump($category_info);die();
-        if(!empty($category_info[0])){
-            return $category_info[0];
+
+        if(empty($category_info[0])){
+            return array("error" => "категории не существует");
         }else{
-            return array();
+            return array("data" => $category_info[0]);
         }
 
     }
@@ -47,18 +46,18 @@ class Catalog_model extends CI_Model {
     /*
     *   Получение списка товаров по категории
     *   @param int $num - количество товаров отображаемого на странице
-    *   @param $offset - позиция указателя страница в url
+    *   @param int $offset - позиция указателя страница в url
     *   @param int $category_id
     *   @param string $order - способ сортировки
     *   @param array $filter - массив фильтров
-    *   @return array $products - список товаров
     */
     function get_products_by_category($num,$offset,$category_id,$order,$filter){
-        // var_dump($num);
-        // var_dump($offset);
-        // var_dump($category_id);
-        // var_dump($order);
-        // var_dump($filter);die();
+        $num = intval($num);
+        $offset = intval($offset);
+        $category_id = intval($category_id);
+        if(!is_int($num) || !is_int($offset) || !is_int($category_id) || !is_string($order) || !is_array($filter)){
+            return array("error" => "неверный тип аргументов");
+        }
         if($order == "new") {
             $order = "product_id";
             $type = "desc";
@@ -72,7 +71,7 @@ class Catalog_model extends CI_Model {
             $order = "product_name";
             $type = "asc";
         }else{
-            return array();
+            return array("error" => "неверный тип сортировки");
         }
 
         if(empty($filter)){
@@ -88,45 +87,56 @@ class Catalog_model extends CI_Model {
                                             ->result_array();
         }
 
-        if(!empty($products)){
-            return $products;
+        if(empty($products)){
+            return array("error" => "нет товаров данной категории");
         }else{
-            return array();
+            return array("data" => $products);
         }
 
     }
 
-        /*
+    /*
     *	Получение информации о товаре по id
     *	@param int id $product_id
-    *	@return array - информация о категории
-    *	@return array array() - если нет товара с таким idl
     */
     public function get_product_info_by_id($product_id){
+        if(!is_int($product_id)){
+            return array("error" => "аргумент должен быть типа int");
+        }
         $product_info = $this->db->where('product_id',$product_id)
                                         ->get('products')
                                         ->result_array();
         if (empty($product_info)){
-            return array();
+            return array("error" => "нет товара с таким id");
         }else{
-            return $product_info[0];
+            return array("data" => $product_info[0]);
         }
     }
 
     /*
-    *	Получение количества товаров по id категории
-    *	@param int $category_id
-    *	@return	int количество товаров данной категории в БД
+    *   Получение количества товаров по id категории
+    *   @param int $category_id
+    *   @param array $filter - массив фильтров
     */
     function get_products_count_by_category($category_id,$filter) {
+        $category_id = intval($category_id);
+        if(!is_int($category_id) || !is_array($filter)){
+            return array("error" => "неверный тип аргументов");
+        }
 
         if (empty($filter)){
-            return $this->db->where('product_category_id',$category_id)
+            $count = $this->db->where('product_category_id',$category_id)
                                             ->count_all_results('products');
         }else{
-            return $this->db->where('product_category_id',$category_id)
+            $count = $this->db->where('product_category_id',$category_id)
                                             ->where($filter)
                                             ->count_all_results('products');
+        }
+
+        if ($count===0) {
+            return array("error" => "нет товаров данной категории");
+        }else{
+            return array("data" => $count);
         }
 
 
@@ -137,20 +147,18 @@ class Catalog_model extends CI_Model {
 	*	Разбор get параметров в ассоциативный массив
 	*	@param $array - входящий массив get параметров
 	*						 url адресса вида order=pricemax/product=3
-	*	@return array $result - ассоциативный массив
-	*								["product" => 3, "order" => "pricemax"]
-     *     @return array () - при неправильном формате get параметров
 	*/
 	function get_params($array) {
-		$result = array();
-		$result["order"] = "new";
-		$result["product"] = null;
-         $result["filter"] = array();
-		if (empty($array)) {
-			return $result;
-		}else{
-			foreach ($array as $item) {
-				$parametr = preg_split("/=/",$item);
+
+        //Настройки по умолчанию
+        $result["order"] = "new";
+        $result["product"] = null;
+        $result["filter"] = array();
+        if (empty($array)) {
+            return array("data" => $result);
+        }else{
+            foreach ($array as $item) {
+                $parametr = preg_split("/=/",$item);
 
                   //Разбиваем параметры по =, если передано чтото не через =
                   //возвращаем пустой массив
@@ -164,30 +172,39 @@ class Catalog_model extends CI_Model {
                             if ($parametr_key=="firm") {
                                 $parametr_key = "product_firm";
                             }else{
-                                return array();
+                                return array("error" => "заданы недопустимые параметры");
                             }
                             $result["filter"][$parametr_key] = $parametr_value;
                         }
 
-				}else{
-                    return array();
+                    }else{
+                        return array("error" => "заданы недопустимые параметры");
+                    }
                 }
-			}
-		}
-		return $result;
+            }
+		return array("data" => $result);
 	}
 
     /*
     *   Получения списка фирм по id категории
     *   @param int $category_id
-    *   @return array - список фирм
     */
     public function get_category_firm_list($category_id) {
-        return $this->db->select('product_firm')
+        $category_id = intval($category_id);
+        if(!is_int($category_id)){
+            return array("error"=>"аргумент должен быть типа int");
+        }
+
+        $result = $this->db->select('product_firm')
                         ->where('product_category_id',$category_id)
                         ->group_by('product_firm')
                         ->get('products')
                         ->result_array();
+        if(empty($result)){
+            return array("error" => "у данной категории нет фирм");
+        }else{
+            return array("data" => $result);
+        }
     }
 
     /*
@@ -196,10 +213,13 @@ class Catalog_model extends CI_Model {
     *	@param int $per_page - количество товара на странице
     *	@param int $total_rows - количество товаров данной категории
     *	@param int $product - номер текущей страницы
-    *    @return array $config - массив опций для инициализации класса Pagination
     */
     public function set_pagination($uri,$per_page,$total_rows,$product) {
-
+        $per_page = intval($per_page);
+        $product = intval($product);
+        if(!is_object($uri) || !is_int($per_page) || !is_int($total_rows) || !is_int($product)){
+            return array("error" => "неверный тип аргументов");
+        }
         //Количество сегментов в текущем url
         $uri_segment = count($uri->segments);
 
@@ -219,48 +239,56 @@ class Catalog_model extends CI_Model {
         $config['cur_page'] = $product;
         $config['uri_segment'] = $uri_segment;
         $config['prefix'] = 'product=';
-        return $config;
+        return array("data" => $config);
 
     }
 
     /*
     *   Формирование url для сортировки (обрезаем данные пагинатора)
     *   @param string $current_url - текущий url
-    *   @return string - текущий url без данных пагинатора
     */
     public function get_url_for_order($current_url){
+        if (!is_string($current_url)){
+            return array("error" => "аргумент должен быть типа string");
+        }
         $array = preg_split("/(\/product=\w+$)/",$current_url);
-        return(base_url().$array[0]."/");
+        return array("data" => base_url().$array[0]."/");
     }
 
     /*
     *   Получеения случайны горячих предложений
-    *   @param string $num - количество получаемых данных
-    *   @return array - массив товаров
+    *   @param int $num - количество получаемых данных
     */
     public function get_random_hot_products($num){
-        return $this->db->where('product_hot','1')
+        $num = intval($num);
+        $result = $this->db->where('product_hot','1')
                         ->order_by('product_id','random')
                         ->limit($num)
                         ->get('products')
                         ->result_array();
+        if(empty($result)) {
+            return array("error" => "нет горячих товаров");
+        }else{
+            return array("data" => $result);
+        }
     }
 
     /*
     *   Получение цены товара по id
     *   @param int $id - id товара
-    *   @return $price
-    *   @return boolean false - в случае отсутствия товара
     */
     public function get_product_price_by_id($id){
+            if (!is_int($id)){
+                return array("error" => "аргумент должен быть типа int");
+            }
             $price = $this->db->select('product_price')
                                         ->where('product_id',$id)
                                         ->get('products')
                                         ->result_array();
             if (empty($price)){
-                return false;
+                return array("error" => "нет товара с таким id");
             }else{
-                return $price[0]["product_price"];
+                return array("data" => $price[0]["product_price"]);
             }
 
     }
