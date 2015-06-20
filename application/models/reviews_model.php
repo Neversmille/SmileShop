@@ -1,21 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Reviews_model extends CI_Model {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
+
 
    /*
    *    Получение всех отзывов из базы данных
    *    @param int $num - количество
    *    @param int $offset - сдвиг
-   *    @return array - комментарии
    */
    function get_reviews($num,$offset){
-              return  $this->db->order_by('review_id', 'desc')
-                                       ->get('reviews',$num,$offset)
-                                       ->result_array();
+       $num = intval($num);
+       $offset = intval($offset);
+       $result = $this->db->order_by('review_id', 'desc')
+                                   ->get('reviews',$num,$offset)
+                                   ->result_array();
+        if(empty($result)){
+            return array("error" => "комментариев нет");
+        }else{
+            return array("data" => $result);
+        }
    }
 
    /*
@@ -23,8 +26,15 @@ class Reviews_model extends CI_Model {
    *    @param array $insert - массив данных для вставки
    */
    function add_review($insert){
+       if(!is_array($insert)){
+           return array("error" => "неверный тип аргументов");
+       }
         $this->db->set('review_time', 'NOW()', FALSE);
-        $this->db->insert('reviews', $insert);
+        if($this->db->insert('reviews', $insert)){
+            return array("data" => true);
+        }else{
+            return array("error" => "ошибка вставки данных");
+        }
    }
 
    /*
@@ -41,6 +51,8 @@ class Reviews_model extends CI_Model {
    *    @param int $page - текущий номер страницы
    */
    function set_pagination($per_page,$page){
+       $per_page = intval($per_page);
+       $page = intval($page);
        $this->load->library('pagination');
        $config['base_url'] = base_url().'reviews';
        $config['per_page'] =$per_page;

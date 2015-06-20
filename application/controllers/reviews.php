@@ -6,7 +6,7 @@ class Reviews extends MY_Controller{
 	*	Главная страница Отзывов
 	*/
 	public function index($current_page="null"){
-		// var_dump($current_page); die();
+
 		$this->load->model('reviews_model');
 
 		//Проверяем был ли отправлен комментарий
@@ -37,14 +37,20 @@ class Reviews extends MY_Controller{
 					if ($file["result"]) {
 						$insert["review_file"] = $file["file_name"];
 						$insert["review_filename"] = $file["orig_name"];
-						$this->reviews_model->add_review($insert);
+						$add_review = $this->reviews_model->add_review($insert);
+						if (isset($add_review["error"])){
+							show_404("ошибка добавления комментария");
+						}
 						redirect($this->uri->uri_string());
 					}else{
 						$this->data["file_error"] = $file["file_error"];
 					}
 
 				}else{
-					$this->reviews_model->add_review($insert);
+					$add_review = $this->reviews_model->add_review($insert);
+					if (isset($add_review["error"])){
+						show_404("ошибка добавления комментария");
+					}
 					redirect($this->uri->uri_string());
 				}
 
@@ -53,11 +59,16 @@ class Reviews extends MY_Controller{
 
 		//Опции для пагинатора
 		$per_page = 5;
-		$page = $current_page;
+		$page = intval($current_page);
 
 		//Данные для отображения
 		$this->reviews_model->set_pagination($per_page,$page);
 		$reviews = $this->reviews_model->get_reviews($per_page,$page);
+		if(isset($reviews["error"])){
+			$reviews = array();
+		}else{
+			$reviews = $reviews["data"];
+		}
 		$this->data["form"] = $this->load->view("reviews/form_add_review",$this->data,true);
 		$this->data["reviews"] = $reviews;
 		$this->data["title"] = "Отзывы";
