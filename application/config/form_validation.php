@@ -81,6 +81,59 @@ $config = array(
 			'label' => 'Пароль',
 			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
 		)
+    ),
+    'admin_login' => array(
+        array(
+            'field' => 'email',
+            'label' => 'eMail',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[40]|valid_email'
+        ),
+        array(
+            'field' => 'password',
+            'label' => 'Пароль',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
+        )
+    ),
+    'product' => array(
+        array(
+            'field' => 'product_id',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[11]|is_natural'
+        ),
+        array(
+            'field' => 'product_name',
+            'label' => 'Наименование',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[255]'
+        ),
+        array(
+            'field' => 'product_url',
+            'label' => 'URL',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[100]|alpha_dash'
+        ),
+        array(
+            'field' => 'product_price',
+            'label' => 'Цена',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[8]|decimal'
+        ),
+        array(
+            'field' => 'product_description',
+            'label' => 'Описание',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[400]'
+        ),
+        array(
+            'field' => 'product_category_id',
+            'label' => 'Категория',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[11]|is_natural'
+        ),
+        array(
+            'field' => 'product_hot',
+            'label' => 'Горячее предложение',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[1]|is_natural'
+        ),
+        array(
+            'field' => 'product_avaible',
+            'label' => 'Наличие на складе',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[1]|is_natural'
+        ),
     )
 
 );

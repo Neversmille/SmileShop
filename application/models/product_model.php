@@ -13,6 +13,7 @@ class Product_model extends CI_Model {
 			return array("error" => "некорректный тип аргумента");
 		}
 		$product_info = $this->db->join('firms', 'product_firm = firm_id', 'left')
+										->join('categories', 'product_category_id = category_id', 'left')
 										->where('product_url', $url)
 										->get('products')
 										->result_array();

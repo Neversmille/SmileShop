@@ -8,6 +8,7 @@ class MY_Controller extends CI_Controller{
     public $css = array('style.css','owl.carousel.css','bootstrap.min.css','flexslider.css','flexslider.css','font-awesome.min.css','red.css','sidebar-nav.css');
     public $js = array('jquery.js','bootstrap.min.js','owl.carousel.min.js','filter.js','nav.js','jquery.flexslider-min.js','respond.min.js','html5shiv.js','custom.js','ajax-basket.js');
 
+
     public function __construct(){
 
         parent::__construct();
@@ -39,6 +40,22 @@ class MY_Controller extends CI_Controller{
    }
 
    /*
+   *   Загрузка layout
+   */
+   public function admin_layout() {
+
+        if ($this->check_admin_status()){
+            $this->data["admin_widget"] = $this->load->view('admin/admin_widget',$this->data,true);
+            $this->template['menu']   = $this->load->view('admin/layouts/menu', $this->data, true);
+            $this->template['footer'] = $this->load->view('admin/layouts/footer', $this->data, true);
+            $this->load->view('admin/layouts/index', $this->template);
+        }else{
+            redirect('/admin/login');
+        }
+
+  }
+
+   /*
    *    Получение количества наименований в корзине
    */
    private function get_basket_count(){
@@ -67,6 +84,15 @@ class MY_Controller extends CI_Controller{
    */
    public function get_recent_items(){
        return  $this->session->userdata('recent_items');
+   }
+
+   private function check_admin_status(){
+        if ($this->session->userdata('admin')) {
+            $this->data["admin_info"] = $this->session->userdata('admin');
+            return true;
+        }else{
+            return false;
+        }
    }
 
 }

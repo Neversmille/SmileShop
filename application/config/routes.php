@@ -59,6 +59,9 @@ $route['register\/?'] = "account/register";
 $route['login\/?'] = "account/login";
 $route['logout\/?'] = "account/logout";
 
+$route['admin/product/(:any)'] = "admin/products/product/$1";
+$route['admin/products/(:any)'] = "admin/products/index/$1";
+$route['admin$'] = "admin/index";
 
 
 //$route['catalog/([a-z]+)(\/?)(\d*)(\/?)([a-z]*)'] = "catalog/view_category/$1/$5/$3";
