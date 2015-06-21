@@ -37,7 +37,7 @@ class Product extends MY_Controller{
 		$this->data["title"] = "SmileShop ".$product_info['product_name'];
 		$this->data["category"] = $category_info["category_alias"];
 		$this->data["category_name"] = $category_info["category_name"];
-		$this->data["product_firm"] = $product_info["product_firm"];
+		$this->data["product_firm"] = $product_info["firm_name"];
 		$this->data["firm_list"] = $firm_list;
 		$this->data["firms"] = $this->load->view("catalog/firms",$this->data,true);
 		$this->data["product_info"] = $product_info;

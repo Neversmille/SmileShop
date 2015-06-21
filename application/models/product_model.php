@@ -12,9 +12,10 @@ class Product_model extends CI_Model {
 		if(!is_string($url)){
 			return array("error" => "некорректный тип аргумента");
 		}
-		$product_info = $this->db->where('product_url', $url)
-					->get('products')
-					->result_array();
+		$product_info = $this->db->join('firms', 'product_firm = firm_id', 'left')
+										->where('product_url', $url)
+										->get('products')
+										->result_array();
 		if (empty($product_info)){
 			return array("error" => "информация по данному продукту не найдена");
 		}else {

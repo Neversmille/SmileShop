@@ -58,7 +58,6 @@ class Catalog extends MY_Controller{
 		$order = $parametrs["order"];
 		$filter = $parametrs["filter"];
 
-
 		//Получаем информации о переданной категории
 		$category_info =$this->catalog_model->get_category_info($alias);
 		if (isset($category_info["error"])) {
@@ -101,10 +100,9 @@ class Catalog extends MY_Controller{
 			$firm_list = $firm_list["data"];
 		}
 
-
 		//Записываем необходимые данные в отображение и выводим его
-		if(isset($filter["product_firm"])){
-			$this->data["product_firm"] =$filter["product_firm"];
+		if(isset($filter["firm_name"])){
+			$this->data["product_firm"] =$filter["firm_name"];
 		}else{
 			$this->data["product_firm"] =$category_info["category_name"];
 		}

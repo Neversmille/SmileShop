@@ -9,6 +9,7 @@
 				<span class="order-id">№<?=$order["order_id"];?></span>
 				<span class="order-amount"> товаров: <?=count($orders_history[$order["order_id"]]);?></span>
 				<span class="order-cost">на <?=$order["order_price"];?> грн.</span>
+				<span class="order-date">от <?=$order["order_create_date"];?></span>
 				<?php if($order["order_complete"]==0)
 				 			echo "<span class='order-status'>выполняется</span>";
 						else  echo "<span class='order-status green'>выполнен</span>"; ?>

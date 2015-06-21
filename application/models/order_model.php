@@ -114,7 +114,7 @@ class Order_model extends CI_Model {
         if (isset($id_check["error"])){
             return array("error" => "нет клиента с таким id");
         }
-
+        $this->db->set('order_create_date', 'NOW()', FALSE);
         $data = array("order_price" => $order_price, "order_client_id" => $client_id, "order_text" => $order_text, "order_phone" => $order_phone);
         if($this->db->insert('orders',$data)){
             return array("data" => $this->db->insert_id());

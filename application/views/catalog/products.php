@@ -57,7 +57,7 @@
 											<?php endif;?>
 										</h5>
 										<div class="clearfix">
-											<p class="color capitalize"><?php echo $value['product_firm'];?></p>
+											<p class="color capitalize"><?php echo $value['firm_name'];?></p>
 										</div>
 										<!-- Para. Note more than 2 lines. -->
 										<p><?php echo $value['product_description'];?></p>

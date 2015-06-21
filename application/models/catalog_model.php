@@ -76,12 +76,14 @@ class Catalog_model extends CI_Model {
         }
 
         if(empty($filter)){
-            $products = $this->db->where('product_category_id',$category_id)
+            $products = $this->db->join('firms', 'product_firm = firm_id', 'left')
+                                            ->where('product_category_id',$category_id)
                                             ->order_by($order, $type)
                                             ->get('products',$num,$offset)
                                             ->result_array();
         }else{
-            $products = $this->db->where('product_category_id',$category_id)
+            $products = $this->db->join('firms', 'product_firm = firm_id', 'left')
+                                            ->where('product_category_id',$category_id)
                                             ->where($filter)
                                             ->order_by($order, $type)
                                             ->get('products',$num,$offset)
@@ -129,7 +131,8 @@ class Catalog_model extends CI_Model {
             $count = $this->db->where('product_category_id',$category_id)
                                             ->count_all_results('products');
         }else{
-            $count = $this->db->where('product_category_id',$category_id)
+            $count = $this->db->join('firms', 'product_firm = firm_id', 'left')
+                                            ->where('product_category_id',$category_id)
                                             ->where($filter)
                                             ->count_all_results('products');
         }
@@ -171,10 +174,11 @@ class Catalog_model extends CI_Model {
                             $result[$parametr_key] = $parametr_value;
                         }else{
                             if ($parametr_key=="firm") {
-                                $parametr_key = "product_firm";
+                                $parametr_key = "firm_name";
                             }else{
                                 return array("error" => "заданы недопустимые параметры");
                             }
+
                             $result["filter"][$parametr_key] = $parametr_value;
                         }
 
@@ -196,11 +200,13 @@ class Catalog_model extends CI_Model {
             return array("error"=>"аргумент должен быть типа int");
         }
 
-        $result = $this->db->select('product_firm')
-                        ->where('product_category_id',$category_id)
-                        ->group_by('product_firm')
-                        ->get('products')
-                        ->result_array();
+        $result = $this->db->select('product_firm, firm_name')
+                                    ->join('firms', 'product_firm = firm_id', 'left')
+                                    ->where('product_category_id',$category_id)
+                                    ->group_by('product_firm')
+                                    ->get('products')
+                                    ->result_array();
+
         if(empty($result)){
             return array("error" => "у данной категории нет фирм");
         }else{
@@ -291,6 +297,34 @@ class Catalog_model extends CI_Model {
             }else{
                 return array("data" => $price[0]["product_price"]);
             }
+
+    }
+
+    public function get_firm_name($firm_id){
+        $firm_id = intval($firm_id);
+        $firm_name = $this->db->where('firm_id',$firm_id)
+                                        ->get('firms')
+                                        ->result_array();
+        if(empty($firm_name)){
+            return array("error" => "нет фирмы с таким id");
+        }else{
+            return array("data" => $firm_name[0]);
+        }
+
+    }
+
+    public function get_firm_id($firm_name){
+        if(!is_string($firm_name)) {
+            return array("error" => "аргумент должен быть типа string");
+        }
+        $firm_id = $this->db->where('firm_name',$firm_name)
+                                        ->get('firms')
+                                        ->result_array();
+        if(empty($firm_id)){
+            return array("error" => "нет фирмы с таким id");
+        }else{
+            return array("data" => $firm_id[0]);
+        }
 
     }
 
