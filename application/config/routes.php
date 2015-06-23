@@ -60,7 +60,13 @@ $route['login\/?'] = "account/login";
 $route['logout\/?'] = "account/logout";
 
 $route['admin/product/(:any)'] = "admin/products/product/$1";
+$route['admin/products/add'] = "admin/products/add";
 $route['admin/products/(:any)'] = "admin/products/index/$1";
+
+$route['admin/firm/(:any)'] = "admin/firms/firm/$1";
+$route['admin/firms/add'] = "admin/firms/add";
+$route['admin/firms/(:any)'] = "admin/firms/index/$1";
+
 $route['admin$'] = "admin/index";
 
 
