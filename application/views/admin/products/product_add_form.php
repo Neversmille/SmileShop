@@ -4,16 +4,15 @@
                 <div class="muted pull-left">Редактирование товара</div>
         </div>
 		<div class="block-content collapse in">
-			<?php if(isset($update)) echo "<div class='update green'>Данные товара обновлены!!</div>";?>
+			<?php if(isset($add)) echo "<div class='update green'>Товар добавлен!!</div>";?>
 		    <div class="span12">
-		        <?=form_open_multipart('admin/product/'.$product_info["product_url"],array("class" => "form-horizontal"));?>
-				<?=form_hidden('product_id', $product_info["product_id"]);?>
+		        <?=form_open_multipart('admin/products/add',array("class" => "form-horizontal"));?>
 
 				<div class="control-group">
   					<label class="control-label">Наименование:</label>
   						<div class="controls">
   							<?=form_input(array('name' => 'product_name',
-													'value' => $product_info["product_name"],
+													'value' => set_value('product_name'),
 													'class' => 'span6 m-wrap'));?>
 							<?=form_error("product_name");?>
   						</div>
@@ -23,7 +22,7 @@
 					<label class="control-label">URL:</label>
 							<div class="controls">
 								<?=form_input(array('name' => 'product_url',
-													'value' => $product_info["product_url"],
+													'value' => set_value('product_url'),
 													'class' => 'span6 m-wrap'));?>
 								<?=form_error("product_url");?>
 							</div>
@@ -33,7 +32,7 @@
 					<label class="control-label">Цена:</label>
 							<div class="controls">
 								<?=form_input(array('name' => 'product_price',
-													'value' => $product_info["product_price"],
+													'value' => set_value('product_price'),
 													'class' => 'span6 m-wrap'));?>
 								<?=form_error("product_price");?>
 							</div>
@@ -48,20 +47,11 @@
 					</div>
 				</div>
 
-				<?php if(!empty($product_info['product_img']) && !is_null($product_info['product_img'])):?>
-					<div class="control-group">
-						<label class="control-label">Текущее изображение:</label>
-						<div class="controls product_preview">
-							<img src="/asset/upload/catalog/<?=$product_info['product_img'];?>">
-						</div>
-					</div>
-				<?php endif;?>
-
 				<div class="control-group">
 					<label class="control-label">Описание:</label>
 							<div class="controls">
 								<?=form_textarea(array('name' => 'product_description',
-													'value' => $product_info["product_description"],
+													'value' => set_value('product_description'),
 													'class' => 'span6 m-wrap'));?>
 								<?=form_error("product_description");?>
 							</div>
@@ -74,7 +64,7 @@
 									foreach ($products_category as $category){
 										$option_category[$category["category_id"]] = $category["category_name"];
 									}
-									echo form_dropdown('product_category_id', $option_category, $product_info["category_id"]);
+									echo form_dropdown('product_category_id', $option_category);
 								;?>
 								<?=form_error("product_category_id");?>
 							</div>
@@ -87,7 +77,7 @@
 									foreach ($products_firm as $firm){
 										$option_firm[$firm["firm_id"]] = $firm["firm_name"];
 									}
-									echo form_dropdown('product_firm_id', $option_firm, $product_info["firm_id"]);
+									echo form_dropdown('product_firm_id', $option_firm);
 								;?>
 								<?=form_error("product_firm_id");?>
 							</div>
@@ -98,7 +88,7 @@
 							<div class="controls">
 								<?php
 									$option_hot = array("0" => "Нет", "1" => "Да");
-									echo form_dropdown('product_hot', $option_hot, $product_info["product_hot"]);
+									echo form_dropdown('product_hot', $option_hot);
 								;?>
 								<?=form_error("product_hot");?>
 							</div>
@@ -109,7 +99,7 @@
 							<div class="controls">
 								<?php
 									$option_avaible = array("0" => "Нет в наличии", "1" => "Есть в наличии");
-									echo form_dropdown('product_avaible', $option_avaible, $product_info["product_avaible"]);
+									echo form_dropdown('product_avaible', $option_avaible);
 								;?>
 								<?=form_error("product_avaible");?>
 							</div>
@@ -117,9 +107,9 @@
 
 
 				<div class="form-actions">
-					<?=form_submit(array('name' => 'update_product',
+					<?=form_submit(array('name' => 'add',
 										'class' => 'btn btn-primary',
-										'value' => 'Изменить'));?>
+										'value' => 'Добавить'));?>
                     </div>
 
 				<?=form_close();?>

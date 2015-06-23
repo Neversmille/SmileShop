@@ -107,7 +107,7 @@ $config = array(
         array(
             'field' => 'product_url',
             'label' => 'URL',
-            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[100]|alpha_dash'
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[100]|alpha_dash|callback_check_unique_edit_url'
         ),
         array(
             'field' => 'product_price',
@@ -134,6 +134,62 @@ $config = array(
             'label' => 'Наличие на складе',
             'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[1]|is_natural'
         ),
+    ),
+    'product_add' => array(
+        array(
+            'field' => 'product_name',
+            'label' => 'Наименование',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[255]'
+        ),
+        array(
+            'field' => 'product_url',
+            'label' => 'URL',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[100]|alpha_dash|callback_check_unique_url'
+        ),
+        array(
+            'field' => 'product_price',
+            'label' => 'Цена',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[8]|decimal'
+        ),
+        array(
+            'field' => 'product_description',
+            'label' => 'Описание',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[400]'
+        ),
+        array(
+            'field' => 'product_category_id',
+            'label' => 'Категория',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[11]|is_natural'
+        ),
+        array(
+            'field' => 'product_hot',
+            'label' => 'Горячее предложение',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[1]|is_natural'
+        ),
+        array(
+            'field' => 'product_avaible',
+            'label' => 'Наличие на складе',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[1]|is_natural'
+        ),
+    ),
+    'firm' => array(
+        array(
+            'field' => 'firm_id',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[11]|is_natural'
+        ),
+        array(
+            'field' => 'firm_name',
+            'label' => 'Наименование',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[30]|callback_check_unique_edit_name'
+        )
+    ),
+    'firm_add' => array(
+        array(
+            'field' => 'firm_name',
+            'label' => 'Наименование',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[30]|callback_check_unique_name'
+        )
     )
+
 
 );

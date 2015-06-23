@@ -1,5 +1,4 @@
-<?=$products_category_menu;?>
-<div class="span9 block" id="content">
+<div class="span12 block" id="content">
 	<div class="row-fluid">
 		<div class="navbar navbar-inner block-header">
                 <div class="muted pull-left">Каталог товаров<?php if(!empty($category_name)) echo ", категория - ".$category_name; ?></div>
@@ -8,7 +7,7 @@
 		    <div class="span12">
 		        <div class="table-toolbar">
 		            <div class="btn-group">
-		                <a href="#"><button class="btn btn-success product_add">Добавить</button></a>
+		                <a href="/admin/products/add"><button class="btn btn-success product_add">Добавить</button></a>
 		            </div>
 		        </div>
 		        <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
@@ -68,7 +67,11 @@
 							<div class="dataTables_info" id="example2_info">Showing 1 to 10 of 57 entries</div>
 						</div> -->
 						<div class="span6">
-
+								<div class="span6">
+									<div class="dataTables_paginate paging_bootstrap pagination">
+										<?=$this->pagination->create_links(); ?>
+									</div>
+								</div>
 						</div>
 					</div>
 				</div>
