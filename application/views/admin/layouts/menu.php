@@ -18,7 +18,7 @@
 								<a href="/admin/products">Каталог товаров</a>
 							</li>
 							<li>
-								<a href="#">Фирмы</a>
+								<a href="/admin/firms">Фирмы</a>
 							</li>
 							<li class="divider"></li>
 						</ul>

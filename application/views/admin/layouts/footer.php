@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid footer-wrap">
 	<footer>
 		<p>&copy; Smile 2015</p>
 	</footer>

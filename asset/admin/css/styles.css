@@ -1,4 +1,10 @@
 /** Home Page **/
+html {
+	min-height: 100%;
+	margin-bottom: 30px;
+	position: relative;
+}
+
 body {
 	padding-top: 0;
 	padding-bottom: 40px;
@@ -237,4 +243,13 @@ body {
 
 .product_add{
 	margin-bottom: 12px;
+}
+
+.product_preview {
+	width: 10%;
+}
+
+.footer-wrap {
+	position: absolute;
+	bottom: 0;
 }
