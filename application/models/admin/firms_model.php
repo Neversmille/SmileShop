@@ -8,8 +8,14 @@ class Firms_model extends CI_Model {
 
 	/*
 	*	Получение списка фирм
+	*	@param int $num - количество фирм на странице
+	*	@param int $offset - смещение
 	*/
 	public function get_firms($num,$offset){
+
+		$num = intval($num);
+		$offset = intval($offset);
+
 		$firms = $this->db->order_by('firm_id','desc')
 										->get('firms',$num,$offset)
 										->result_array();
@@ -22,6 +28,10 @@ class Firms_model extends CI_Model {
 
 	}
 
+	/*
+	*	Добавление фиормы
+	*	@pararm array $add_data
+	*/
 	public function add_firm($add_data){
 		if(!is_array($add_data)){
 			return array("error" => "неверный тип аргумента");
@@ -34,8 +44,17 @@ class Firms_model extends CI_Model {
 		}
 	}
 
+	/*
+	*	Обновление данных о фирме
+	*	@param int $firm_id
+	*	@param array $update_data
+	*/
 	public function update_firm($firm_id,$update_data){
 		$firm_id = intval($firm_id);
+		if(!is_array($update_data)){
+			return array("error" => "неверный тип аргумента");
+		}
+
 		$update = $this->db->where('firm_id', $firm_id)
 								->update('firms', $update_data);
 		if($update){
@@ -45,12 +64,16 @@ class Firms_model extends CI_Model {
 		}
 	}
 
-	public function get_firm_info_by_name($url){
-		if(!is_string($url)){
+	/*
+	*	Получение данных о фирме по имени
+	*	@param string $name
+	*/
+	public function get_firm_info_by_name($name){
+		if(!is_string($name)){
 			return array("error" => "неверный аргумент");
 		}
 
-		$firm_info = $this->db->where('firm_name',$url)
+		$firm_info = $this->db->where('firm_name',$name)
 									->get('firms')
 									->result_array();
 
@@ -98,8 +121,8 @@ class Firms_model extends CI_Model {
 	}
 
 	/*
-	*	Проверка уникальности url адресса товара
-	*	@param string $url
+	*	Проверка уникальности имени фирмы 
+	*	@param string $name
 	*/
 	public function check_unique_name($name){
 		if(!is_string($name)){
