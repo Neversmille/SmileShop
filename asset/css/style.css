@@ -656,8 +656,7 @@ header form input, header form button{
 }
 
 .items .item{
-	min-height: 320px;
-	max-height: 340px;
+	height: 323px;
 	max-width: 250px;
 	margin: 10px auto;
 	padding: 10px 10px;
@@ -811,7 +810,7 @@ header form input, header form button{
 
 .product-slider .flexslider img{
 	max-height: auto;
-	width: auto;
+	width: 100%;
 	margin: 0 auto;
 }
 
@@ -1661,7 +1660,7 @@ header .hlinks > span.vk {
 	max-height: initial;
 	min-height: initial;
 	height: 30%;
-	margin-top: 20%;
+	margin-top: 40%;
 }
 
 .reviews-show-more {
@@ -1726,4 +1725,8 @@ header .hlinks > span.vk {
 
 .product_descr {
 	white-space: pre-line;
+}
+
+.input-group .form-control{
+	z-index: 0
 }

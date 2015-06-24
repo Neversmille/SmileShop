@@ -20,7 +20,7 @@
 							<h4><a href="<?=base_url().'product/'.$item['product_url'];?>"><?=$item['product_name'];?></a></h4>
 							<div class="clearfix"></div>
 							<!-- Paragraph -->
-							<p><?=$item["product_description"];?></p>
+							<p class="catalog-descr"><?=$item["product_description"];?></p>
 							<div class="item-price pull-left"><?=$item["product_price"];?> грн.</div>
 							<div class="button pull-right product-add-to-order">
 								<input class="product-amount" type="hidden" value="1">

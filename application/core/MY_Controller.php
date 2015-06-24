@@ -5,7 +5,7 @@ class MY_Controller extends CI_Controller{
     public $data;
     public $template  = array();
     //Базовый набор css, js;
-    public $css = array('style.css','owl.carousel.css','bootstrap.min.css','flexslider.css','flexslider.css','font-awesome.min.css','red.css','sidebar-nav.css');
+    public $css = array('owl.carousel.css','bootstrap.min.css','flexslider.css','flexslider.css','font-awesome.min.css','red.css','sidebar-nav.css','style.css');
     public $js = array('jquery.js','bootstrap.min.js','owl.carousel.min.js','filter.js','nav.js','jquery.flexslider-min.js','respond.min.js','html5shiv.js','custom.js','ajax-basket.js');
 
 

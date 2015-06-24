@@ -40,6 +40,8 @@ class Product extends MY_Controller{
 		$this->data["product_firm"] = $product_info["firm_name"];
 		$this->data["firm_list"] = $firm_list;
 		$this->data["firms"] = $this->load->view("catalog/firms",$this->data,true);
+		$this->js[] = 'jquery.elevatezoom.js';
+		$this->js[] = 'zoom.js';
 		$this->data["product_info"] = $product_info;
 		$this->middle = 'product/index';
 		$this->layout();

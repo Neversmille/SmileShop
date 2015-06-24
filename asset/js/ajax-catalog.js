@@ -104,7 +104,7 @@ var Catalog = {
 								'<div class="clearfix">'+
 									'<p class="color capitalize">'+data.products[i].product_firm+'</p>'+
 							'</div>'+
-								'<p>'+data.products[i].product_description+'</p>'+
+								'<p class="catalog-descr">'+data.products[i].product_description+'</p>'+
 								'<hr />'+
 								'<div class="item-price pull-left">'+data.products[i].product_price+' грн</div>'+
 								'<div class="button pull-right product-add-to-order">'+

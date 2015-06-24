@@ -25,7 +25,8 @@ function setProductEvents() {
         curentAmount = curentAmount+(+product_amount);
         setBasketWidgetAmount(curentAmount);
 
-    });
+    });  
+
 
     /*
    * Уменьшение количества товара в корзине

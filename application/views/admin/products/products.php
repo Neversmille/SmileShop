@@ -6,7 +6,7 @@
 		<div class="block-content collapse in">
 		    <div class="span12">
 		        <div class="table-toolbar">
-		            <div class="btn-group parse-wrap">
+		            <div class="btn-group">
 		                <a href="/admin/products/add"><button class="btn btn-success product_add">Добавить</button></a>
 		            </div>
 		        </div>
