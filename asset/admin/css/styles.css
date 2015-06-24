@@ -253,3 +253,7 @@ body {
 	position: absolute;
 	bottom: 0;
 }
+
+.parse-wrap {
+	margin-left: 180px;
+}

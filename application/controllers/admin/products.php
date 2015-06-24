@@ -58,6 +58,9 @@ class Products extends MY_Controller{
 				$add_data["product_hot"] = $this->input->post('product_hot');
 				$add_data["product_avaible"] = $this->input->post('product_avaible');
 				$add_data["product_firm"] = $this->input->post('product_firm_id');
+
+
+
 				$tmp_name = $_FILES["product_img"]["tmp_name"];
 
 				if (is_uploaded_file($tmp_name)) {
@@ -73,6 +76,14 @@ class Products extends MY_Controller{
 						$this->data["file_error"] = $file["file_error"];
 					}
 				}else{
+					$img = $this->input->post('parse_img');
+					if ($img) {
+						$img = $this->file_upload_by_url($img);
+						if(isset($img["data"])){
+							$add_data["product_img"] = $img["data"];
+						}
+					}
+
 					$add_product = $this->products_model->add_product($add_data);
 					if (isset($add_product["error"])){
 						show_404("ошибка добавления комментария");
@@ -243,6 +254,21 @@ class Products extends MY_Controller{
 		}
 	}
 
+
+	/*
+	*	callback функция проверки уникальности url
+	*	@param string $url
+	*/
+	public function check_price($price){
+
+		if(preg_match("/^[0-9]{0,6}(.[0-9]{0,2})$/",$price)){
+			return true;
+		}else{
+			$this->form_validation->set_message('check_price', 'Неверный формат строки');
+			return false;
+		}
+	}
+
 	/*
 	*	callback функция проверки уникальности urlпри редактировании url
 	*	@param string $url
@@ -255,6 +281,25 @@ class Products extends MY_Controller{
 			$this->form_validation->set_message('check_unique_edit_url', 'Данный url  уже занят');
 			return false;
 		}
+	}
+
+
+
+	private function file_upload_by_url($img_url){
+	$handle = fopen($img_url, 'rb');
+	$img = new Imagick();
+	$img->readImageFile($handle);
+	$format =$img->getImageFormat();
+	$format = strtolower($format);
+	var_dump($format);
+	if ($format=='gif' || $format=='jpg' || $format=='jpeg' || $format=='bmp'){
+		$name = md5(time().rand(1,100));
+		$img->writeImage('asset/upload/catalog/'.$name.'.'.$format);
+		return array("data" => $name.'.'.$format);
+	}
+
+	return array("error" => "неверный формат файла");
+
 	}
 
 }

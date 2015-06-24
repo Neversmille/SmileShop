@@ -19,7 +19,7 @@
 								<h5><a href="<?=base_url().'product/'.$item['product_url'];?>"><?=$item['product_name'];?></a><span class="ico"><img src="/asset/img/hot.png" alt="" /></span></h5>
 								<div class="clearfix"></div>
 								<!-- Para. Note more than 2 lines. -->
-								<p><?=$item['product_description'];?></p>
+								<p class="catalog-descr"><?=$item['product_description'];?></p>
 								<hr />
 								<!-- Price -->
 								<div class="item-price pull-left"><?=$item['product_price'];?> грн</div>

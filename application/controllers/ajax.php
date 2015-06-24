@@ -35,6 +35,15 @@ class Ajax extends MY_Controller{
 				$num = $this->input->post("num",true);
 				$offset = $this->input->post("offset",true);
 				$this->ajax_model->reviews_show_more($num,$offset);
+			}elseif ($action == "parse"){
+				$name = $this->input->post("name",true);
+				$this->load->helper("parse_product");
+				$product = parse($name);
+				if (isset($product["error"])) {
+					$this->output->set_output(json_encode(false));
+				}else{
+					$this->output->set_output(json_encode(array($product)));
+				}
 			}else{
 				$this->output->set_output(json_encode(array(false)));
 			}

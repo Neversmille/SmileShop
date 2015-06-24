@@ -85,7 +85,7 @@ class Reviews extends MY_Controller{
 
 		//Правила загружаемного файла
 		$config['upload_path'] = 'asset/upload/reviews';
-		$config['allowed_types'] = 'gif|jpg|png';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
 		$config['max_size']	= '10000';
 		$config['encrypt_name'] = TRUE;
 		$config['remove_spaces'] = TRUE;

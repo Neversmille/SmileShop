@@ -1646,6 +1646,14 @@ header .hlinks > span.vk {
 	margin-top: 5px;
 }
 
+.catalog-descr {
+	overflow-wrap: initial;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: pre;
+	max-height: 4em;
+}
+
 .catalog-show-more .more-item, .catalog-show-more .more-item:hover {
 	border: none;
 	box-shadow: none;
@@ -1714,4 +1722,8 @@ header .hlinks > span.vk {
 
 .green {
 	color: #16803B;
+}
+
+.product_descr {
+	white-space: pre-line;
 }

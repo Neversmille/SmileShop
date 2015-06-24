@@ -67,6 +67,9 @@ $route['admin/firm/(:any)'] = "admin/firms/firm/$1";
 $route['admin/firms/add'] = "admin/firms/add";
 $route['admin/firms/(:any)'] = "admin/firms/index/$1";
 
+$route['admin/admins/add'] = "admin/admins/add";
+$route['admin/admins/(:any)'] = "admin/admins/index/$1";
+
 $route['admin$'] = "admin/index";
 
 

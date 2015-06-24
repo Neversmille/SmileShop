@@ -112,7 +112,7 @@ $config = array(
         array(
             'field' => 'product_price',
             'label' => 'Цена',
-            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[8]|decimal'
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[8]|callback_ check_price'
         ),
         array(
             'field' => 'product_description',
@@ -149,7 +149,7 @@ $config = array(
         array(
             'field' => 'product_price',
             'label' => 'Цена',
-            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[8]|decimal'
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[8]|callback_ check_price'
         ),
         array(
             'field' => 'product_description',

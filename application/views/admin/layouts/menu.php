@@ -29,6 +29,9 @@
 					<li>
 	                        <a tabindex="-1" href="#">Комментарии</a>
 	                    </li>
+					<li>
+						<a href="/admin/admins">Администраторы</a>
+					</li>
 				</ul>
 			</div>
 		</div>

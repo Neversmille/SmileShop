@@ -1,13 +1,13 @@
 <div class="span12 block" id="content">
 	<div class="row-fluid">
 		<div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">Каталог товаров</div>
+                <div class="muted pull-left">Администраторы системы</div>
         </div>
 		<div class="block-content collapse in">
 		    <div class="span12">
 		        <div class="table-toolbar">
 		            <div class="btn-group">
-		                <a href="/admin/firms/add"><button class="btn btn-success product_add">Добавить</button></a>
+		                <a href="/admin/admins/add"><button class="btn btn-success product_add">Добавить</button></a>
 		            </div>
 		        </div>
 		        <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
@@ -34,19 +34,23 @@
 				        <thead>
 				            <tr role="row">
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 157px;" aria-label="Rendering engine: activate to sort column ascending">Id</th>
-								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 232px;" aria-label="Browser: activate to sort column ascending">Наименование</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 232px;" aria-label="Browser: activate to sort column ascending">Имя</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 232px;" aria-label="Browser: activate to sort column ascending">e-mail</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 232px;" aria-label="Browser: activate to sort column ascending">Действие</th>
 							</tr>
 				        </thead>
 				        <tbody role="alert" aria-live="polite" aria-relevant="all">
-							<?php if(empty($firms)):?>
+							<?php if(empty($admins)):?>
 								<tr>
-									Нет фирм
+									Нет админов
 								</tr>
 							<?php else:?>
-								<?php foreach($firms as $firm):?>
+								<?php foreach($admins as $admin):?>
 									<tr class="gradeX odd">
-						                    <td class=""><?=$firm["firm_id"];?></td>
-						                    <td class=""><a href="/admin/firm/<?=$firm['firm_name'];?>"><?=$firm["firm_name"];?></a></td>
+						                    <td class=""><?=$admin["admin_id"];?></td>
+						                    <td class=""><a href="/admin/admin/<?=$admin['admin_name'];?>"><?=$admin["admin_name"];?></a></td>
+										<td class=""><?=$admin["admin_email"];?></td>
+										<td class=""><a href="/admin/admin/security/<?=$admin["admin_name"];?>">Изменить пароль</a></td>
 									</tr>
 								<?php endforeach;?>
 							<?php endif;?>

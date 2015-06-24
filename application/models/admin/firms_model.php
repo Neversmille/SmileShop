@@ -1,6 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Firms_model extends CI_Model {
 
+	/*
+	*	Получение количества фирм
+	*/
 	public function get_firms_count(){
 		$count = $this->db->count_all_results('firms');
 		return $count;
@@ -121,7 +124,7 @@ class Firms_model extends CI_Model {
 	}
 
 	/*
-	*	Проверка уникальности имени фирмы 
+	*	Проверка уникальности имени фирмы
 	*	@param string $name
 	*/
 	public function check_unique_name($name){

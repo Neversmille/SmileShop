@@ -60,7 +60,7 @@
 											<p class="color capitalize"><?php echo $value['firm_name'];?></p>
 										</div>
 										<!-- Para. Note more than 2 lines. -->
-										<p><?php echo $value['product_description'];?></p>
+										<p class="catalog-descr"><?php echo $value['product_description'];?></p>
 										<hr />
 										<!-- Price -->
 										<div class="item-price pull-left"><?=$value['product_price'];?> грн</div>

@@ -6,6 +6,12 @@
 		<div class="block-content collapse in">
 			<?php if(isset($add)) echo "<div class='update green'>Товар добавлен!!</div>";?>
 		    <div class="span12">
+				<div class="parse-wrap">
+					<div class="btn-group">
+						<a href="javascript:void(0)" class="parse-link"><button class="btn btn-success product_add">Спарсить c price.ua</button></a>
+					</div>
+				</div>
+
 		        <?=form_open_multipart('admin/products/add',array("class" => "form-horizontal"));?>
 
 				<div class="control-group">
@@ -13,7 +19,7 @@
   						<div class="controls">
   							<?=form_input(array('name' => 'product_name',
 													'value' => set_value('product_name'),
-													'class' => 'span6 m-wrap'));?>
+													'class' => 'span6 m-wrap product_name'));?>
 							<?=form_error("product_name");?>
   						</div>
   				</div>
@@ -23,7 +29,7 @@
 							<div class="controls">
 								<?=form_input(array('name' => 'product_url',
 													'value' => set_value('product_url'),
-													'class' => 'span6 m-wrap'));?>
+													'class' => 'span6 m-wrap product_url'));?>
 								<?=form_error("product_url");?>
 							</div>
 				</div>
@@ -33,12 +39,12 @@
 							<div class="controls">
 								<?=form_input(array('name' => 'product_price',
 													'value' => set_value('product_price'),
-													'class' => 'span6 m-wrap'));?>
+													'class' => 'span6 m-wrap product_price'));?>
 								<?=form_error("product_price");?>
 							</div>
 				</div>
 
-				<div class="control-group">
+				<div class="control-group img-wrap">
 					<label class="control-label">Изображение:</label>
 					<div class="controls">
 						<?=form_upload(array('name' => 'product_img',
@@ -52,7 +58,7 @@
 							<div class="controls">
 								<?=form_textarea(array('name' => 'product_description',
 													'value' => set_value('product_description'),
-													'class' => 'span6 m-wrap'));?>
+													'class' => 'span6 m-wrap product_description'));?>
 								<?=form_error("product_description");?>
 							</div>
 				</div>
@@ -118,3 +124,5 @@
 		</div>
 	</div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/asset/admin/js/add_form.js"></script>
