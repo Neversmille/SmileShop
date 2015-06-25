@@ -257,3 +257,34 @@ body {
 .parse-wrap {
 	margin-left: 180px;
 }
+
+.review-short-text {
+	overflow-wrap: initial;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: pre;
+	max-height: 4em;
+	max-width: 232px;
+}
+
+.control-label {
+  float: left;
+  width: 160px;
+  padding-top: 5px;
+  text-align: right;
+  font-size: 1.1em;
+font-weight: 700;
+}
+
+.checkoutLabel {
+	padding-top: 5px;
+	margin-left: 170px;
+}
+
+.review-img {
+	margin-top: 8px;
+}
+
+.hidden {
+	display: none;
+}

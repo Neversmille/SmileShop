@@ -1681,6 +1681,24 @@ header .hlinks > span.vk {
 	margin-right: 8px;
 }
 
+.review-info {
+	color: #555;
+	position: relative;
+}
+
+.review-info span {
+	margin-right: 10px;
+	font-size: 1.2em;
+}
+
+.review-date {
+	position: absolute;
+	right: -10px;
+}
+.review-info i{
+	margin-right: 4px;
+}
+
 #nav > li.color > a {
 	color: #f25758;
 }

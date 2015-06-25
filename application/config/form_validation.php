@@ -36,6 +36,16 @@ $config = array(
 		)
 	),
 	'reviews' => array(
+        array(
+			'field' => 'name',
+			'label' => 'Имя',
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]'
+		),
+        array(
+			'field' => 'email',
+			'label' => 'eMail',
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[40]|valid_email|callback_unique_email'
+		),
 		array(
             'field' => 'text',
             'label' => 'Ваш отзыв',
@@ -188,6 +198,39 @@ $config = array(
             'field' => 'firm_name',
             'label' => 'Наименование',
             'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[30]|callback_check_unique_name'
+        )
+    ),
+    'admin_review' => array(
+        array(
+            'field' => 'review_is_delete',
+            'label' => 'Статус',
+            'rules' => 'required|max_length[1]|callback_check_review_select'
+        ),
+        array(
+            'field' => 'review_id',
+            'rules' => 'required|min_length[1]|max_length[11]|is_natural_no_zero'
+        )
+    ),
+    'slide_add' => array(
+        array(
+            'field' => 'slider_position',
+            'label' => 'Позиция(1-99)',
+            'rules' => 'required|min_length|max_length[2]|is_natural_no_zero'
+        ),
+        array(
+            'field' => 'slider_is_active',
+            'label' => 'Статус',
+            'rules' => 'required|max_length[1]|callback_check_is_active'
+        ),
+        array(
+            'field' => 'slider_product_name',
+            'label' => 'Наименование',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[255]'
+        ),
+		array(
+            'field' => 'slider_description',
+            'label' => 'Описание',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[400]'
         )
     )
 

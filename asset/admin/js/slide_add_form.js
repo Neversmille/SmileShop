@@ -1,0 +1,34 @@
+$(document).ready(function () {
+		parseEvent();
+});
+
+
+function parseEvent() {
+
+	console.log('parseEvent');
+	$(".get-product").click(function(){
+		val = $(this).closest(".get-product-wrap").find('input').val();
+		getproduct(val);
+	});
+}
+
+function getproduct(id){
+	var msg = {};
+	msg.id = id;
+	$.ajax({
+		type: 'POST',
+		url: '/admin/slider/ajax',
+		data: msg,
+		success: function(data){
+			console.log("response ajax/getproduct:" ,data);
+			$(".slider_product_name").val(data.product_name);
+			$(".product_price").text(data.product_price+" грн");
+			$("form").removeClass("hidden");
+			$("input[name = slider_product_id]").val(data.product_id);
+		},
+		error:  function(xhr, str){
+			console.log('Возникла ошибка: ' + xhr.responseCode);
+		}
+	});
+
+}

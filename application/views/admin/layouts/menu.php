@@ -27,8 +27,11 @@
                             <a tabindex="-1" href="#">Заказы</a>
                         </li>
 					<li>
-	                        <a tabindex="-1" href="#">Комментарии</a>
+	                        <a tabindex="-1" href="/admin/reviews">Отзывы</a>
 	                    </li>
+					<li>
+						<a href="/admin/slider">Слайдер</a>
+					</li>
 					<li>
 						<a href="/admin/admins">Администраторы</a>
 					</li>

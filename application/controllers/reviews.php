@@ -23,7 +23,8 @@ class Reviews extends MY_Controller{
 			if ($check == TRUE){
 
 				$insert["review_text"] = $this->input->post('text');
-
+				$insert["review_name"] = $this->input->post('name');
+				$insert["review_email"] = $this->input->post('email');
 				//Получаем имя загруженного файла для проверки далее был ли загружен вообще файл
 				$tmp_name = $_FILES["userfile"]["tmp_name"];
 
@@ -69,6 +70,7 @@ class Reviews extends MY_Controller{
 		}else{
 			$reviews = $reviews["data"];
 		}
+		$this->data["client_info"] = $this->session->userdata("account");
 		$this->data["form"] = $this->load->view("reviews/form_add_review",$this->data,true);
 		$this->data["reviews"] = $reviews;
 		$this->data["title"] = "Отзывы";

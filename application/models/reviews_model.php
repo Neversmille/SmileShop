@@ -11,7 +11,8 @@ class Reviews_model extends CI_Model {
    function get_reviews($num,$offset){
        $num = intval($num);
        $offset = intval($offset);
-       $result = $this->db->order_by('review_id', 'desc')
+       $result = $this->db->where('review_is_delete',0)
+                                    ->order_by('review_id', 'desc')
                                    ->get('reviews',$num,$offset)
                                    ->result_array();
         if(empty($result)){
