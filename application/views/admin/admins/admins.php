@@ -50,7 +50,7 @@
 						                    <td class=""><?=$admin["admin_id"];?></td>
 						                    <td class=""><a href="/admin/admin/<?=$admin['admin_name'];?>"><?=$admin["admin_name"];?></a></td>
 										<td class=""><?=$admin["admin_email"];?></td>
-										<td class=""><a href="/admin/admin/security/<?=$admin["admin_name"];?>">Изменить пароль</a></td>
+										<td class=""><a href="/admin/admins/editinfo/<?=$admin["admin_id"];?>">Изменить данные </a>/<a href="/admin/admins/editpass/<?=$admin["admin_id"];?>"> Изменить пароль</a></td>
 									</tr>
 								<?php endforeach;?>
 							<?php endif;?>

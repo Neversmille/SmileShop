@@ -32,6 +32,20 @@ class Admins_model extends CI_Model {
 
 	}
 
+	public function check_email($email){
+		if(!is_string($email)){
+			return array("error" => "неверный тип аргумента");
+		}
+		$email = $this->db->where("admin_email",$email)
+								->count_all_results("admin_users");
+		if($email===0){
+			return array("data" => true);
+		}else{
+			return array("error" => "Данный email занят");
+		}
+
+	}
+
 	/*
 	*    Формирование и инициализация массива опций пагинатора
 	*    @param int $per_page - колчество комментариев на странице
@@ -65,6 +79,60 @@ class Admins_model extends CI_Model {
 		$config['use_page_numbers'] = TRUE;
 		$config['total_rows'] = $this->get_admins_count();
 		$this->pagination->initialize($config);
+	}
+
+	public function add_admin($add_data){
+		if(!is_array($add_data)){
+			return array("error" => "аргумент должен быть массивом");
+		}
+		$add = $this->db->insert("admin_users",$add_data);
+		if($add){
+			return array("data" => true);
+		}else{
+			return array("error" => "ошибка добавления данных");
+		}
+	}
+
+	public function get_admin_all_data($admin_id){
+		$admin_id = intval($admin_id);
+		$admin_data = $this->db->select('admin_email,admin_name,admin_is_active')
+										->where('admin_id',$admin_id)
+										->get('admin_users')
+										->result_array();
+		if(empty($admin_data)){
+			return array("error" => "нет такого администратора");
+		}else{
+			return array("data" => $admin_data[0]);
+		}
+	}
+
+	public function edit_admin_info($admin_id,$edit_data){
+		$admin_id = intval($admin_id);
+		if(!is_array($edit_data)){
+			return array("error" => "аргумент должен быть массивом");
+		}
+		$edit = $this->db->where("admin_id",$admin_id)
+							->update('admin_users',$edit_data);
+		if($edit){
+			return array("data" => true);
+		}else{
+			return array("error" => "ошибка обновления данных");
+		}
+	}
+
+	public function edit_admin_pass($admin_id,$admin_pass){
+		$admin_id = intval($admin_id);
+		if(!is_string($admin_pass)){
+			return array("error" => "неверный тип аргумента");
+		}
+		$edit = $this->db->where("admin_id",$admin_id)
+							->set("admin_password",$admin_pass)
+							->update("admin_users");
+		if($edit){
+			return array("data" => true);
+		}else{
+			return array("error" => "ошибка обновления данных");
+		}
 	}
 
 }

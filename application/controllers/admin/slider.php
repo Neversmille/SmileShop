@@ -7,15 +7,22 @@ class Slider extends MY_Controller{
         parent::__construct();
     }
 
-	public function index() {
+	public function index($current_page="null") {
+		//Опции для пагинатора
+		$per_page =1;
+		if($current_page!==0){
+			$current_page--;
+		}
+		$page = intval($current_page);
 		$this->output->enable_profiler(TRUE);
 		$this->load->model('admin/slider_admin_model');
-		$slides = $this->slider_admin_model->get_slides();
+		$slides = $this->slider_admin_model->get_slides($per_page,$page);
 		if(isset($slides["error"])){
 			$slides = array();
 		}else{
 			$slides = $slides["data"];
 		}
+		$this->slider_admin_model->set_pagination($per_page,$page);
 		$this->data["slides"] = $slides;
 		$this->data["middle"] = $this->load->view("admin/slider/index",$this->data,true);
 		$this->data["title"] = "Отзывы";

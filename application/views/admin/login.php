@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+              <meta charset="utf-8">
     <title>Вход в панель администрирования</title>
     <!-- Bootstrap -->
     <link href="/asset/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">

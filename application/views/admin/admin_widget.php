@@ -6,7 +6,8 @@
         <ul class="dropdown-menu">
             <li class="divider"></li>
             <li>
-                <a tabindex="-1" href="admin/login/logout">Выйти</a>
+                <a tabindex="-1" href="/admin/profile">Профайл</a>
+                <a tabindex="-1" href="/admin/logout">Выйти</a>
             </li>
         </ul>
     </li>

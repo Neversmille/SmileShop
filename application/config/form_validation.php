@@ -5,12 +5,12 @@ $config = array(
 		array(
 			'field' => 'name',
 			'label' => 'Имя',
-			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]'
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[40]'
 		),
 		array(
 			'field' => 'lastname',
 			'label' => 'Фамилия',
-			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[400]'
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[40]'
 		),
 		array(
 			'field' => 'email',
@@ -232,7 +232,82 @@ $config = array(
             'label' => 'Описание',
             'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[400]'
         )
-    )
+    ),
+    'admin_update_pass' => array(
+        array(
+            'field' => 'oldpass',
+            'label' => 'Пароль',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]|callback_check_pass'
+        ),
+        array(
+            'field' => 'newpass',
+            'label' => 'Пароль',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]|matches[confpass]'
+        ),
+        array(
+            'field' => 'confpass',
+            'label' => 'Пароль',
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
+        )
+    ),
+    'admin_update_info' => array(
+        array(
+			'field' => 'name',
+			'label' => 'Имя',
+			'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[40]'
+		)
+    ),
+    'add_new_admin' => array(
+       array(
+           'field' => 'name',
+           'label' => 'Имя',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[40]'
+       ),
+       array(
+           'field' => 'email',
+           'label' => 'eMail',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[40]|valid_email|callback_unique_email'
+       ),
+       array(
+           'field' => 'password',
+           'label' => 'Пароль',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]|matches[confpass]'
+       ),
+       array(
+           'field' => 'confpass',
+           'label' => 'Пароль',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
+       )
+   ),
+   'edit_admin' => array(
+       array(
+           'field' => 'name',
+           'label' => 'Имя',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[2]|max_length[40]'
+       ),
+       array(
+           'field' => 'email',
+           'label' => 'eMail',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[40]|valid_email'
+       ),
+       array(
+           'field' => 'is_active',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       )
+   ),
+   'edit_admin_pass' => array(
+       array(
+           'field' => 'password',
+           'label' => 'Пароль',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]|matches[confpass]'
+       ),
+       array(
+           'field' => 'confpass',
+           'label' => 'Пароль',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
+       )
+   )
 
 
 );

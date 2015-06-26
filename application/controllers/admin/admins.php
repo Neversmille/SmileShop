@@ -3,13 +3,11 @@
 class Admins extends MY_Controller{
 
 	public function __construct(){
-
         parent::__construct();
+		$this->load->model('admin/admins_model');
     }
 
 	public function index($current_page="null") {
-		$this->output->enable_profiler(TRUE);
-		$this->load->model('admin/admins_model');
 
 		//Опции для пагинатора
 		$per_page =1;
@@ -37,28 +35,29 @@ class Admins extends MY_Controller{
 	*	Страница редактирования товара
 	*/
 	public function add(){
-
-		$this->load->model('admin/firms_model');
-
 		//Проверяем отправлен ли запрос на регистрацию
 		if(null!==$this->input->post('add')){
 			$this->load->library('form_validation');
-			$check = $this->form_validation->run('firm_add');
+			$check = $this->form_validation->run('add_new_admin');
 
 			//Проверям валидацию
 			if($check){
-				$add_data["firm_name"] = $this->input->post('firm_name');
-				$add_firm = $this->firms_model->add_firm($add_data);
-					if (isset($add_firm["error"])){
+				$add_data["admin_name"] = $this->input->post('name');
+				$add_data["admin_email"] = $this->input->post('email');
+				$password = $this->input->post('password');
+				$this->load->library('passwordhash');
+				$add_data["admin_password"] = $this->passwordhash->HashPassword($password);
+				$add_admin = $this->admins_model->add_admin($add_data);
+					if (isset($add_admin["error"])){
 						show_404("ошибка добавления комментария");
 					}
-					redirect('/admin/firms');
+					redirect('/admin/admins');
 			}
 		}
 
 		$this->load->helper('form');
-		$this->data["middle"] = $this->load->view("admin/firms/firm_add_form",$this->data,true);
-		$this->data["title"] = "Добавление товара";
+		$this->data["middle"] = $this->load->view("admin/admins/admin_add_form",$this->data,true);
+		$this->data["title"] = "Добавление администратора";
 		$this->admin_layout();
 
 	}
@@ -67,41 +66,64 @@ class Admins extends MY_Controller{
 	/*
 	*	Страница редактирования товара
 	*/
-	public function firm($url = null,$update = false){
-		if(is_null($url)) {
-			show_404("Запрашиваемая фирма не найдена");
-		}
-		if($update){
-			$this->data["update"] = true;
-		}
-		$this->load->model('admin/firms_model');
+	public function editinfo($id){
 		//Проверяем отправлен ли запрос на регистрацию
-		if(null!==$this->input->post('update_firm')){
-			$this->edit_id = $this->input->post('firm_id',TRUE);
+		$id = intval($id);
+		$admin_info = $this->admins_model->get_admin_all_data($id);
+		if(isset($admin_info["error"])){
+			show_404("нет такого админа");
+		}
+		var_dump($admin_info);
+		$admin_info = $admin_info["data"];
+		if(null!==$this->input->post('edit')){
 			$this->load->library('form_validation');
-			$check = $this->form_validation->run('firm');
+			$check = $this->form_validation->run('edit_admin');
 			//Проверям валидацию
 			if($check){
-				$firm_id = $this->input->post('firm_id');
-				$update_data["firm_name"] = $this->input->post('firm_name');
-				$update_firm = $this->firms_model->update_firm($firm_id,$update_data);
-					if (isset($update_firm["error"])){
+				$edit_data["admin_name"] = $this->input->post('name');
+				$edit_data["admin_email"] = $this->input->post('email');
+				$edit_data["admin_is_active"] = $this->input->post('is_active');
+				$edit_admin = $this->admins_model->edit_admin_info($id,$edit_data);
+					if (isset($edit_admin["error"])){
 						show_404("ошибка добавления комментария");
 					}
-					redirect('/admin/firm/'.$update_data["firm_name"]."/update");
+					redirect('/admin/admins');
 			}
 		}
-
-		$this->data["update_status"] = false;
-		$firm_info = $this->firms_model->get_firm_info_by_name($url);
-		if (isset($firm_info["error"])){
-			show_404("Запрашиваемая фирма не найдена");
-		}
-		$firm_info = $firm_info["data"];
+		$this->data["admin_info"] = $admin_info;
+		$this->data["admin_id"] = $id;
 		$this->load->helper('form');
-		$this->data["firm_info"] = $firm_info;
-		$this->data["middle"] = $this->load->view("admin/firms/firm_edit_form",$this->data,true);
-		$this->data["title"] = "Редактирование фирмы";
+		$this->data["middle"] = $this->load->view("admin/admins/admin_edit_form",$this->data,true);
+		$this->data["title"] = "Редактирование учетной записи администратора";
+		$this->admin_layout();
+
+	}
+
+	/*
+	*	Страница редактирования товара
+	*/
+	public function editpass($id){
+		//Проверяем отправлен ли запрос на регистрацию
+		$id = intval($id);
+		if(null!==$this->input->post('edit_pass')){
+			$this->load->library('form_validation');
+			$check = $this->form_validation->run('edit_admin_pass');
+			//Проверям валидацию
+			if($check){
+				$pass =  $this->input->post('password');
+				$this->load->library('passwordhash');
+				$pass  = $this->passwordhash->HashPassword($pass);
+				$edit_pass = $this->admins_model->edit_admin_pass($id,$pass);
+					if (isset($edit_pass["error"])){
+						show_404("ошибка добавления комментария");
+					}
+					redirect('/admin/admins');
+			}
+		}
+		$this->data["admin_id"] = $id;
+		$this->load->helper('form');
+		$this->data["middle"] = $this->load->view("admin/admins/admin_edit_pass_form",$this->data,true);
+		$this->data["title"] = "Редактирование учетной записи администратора";
 		$this->admin_layout();
 
 	}
@@ -110,27 +132,27 @@ class Admins extends MY_Controller{
 
 
 	/*
-	*	callback функция проверки уникальности url
+	*	callback функция валидации уникальности email
 	*/
-	public function check_unique_name($name){
-		$check = $this->firms_model->check_unique_name($name);
+	public function unique_email($email){
+		$check = $this->admins_model->check_email($email);
 		if(isset($check["data"])) {
 			return true;
 		}else{
-			$this->form_validation->set_message('check_unique_name', 'Данный name  уже занят');
+			$this->form_validation->set_message('unique_email', 'Пользователь с таким eMail уже зарегистрирован');
 			return false;
 		}
 	}
 
 	/*
-	*	callback функция проверки уникальности url
+	*	Callback проверки review_is_delete
+	*	@param int $value
 	*/
-	public function check_unique_edit_name($name){
-		$check = $this->firms_model->check_unique_edit_name($this->edit_id,$name);
-		if(isset($check["data"])) {
+	public function check_is_active($value){
+		$value = intval($value);
+		if($value===1||$value===0){
 			return true;
 		}else{
-			$this->form_validation->set_message('check_unique_edit_name', 'Данный url  уже занят');
 			return false;
 		}
 	}

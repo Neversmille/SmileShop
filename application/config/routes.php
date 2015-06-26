@@ -67,14 +67,20 @@ $route['admin/firm/(:any)'] = "admin/firms/firm/$1";
 $route['admin/firms/add'] = "admin/firms/add";
 $route['admin/firms/(:any)'] = "admin/firms/index/$1";
 
+
+$route['admin/logout'] = "admin/login/logout";
 $route['admin/admins/add'] = "admin/admins/add";
+$route['admin/admins/editinfo/(:any)'] = "admin/admins/editinfo/$1";
+$route['admin/admins/editpass/(:any)'] = "admin/admins/editpass/$1";
 $route['admin/admins/(:any)'] = "admin/admins/index/$1";
 
 $route['admin/review/(:any)'] = "admin/reviews/review/$1";
 $route['admin/reviews/(:any)'] = "admin/reviews/index/$1";
 
 // $route['admin/slide/add'] = "admin/slide/add";
-
+$route['admin/slider/add'] = "admin/slider/add";
+$route['admin/slider/edit/(:any)'] = "admin/slider/edit/$1";
+$route['admin/slider/(:any)'] = "admin/slider/index/$1";
 $route['admin$'] = "admin/index";
 
 

@@ -66,8 +66,8 @@
 						<!-- <div class="span6">
 							<div class="dataTables_info" id="example2_info">Showing 1 to 10 of 57 entries</div>
 						</div> -->
-						<div class="span6">
-								<div class="span6">
+						<div class="span12">
+								<div class="span12">
 									<div class="dataTables_paginate paging_bootstrap pagination">
 										<?=$this->pagination->create_links(); ?>
 									</div>

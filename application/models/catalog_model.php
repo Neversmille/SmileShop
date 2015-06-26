@@ -328,4 +328,21 @@ class Catalog_model extends CI_Model {
 
     }
 
+    /*
+    *   Получение слайдов главной страницы
+    */
+    public function get_main_slides(){
+        $slides = $this->db->join('products', 'product_id = slider_product_id', 'left')
+                                    ->where('slider_is_active',1)
+                                    ->order_by('slider_is_active','desc')
+                                    ->order_by('slider_position','asc')
+                                    ->get('slider')
+                                    ->result_array();
+        if (empty($slides)){
+            return array("error" => "нет слайдов");
+        }else{
+            return array("data" => $slides);
+        }
+    }
+
 }

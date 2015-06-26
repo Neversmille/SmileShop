@@ -13,7 +13,9 @@ class Login_model extends CI_Model {
 			return array("error" => "нет админа с таким email");
 		}else{
 			$admin_info = $admin_info[0];
-			if ($password===$admin_info["admin_password"]){
+
+			$this->load->library('passwordhash');
+			if($this->passwordhash->CheckPassword($password,$admin_info["admin_password"])){
 				$this->session->set_userdata(array("admin" => array("admin_name" => $admin_info["admin_name"],
 				 											"admin_id" => $admin_info["admin_id"])));
 				return array("data" => true);

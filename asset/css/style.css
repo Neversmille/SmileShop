@@ -1559,6 +1559,10 @@ footer .payment-icons img{
 *   My styles
 */
 
+.main-slider-img{
+	  max-height: 400px;
+}
+
 input.reviews {
     border: none;
 }
