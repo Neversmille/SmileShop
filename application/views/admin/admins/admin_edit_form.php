@@ -40,6 +40,73 @@
 								</div>
 					</div>
 
+					<div class="control-group">
+						<label class="control-label">Заказы:</label>
+								<div class="controls">
+									<?php
+										$option_hot = array("0" => "Запрещено", "1" => "Разрешено");
+										echo form_dropdown('allow_orders', $option_hot, $admin_info["allow_orders"]);
+									;?>
+									<?=form_error("allow_orders");?>
+								</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">Товары:</label>
+								<div class="controls">
+									<?php
+										$option_hot = array("0" => "Запрещено", "1" => "Разрешено");
+										echo form_dropdown('allow_products', $option_hot, $admin_info["allow_products"]);
+									;?>
+									<?=form_error("allow_products");?>
+								</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">Фирмы:</label>
+								<div class="controls">
+									<?php
+										$option_hot = array("0" => "Запрещено", "1" => "Разрешено");
+										echo form_dropdown('allow_firms', $option_hot, $admin_info["allow_firms"]);
+									;?>
+									<?=form_error("allow_firms");?>
+								</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">Комментарии:</label>
+								<div class="controls">
+									<?php
+										$option_hot = array("0" => "Запрещено", "1" => "Разрешено");
+										echo form_dropdown('allow_reviews', $option_hot, $admin_info["allow_reviews"]);
+									;?>
+									<?=form_error("allow_reviews");?>
+								</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">Слайдер:</label>
+								<div class="controls">
+									<?php
+										$option_hot = array("0" => "Запрещено", "1" => "Разрешено");
+										echo form_dropdown('allow_slider', $option_hot, $admin_info["allow_slider"]);
+									;?>
+									<?=form_error("allow_slider");?>
+								</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label">Администрирование:</label>
+								<div class="controls">
+									<?php
+										$option_hot = array("0" => "Запрещено", "1" => "Разрешено");
+										echo form_dropdown('allow_admins', $option_hot, $admin_info["allow_admins"]);
+									;?>
+									<?=form_error("allow_admins");?>
+								</div>
+					</div>
+
+
 				<div class="form-actions">
 					<?=form_submit(array('name' => 'edit_admin',
 										'class' => 'btn btn-primary',

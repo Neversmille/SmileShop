@@ -81,6 +81,7 @@ $route['admin/reviews/(:any)'] = "admin/reviews/index/$1";
 $route['admin/slider/add'] = "admin/slider/add";
 $route['admin/slider/edit/(:any)'] = "admin/slider/edit/$1";
 $route['admin/slider/(:any)'] = "admin/slider/index/$1";
+$route['admin/index/denied'] = "admin/index/denied";
 $route['admin$'] = "admin/index";
 
 

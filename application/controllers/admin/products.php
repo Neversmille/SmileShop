@@ -5,6 +5,10 @@ class Products extends MY_Controller{
 	public function __construct(){
 
         parent::__construct();
+		$admin = $this->session->userdata('admin');
+		if($admin["allow_products"]===0){
+			redirect('/admin/index/denied');
+		}
     }
 
 	public function index($current_page="null") {

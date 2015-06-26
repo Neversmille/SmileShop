@@ -277,6 +277,36 @@ $config = array(
            'field' => 'confpass',
            'label' => 'Пароль',
            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
+       ),
+       array(
+           'field' => 'allow_orders',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_products',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_firms',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_reviews',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_slider',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_admins',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
        )
    ),
    'edit_admin' => array(
@@ -294,7 +324,37 @@ $config = array(
            'field' => 'is_active',
            'label' => 'Статус',
            'rules' => 'required|max_length[1]|callback_check_is_active'
-       )
+       ),
+       array(
+           'field' => 'allow_orders',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_products',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_firms',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_reviews',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_slider',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
+       array(
+           'field' => 'allow_admins',
+           'label' => 'Статус',
+           'rules' => 'required|max_length[1]|callback_check_is_active'
+       ),
    ),
    'edit_admin_pass' => array(
        array(

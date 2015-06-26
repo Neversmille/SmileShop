@@ -95,7 +95,7 @@ class Admins_model extends CI_Model {
 
 	public function get_admin_all_data($admin_id){
 		$admin_id = intval($admin_id);
-		$admin_data = $this->db->select('admin_email,admin_name,admin_is_active')
+		$admin_data = $this->db->select('admin_email,admin_name,admin_is_active,allow_orders,allow_products,allow_firms,allow_reviews,allow_slider,allow_admins')
 										->where('admin_id',$admin_id)
 										->get('admin_users')
 										->result_array();

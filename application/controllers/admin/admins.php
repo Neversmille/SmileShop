@@ -4,6 +4,10 @@ class Admins extends MY_Controller{
 
 	public function __construct(){
         parent::__construct();
+		$admin = $this->session->userdata('admin');
+		if($admin["allow_admins"]==0){
+			redirect('/admin/index/denied');
+		}
 		$this->load->model('admin/admins_model');
     }
 
@@ -44,6 +48,12 @@ class Admins extends MY_Controller{
 			if($check){
 				$add_data["admin_name"] = $this->input->post('name');
 				$add_data["admin_email"] = $this->input->post('email');
+				$add_data["allow_orders"] = $this->input->post('allow_orders');
+				$add_data["allow_products"] = $this->input->post('allow_products');
+				$add_data["allow_firms"] = $this->input->post('allow_firms');
+				$add_data["allow_reviews"] = $this->input->post('allow_reviews');
+				$add_data["allow_slider"] = $this->input->post('allow_slider');
+				$add_data["allow_admins"] = $this->input->post('allow_admins');
 				$password = $this->input->post('password');
 				$this->load->library('passwordhash');
 				$add_data["admin_password"] = $this->passwordhash->HashPassword($password);
@@ -73,7 +83,6 @@ class Admins extends MY_Controller{
 		if(isset($admin_info["error"])){
 			show_404("нет такого админа");
 		}
-		var_dump($admin_info);
 		$admin_info = $admin_info["data"];
 		if(null!==$this->input->post('edit')){
 			$this->load->library('form_validation');
@@ -83,6 +92,12 @@ class Admins extends MY_Controller{
 				$edit_data["admin_name"] = $this->input->post('name');
 				$edit_data["admin_email"] = $this->input->post('email');
 				$edit_data["admin_is_active"] = $this->input->post('is_active');
+				$edit_data["allow_orders"] = $this->input->post('allow_orders');
+				$edit_data["allow_products"] = $this->input->post('allow_products');
+				$edit_data["allow_firms"] = $this->input->post('allow_firms');
+				$edit_data["allow_reviews"] = $this->input->post('allow_reviews');
+				$edit_data["allow_slider"] = $this->input->post('allow_slider');
+				$edit_data["allow_admins"] = $this->input->post('allow_admins');
 				$edit_admin = $this->admins_model->edit_admin_info($id,$edit_data);
 					if (isset($edit_admin["error"])){
 						show_404("ошибка добавления комментария");
@@ -153,6 +168,7 @@ class Admins extends MY_Controller{
 		if($value===1||$value===0){
 			return true;
 		}else{
+			$this->form_validation->set_message('check_is_active', 'неверный параметр');
 			return false;
 		}
 	}
