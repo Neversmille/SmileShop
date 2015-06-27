@@ -107,8 +107,8 @@ class Catalog_model extends CI_Model {
             return array("error" => "аргумент должен быть типа int");
         }
         $product_info = $this->db->where('product_id',$product_id)
-                                        ->get('products')
-                                        ->result_array();
+                                            ->get('products')
+                                            ->result_array();
         if (empty($product_info)){
             return array("error" => "нет товара с таким id");
         }else{
@@ -129,13 +129,13 @@ class Catalog_model extends CI_Model {
 
         if (empty($filter)){
             $count = $this->db->where('product_category_id',$category_id)
-                                            ->count_all_results('products');
+                                        ->count_all_results('products');
         }else{
             $count = $this->db->join('firms', 'product_firm = firm_id', 'left')
-                                            ->where('product_category_id',$category_id)
-                                            ->where($filter)
-                                            ->count_all_results('products');
-        }
+                                        ->where('product_category_id',$category_id)
+                                        ->where($filter)
+                                        ->count_all_results('products');
+                                    }
 
         if ($count===0) {
             return array("error" => "нет товаров данной категории");
@@ -148,11 +148,11 @@ class Catalog_model extends CI_Model {
     }
 
     /*
-	*	Разбор get параметров в ассоциативный массив
-	*	@param $array - входящий массив get параметров
-	*						 url адресса вида order=pricemax/product=3
-	*/
-	function get_params($array) {
+    *	Разбор get параметров в ассоциативный массив
+    *	@param $array - входящий массив get параметров
+    *						 url адресса вида order=pricemax/product=3
+    */
+    function get_params($array) {
 
         //Настройки по умолчанию
         $result["order"] = "new";
@@ -164,31 +164,31 @@ class Catalog_model extends CI_Model {
             foreach ($array as $item) {
                 $parametr = preg_split("/=/",$item);
 
-                  //Разбиваем параметры по =, если передано чтото не через =
-                  //возвращаем пустой массив
-				if (count($parametr)==2){
-					$parametr_key = $parametr[0];
-					$parametr_value = $parametr[1];
-                        /*Отфильтровуем переданные параметры*/
-                        if ($parametr_key =="order" || $parametr_key == "product"){
-                            $result[$parametr_key] = $parametr_value;
+                //Разбиваем параметры по =, если передано чтото не через =
+                //возвращаем пустой массив
+                if (count($parametr)==2){
+                    $parametr_key = $parametr[0];
+                    $parametr_value = $parametr[1];
+                    /*Отфильтровуем переданные параметры*/
+                    if ($parametr_key =="order" || $parametr_key == "product"){
+                        $result[$parametr_key] = $parametr_value;
+                    }else{
+                        if ($parametr_key=="firm") {
+                            $parametr_key = "firm_name";
                         }else{
-                            if ($parametr_key=="firm") {
-                                $parametr_key = "firm_name";
-                            }else{
-                                return array("error" => "заданы недопустимые параметры");
-                            }
-
-                            $result["filter"][$parametr_key] = $parametr_value;
+                            return array("error" => "заданы недопустимые параметры");
                         }
 
-                    }else{
-                        return array("error" => "заданы недопустимые параметры");
+                        $result["filter"][$parametr_key] = $parametr_value;
                     }
+
+                }else{
+                    return array("error" => "заданы недопустимые параметры");
                 }
             }
-		return array("data" => $result);
-	}
+        }
+        return array("data" => $result);
+    }
 
     /*
     *   Получения списка фирм по id категории
@@ -269,10 +269,10 @@ class Catalog_model extends CI_Model {
     public function get_random_hot_products($num){
         $num = intval($num);
         $result = $this->db->where('product_hot','1')
-                        ->order_by('product_id','random')
-                        ->limit($num)
-                        ->get('products')
-                        ->result_array();
+                                    ->order_by('product_id','random')
+                                    ->limit($num)
+                                    ->get('products')
+                                    ->result_array();
         if(empty($result)) {
             return array("error" => "нет горячих товаров");
         }else{
@@ -285,26 +285,26 @@ class Catalog_model extends CI_Model {
     *   @param int $id - id товара
     */
     public function get_product_price_by_id($id){
-            if (!is_int($id)){
-                return array("error" => "аргумент должен быть типа int");
-            }
-            $price = $this->db->select('product_price')
-                                        ->where('product_id',$id)
-                                        ->get('products')
-                                        ->result_array();
-            if (empty($price)){
-                return array("error" => "нет товара с таким id");
-            }else{
-                return array("data" => $price[0]["product_price"]);
-            }
+        if (!is_int($id)){
+            return array("error" => "аргумент должен быть типа int");
+        }
+        $price = $this->db->select('product_price')
+        ->where('product_id',$id)
+        ->get('products')
+        ->result_array();
+        if (empty($price)){
+            return array("error" => "нет товара с таким id");
+        }else{
+            return array("data" => $price[0]["product_price"]);
+        }
 
     }
 
     public function get_firm_name($firm_id){
         $firm_id = intval($firm_id);
         $firm_name = $this->db->where('firm_id',$firm_id)
-                                        ->get('firms')
-                                        ->result_array();
+                                            ->get('firms')
+                                            ->result_array();
         if(empty($firm_name)){
             return array("error" => "нет фирмы с таким id");
         }else{
@@ -318,8 +318,8 @@ class Catalog_model extends CI_Model {
             return array("error" => "аргумент должен быть типа string");
         }
         $firm_id = $this->db->where('firm_name',$firm_name)
-                                        ->get('firms')
-                                        ->result_array();
+                                    ->get('firms')
+                                    ->result_array();
         if(empty($firm_id)){
             return array("error" => "нет фирмы с таким id");
         }else{
@@ -344,5 +344,60 @@ class Catalog_model extends CI_Model {
             return array("data" => $slides);
         }
     }
+
+    /*
+    *   Поиск товара в БД
+    *   @param string $search
+    */
+    public function search($search,$per_page,$offset) {
+        $per_page = intval($per_page);
+        $offset = intval($offset);
+        if(!is_string($search)){
+            return array("error" => "неверный тип аргумента");
+        }
+
+        $products = $this->db->join('firms', 'product_firm = firm_id', 'left')
+                                    ->like('product_name',$search)
+                                    ->get('products',$per_page,$offset)
+                                    ->result_array();
+        if ($products === false){
+            return array("error" => "ошибка запроса");
+        }else{
+            return array("data" => $products);
+        }
+    }
+
+    function get_search_count($search){
+        if(!is_string($search)){
+            return array("error" => "неверный тип аргумента");
+        }
+
+        $count = $this->db->like('product_name',$search)
+                                    ->count_all_results('products');
+        if ($count === false){
+            return array("error" => "ошибка запроса");
+        }else{
+            return array("data" => $count);
+        }
+    }
+
+    function set_search_pagination($per_page,$page,$totalrows,$search){
+        $per_page = intval($per_page);
+        $page = intval($page);
+        $this->load->library('pagination');
+        $config['base_url'] = base_url()."search/".$search;
+        $config['per_page'] =$per_page;
+        $config['cur_page'] = $page;
+        $config['next_link'] = '&gt;';
+        $config['cur_tag_open'] = '<span class="current">';
+        $config['cur_tag_close'] = '</span>';
+        $config['first_link'] = 'Вначало';
+        $config['last_link'] = 'Последняя';
+        $config['uri_segment'] =3;
+        $config['use_page_numbers'] = TRUE;
+        $config['total_rows'] =$totalrows;
+        $this->pagination->initialize($config);
+    }
+
 
 }

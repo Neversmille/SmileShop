@@ -25,7 +25,7 @@ function setProductEvents() {
         curentAmount = curentAmount+(+product_amount);
         setBasketWidgetAmount(curentAmount);
 
-    });  
+    });
 
 
     /*

@@ -8,7 +8,6 @@ class Catalog extends MY_Controller{
 	*	@param array $args - массив входящих параметров
 	*/
 	function _remap($method,$args){
-
 		if (method_exists($this, $method)){
 			$this->$method($args);
 		}else{
@@ -20,7 +19,7 @@ class Catalog extends MY_Controller{
 	*	Страница /catalog - вывод 8 случайных товаров
 	*/
 	public function all(){
-
+			$this->output->enable_profiler(TRUE);
 			$this->load->model('catalog_model');
 			$products = $this->catalog_model->get_random_hot_products(8);
 			if (isset($products["error"])) {
@@ -121,5 +120,58 @@ class Catalog extends MY_Controller{
 		$this->layout();
 
 	}
+
+	public function find(){
+		if(null!==$this->input->post('search')){
+			$search = $this->input->post('search',TRUE);
+			$search = urlencode($search);
+			redirect('/search/'.$search);
+		}
+	}
+
+	public function search($search=''){
+		if(!empty($search)){
+			$this->load->helper('security');
+			$query = urldecode($search[0]);
+			$query = xss_clean($query);
+
+			if(isset($search[1])){
+				$page = $search[1];
+				$page = xss_clean($page);
+			}else{
+				$page = null;
+			}
+			$per_page = 5;
+
+			if($page == 0){
+				$offset =0;
+			} else{
+				$offset = ($page-1)*$per_page;
+			}
+
+			$this->load->model('catalog_model');
+			$products = $this->catalog_model->search($query,$per_page,$offset);
+			if(isset($products["error"])){
+				show_404("Неверно заданый поиск");
+			}
+			$products = $products["data"];
+			$total_rows = $this->catalog_model->get_search_count($query);
+			if(isset($total_rows["error"])){
+				show_404("Возникла непридвиденная ошибка");
+			}
+			$total_rows = $total_rows["data"];
+			$this->catalog_model->set_search_pagination($per_page,$page,$total_rows,$query);
+			$this->data["search_count"] = $total_rows;
+			$this->data["products"] = $products;
+			$this->data["search_text"] = $query;
+		}
+
+
+		$this->middle = 'catalog/search';
+		$this->layout();
+
+
+	}
+
 
 }

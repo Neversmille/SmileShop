@@ -11,15 +11,7 @@
             </div>
             <div class="col-md-4 col-md-offset-4">
 
-                <!-- Search form -->
-                <form role="form">
-                    <div class="input-group">
-                        <input type="email" class="form-control" id="search1" placeholder="Поиск по сайту...">
-                        <span class="input-group-btn">
-                            <button type="submit" class="btn btn-default">Поиск</button>
-                        </span>
-                    </div>
-                </form>
+                <?=$search;?>
                 <?=$user_widget;?>
             </div>
         </div>

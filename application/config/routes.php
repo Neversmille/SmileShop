@@ -87,6 +87,9 @@ $route['admin/orders/(:any)'] = "admin/orders/index/$1";
 
 $route['admin/slider/(:any)'] = "admin/slider/index/$1";
 $route['admin/index/denied'] = "admin/index/denied";
+
+$route['search'] = "catalog/search";
+$route['search/(:any)'] = "catalog/search/$1";
 $route['admin$'] = "admin/index";
 
 

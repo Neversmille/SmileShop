@@ -28,11 +28,12 @@ class MY_Controller extends CI_Controller{
     public function layout() {
          $this->data["css"] = $this->css;
          $this->data["js"] = $this->js;
+
+         $this->data['search']   = $this->load->view('layouts/search', $this->data, true);
          $this->data['user_widget']   = $this->load->view('layouts/user_widget', $this->data, true);
          $this->template['header']   = $this->load->view('layouts/header', $this->data, true);
          $this->template['menu']   = $this->load->view('layouts/menu', $this->data, true);
          $this->template['middle'] = $this->load->view($this->middle, $this->data, true);
-         $this->template['newsletter'] = $this->load->view('layouts/newsletter', $this->data, true);
          $this->template['footer'] = $this->load->view('layouts/footer', $this->data, true);
          $this->template['product_add'] = $this->load->view('modals/product_add',$this->data,true);
          $this->template['recent_items'] = $this->load->view('layouts/recent_items',$this->data,true);
@@ -61,9 +62,13 @@ class MY_Controller extends CI_Controller{
    private function get_basket_count(){
        $basket = $this->session->userdata('basket');
        if ($basket) {
-           return $basket = count($basket);
+           $amount = 0;
+           foreach ($basket as $value) {
+               $amount+=$value["amount"];
+           }
+           return $amount ;
        }else{
-           return $basket = 0;
+           return  0;
        }
    }
 

@@ -3,19 +3,23 @@
 class Admins extends MY_Controller{
 
 	public function __construct(){
-        parent::__construct();
+
+		parent::__construct();
 		$admin = $this->session->userdata('admin');
 		if($admin["allow_admins"]==0){
 			redirect('/admin/index/denied');
 		}
 		$this->load->model('admin/admins_model');
-    }
+
+	}
 
 	public function index($current_page="null") {
 
 		//Опции для пагинатора
 		$per_page =1;
 		$page = intval($current_page);
+
+		//Параметр смещения для запроса
 		if($page == 0){
 			$offset =0;
 		} else{
@@ -29,7 +33,6 @@ class Admins extends MY_Controller{
 			$admins = $admins["data"];
 		}
 
-
 		$this->admins_model->set_pagination($per_page,$page);
 
 		$this->data["admins"] = $admins;
@@ -40,10 +43,10 @@ class Admins extends MY_Controller{
 	}
 
 	/*
-	*	Страница редактирования товара
+	*	Добавление администратора
 	*/
 	public function add(){
-		//Проверяем отправлен ли запрос на регистрацию
+
 		if(null!==$this->input->post('add')){
 			$this->load->library('form_validation');
 			$check = $this->form_validation->run('add_new_admin');
@@ -62,11 +65,12 @@ class Admins extends MY_Controller{
 				$this->load->library('passwordhash');
 				$add_data["admin_password"] = $this->passwordhash->HashPassword($password);
 				$add_admin = $this->admins_model->add_admin($add_data);
-					if (isset($add_admin["error"])){
-						show_404("ошибка добавления комментария");
-					}
-					redirect('/admin/admins');
+				if (isset($add_admin["error"])){
+					show_404("ошибка добавления комментария");
+				}
+				redirect('/admin/admins');
 			}
+
 		}
 
 		$this->load->helper('form');
@@ -78,16 +82,19 @@ class Admins extends MY_Controller{
 
 
 	/*
-	*	Страница редактирования товара
+	*	Редактирование информации администратора
 	*/
 	public function editinfo($id){
+
 		//Проверяем отправлен ли запрос на регистрацию
 		$id = intval($id);
+
 		$admin_info = $this->admins_model->get_admin_all_data($id);
 		if(isset($admin_info["error"])){
 			show_404("нет такого админа");
 		}
 		$admin_info = $admin_info["data"];
+
 		if(null!==$this->input->post('edit')){
 			$this->load->library('form_validation');
 			$check = $this->form_validation->run('edit_admin');
@@ -103,12 +110,13 @@ class Admins extends MY_Controller{
 				$edit_data["allow_slider"] = $this->input->post('allow_slider');
 				$edit_data["allow_admins"] = $this->input->post('allow_admins');
 				$edit_admin = $this->admins_model->edit_admin_info($id,$edit_data);
-					if (isset($edit_admin["error"])){
-						show_404("ошибка добавления комментария");
-					}
-					redirect('/admin/admins');
+				if (isset($edit_admin["error"])){
+					show_404("ошибка добавления комментария");
+				}
+				redirect('/admin/admins');
 			}
 		}
+
 		$this->data["admin_info"] = $admin_info;
 		$this->data["admin_id"] = $id;
 		$this->load->helper('form');
@@ -119,11 +127,12 @@ class Admins extends MY_Controller{
 	}
 
 	/*
-	*	Страница редактирования товара
+	*	Изменения пароля администратора
 	*/
 	public function editpass($id){
-		//Проверяем отправлен ли запрос на регистрацию
+
 		$id = intval($id);
+
 		if(null!==$this->input->post('edit_pass')){
 			$this->load->library('form_validation');
 			$check = $this->form_validation->run('edit_admin_pass');
@@ -133,12 +142,13 @@ class Admins extends MY_Controller{
 				$this->load->library('passwordhash');
 				$pass  = $this->passwordhash->HashPassword($pass);
 				$edit_pass = $this->admins_model->edit_admin_pass($id,$pass);
-					if (isset($edit_pass["error"])){
-						show_404("ошибка добавления комментария");
-					}
-					redirect('/admin/admins');
+				if (isset($edit_pass["error"])){
+					show_404("ошибка добавления комментария");
+				}
+				redirect('/admin/admins');
 			}
 		}
+
 		$this->data["admin_id"] = $id;
 		$this->load->helper('form');
 		$this->data["middle"] = $this->load->view("admin/admins/admin_edit_pass_form",$this->data,true);
@@ -151,9 +161,11 @@ class Admins extends MY_Controller{
 
 
 	/*
-	*	callback функция валидации уникальности email
+	*	Callback  уникальности email
+	*	@param string $email
 	*/
 	public function unique_email($email){
+
 		$check = $this->admins_model->check_email($email);
 		if(isset($check["data"])) {
 			return true;
@@ -164,10 +176,11 @@ class Admins extends MY_Controller{
 	}
 
 	/*
-	*	Callback проверки review_is_delete
+	*	Callback проверки статуса
 	*	@param int $value
 	*/
 	public function check_is_active($value){
+
 		$value = intval($value);
 		if($value===1||$value===0){
 			return true;

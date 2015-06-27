@@ -10,7 +10,7 @@
 		                    <h3 class="title">Товар был добавлен в вашу корзину!</h3>
 		                    <div class="modal-footer" style="border-top:none;">
 		                        <a href="javascript:void( 0 )" class="btn btn-default basketPopoutButton close-modal-cart">Продолжить покупки</a>
-		                        <a href="<?=base_url().'basket';?>" class="btn btn-danger basketPopoutButtonCart">Оформить заказ</a>
+		                        <a href="<?=base_url().'basket';?>" class="btn btn-danger basketPopoutButtonCart2">Оформить заказ</a>
 		                    </div>
 		                </div>
 		            </div>
