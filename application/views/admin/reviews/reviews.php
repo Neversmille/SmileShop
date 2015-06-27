@@ -35,6 +35,7 @@
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 232px;" aria-label="Browser: activate to sort column ascending">Текст</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 232px;" aria-label="Browser: activate to sort column ascending">Дата</th>
 								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 232px;" aria-label="Browser: activate to sort column ascending">Статус</th>
+								<th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" style="width: 232px;" aria-label="Browser: activate to sort column ascending">Действие</th>
 							</tr>
 				        </thead>
 				        <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -45,11 +46,12 @@
 							<?php else:?>
 								<?php foreach($reviews as $review):?>
 									<tr class="gradeX odd">
-						                    <td class=""><a href="/admin/review/<?=$review["review_id"];?>"><?=$review["review_id"];?></a></td>
+						                    <td class=""><?=$review["review_id"];?></td>
 						                    <td class=""><?=$review["review_name"];?></td>
 										<td class=""><p class="review-short-text"><?=$review["review_text"];?></p></td>
 										<td class=""><?=$review["review_time"];?></td>
 										<td class=""><?php if($review["review_is_delete"]==1) echo "<span class='red'>Удален</span>"; else echo "<span class='green'>Отобржаемый</span>"?></td>
+										<td><a href="/admin/review/<?=$review["review_id"];?>">Редактировать</a></td>
 									</tr>
 								<?php endforeach;?>
 							<?php endif;?>

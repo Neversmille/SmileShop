@@ -1,12 +1,11 @@
 <div class="span12 block" id="content">
 	<div class="row-fluid">
 		<div class="navbar navbar-inner block-header">
-                <div class="muted pull-left">Редактирование товара</div>
+			<div class="muted pull-left">Редактирование товара</div>
         </div>
 		<div class="block-content collapse in">
-			<?php if(isset($update)) echo "<div class='update green'>Данные товара обновлены!!</div>";?>
 		    <div class="span12">
-		        <?=form_open_multipart('admin/product/'.$product_info["product_url"],array("class" => "form-horizontal"));?>
+		        <?=form_open_multipart('admin/product/'.$product_info["product_url"],array("class" => "form-horizontal", "id" => "product_edit"));?>
 				<?=form_hidden('product_id', $product_info["product_id"]);?>
 
 				<div class="control-group">

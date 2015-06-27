@@ -190,14 +190,14 @@ $config = array(
         array(
             'field' => 'firm_name',
             'label' => 'Наименование',
-            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[30]|callback_check_unique_edit_name'
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[30]|alpha_numeric|callback_check_unique_edit_name'
         )
     ),
     'firm_add' => array(
         array(
             'field' => 'firm_name',
             'label' => 'Наименование',
-            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[30]|callback_check_unique_name'
+            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[1]|max_length[30]|alpha_numeric|callback_check_unique_name'
         )
     ),
     'admin_review' => array(

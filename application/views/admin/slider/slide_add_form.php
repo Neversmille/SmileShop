@@ -13,7 +13,7 @@
 					</div>
 				</div>
 
-		        <?=form_open_multipart('admin/slider/add',array("class" => "form-horizontal "));?>
+		        <?=form_open_multipart('admin/slider/add',array("class" => "form-horizontal", "id" => "slide_add"));?>
 				<?=form_hidden('slider_product_id',  $product_id);?>
 				<div class="control-group">
 					<label class="control-label">Позиция(1-99):</label>

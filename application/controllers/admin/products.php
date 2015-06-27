@@ -12,15 +12,18 @@ class Products extends MY_Controller{
     }
 
 	public function index($current_page="null") {
-		$this->output->enable_profiler(TRUE);
 		$this->load->model('admin/products_model');
 		//Опции для пагинатора
 		$per_page = 5;
 		$page = intval($current_page);
 
 		$this->products_model->set_pagination($per_page,$page);
-
-		$products= $this->products_model->get_products($per_page,$page);
+		if($page == 0){
+			$offset =0;
+		} else{
+			$offset = ($page-1)*$per_page;
+		}
+		$products= $this->products_model->get_products($per_page,$offset);
 		if (isset($products["error"])){
 			$products = array();
 		}else{
@@ -129,14 +132,10 @@ class Products extends MY_Controller{
 	/*
 	*	Страница редактирования товара
 	*/
-	public function product($url = null,$update = false){
+	public function product($url = null){
 
 		if(is_null($url)) {
 			show_404("Запрашиваемый товар не найден");
-		}
-
-		if($update){
-			$this->data["update"] = true;
 		}
 
 		$this->load->model('admin/products_model');
@@ -185,7 +184,6 @@ class Products extends MY_Controller{
 			}
 		}
 
-		$this->data["update_status"] = false;
 
 		$this->load->model('product_model');
 

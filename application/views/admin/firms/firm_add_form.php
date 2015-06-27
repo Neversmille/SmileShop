@@ -5,7 +5,7 @@
         </div>
 		<div class="block-content collapse in">
 		    <div class="span12">
-		        <?=form_open('admin/firms/add',array("class" => "form-horizontal"));?>
+		        <?=form_open('admin/firms/add',array("class" => "form-horizontal", "id" => "firm_add"));?>
 
 				<div class="control-group">
   					<label class="control-label">Название:</label>

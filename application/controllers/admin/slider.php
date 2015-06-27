@@ -14,13 +14,14 @@ class Slider extends MY_Controller{
 	public function index($current_page="null") {
 		//Опции для пагинатора
 		$per_page =1;
-		if($current_page!==0){
-			$current_page--;
-		}
 		$page = intval($current_page);
-		$this->output->enable_profiler(TRUE);
+		if($page == 0){
+			$offset =0;
+		} else{
+			$offset = ($page-1)*$per_page;
+		}
 		$this->load->model('admin/slider_admin_model');
-		$slides = $this->slider_admin_model->get_slides($per_page,$page);
+		$slides = $this->slider_admin_model->get_slides($per_page,$offset);
 		if(isset($slides["error"])){
 			$slides = array();
 		}else{
@@ -35,7 +36,6 @@ class Slider extends MY_Controller{
 	}
 
 	public function add() {
-		$this->output->enable_profiler(TRUE);
 		$this->load->model('admin/slider_admin_model');
 		$this->load->helper('form');
 
@@ -95,7 +95,6 @@ class Slider extends MY_Controller{
 
 	public function edit($id) {
 		$id = intval($id);
-		$this->output->enable_profiler(TRUE);
 		$this->load->model('admin/slider_admin_model');
 		$this->load->helper('form');
 		//Проверяем был ли отправлен комментарий

@@ -4,7 +4,7 @@
                 <div class="muted pull-left">Полная информация о отзыве</div>
         </div>
 		<div class="block-content collapse in">
-			<?=form_open('admin/orders/edit/'.$order_info["order_id"],array("class" => "form-horizontal"));?>
+			<?=form_open('admin/orders/edit/'.$order_info["order_id"],array("class" => "form-horizontal", "id" => "order_edit"));?>
 				<?=form_hidden('order_id', $order_info["order_id"]);?>
 				<div class="control-group">
 					<label class="control-label">Статус:</label>

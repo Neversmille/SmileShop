@@ -227,7 +227,7 @@ body {
 	color:#f25758;
 }
 
-.red {
+.red, .error {
 	color:#FF0033;
 }
 

@@ -16,9 +16,13 @@ class Admins extends MY_Controller{
 		//Опции для пагинатора
 		$per_page =1;
 		$page = intval($current_page);
+		if($page == 0){
+			$offset =0;
+		} else{
+			$offset = ($page-1)*$per_page;
+		}
 
-
-		$admins = $this->admins_model->get_admins($per_page,$page);
+		$admins = $this->admins_model->get_admins($per_page,$offset);
 		if (isset($admins["error"])){
 			$admins = array();
 		}else{

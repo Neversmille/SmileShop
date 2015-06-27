@@ -12,7 +12,7 @@
 					</div>
 				</div>
 
-		        <?=form_open_multipart('admin/products/add',array("class" => "form-horizontal"));?>
+		        <?=form_open_multipart('admin/products/add',array("class" => "form-horizontal","id" => "product_add"));?>
 
 				<div class="control-group">
   					<label class="control-label">Наименование:</label>

@@ -5,7 +5,7 @@
         </div>
 		<div class="block-content collapse in">
 		    <div class="span12">
-		        <?=form_open_multipart('admin/slider/edit/'.$slide_info["slider_id"],array("class" => "form-horizontal "));?>
+		        <?=form_open_multipart('admin/slider/edit/'.$slide_info["slider_id"],array("class" => "form-horizontal", "id" => "slide_edit"));?>
 				<?=form_hidden('slider_id',  $slide_info["slider_id"]);?>
 				<div class="control-group">
 					<label class="control-label">Позиция(1-99):</label>

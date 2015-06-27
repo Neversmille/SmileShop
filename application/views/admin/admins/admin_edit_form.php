@@ -5,7 +5,7 @@
         </div>
 		<div class="block-content collapse in">
 		    <div class="span12">
-		        <?=form_open('/admin/admins/editinfo/'.$admin_id,array("class" => "form-horizontal"));?>
+		        <?=form_open('/admin/admins/editinfo/'.$admin_id,array("class" => "form-horizontal", "id" => "admin_edit"));?>
 				<?=form_hidden('admin_id', $admin_id);?>
 				<div class="control-group">
 						<label class="control-label">Имя:</label>

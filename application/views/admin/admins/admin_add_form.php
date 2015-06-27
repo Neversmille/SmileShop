@@ -5,7 +5,7 @@
         </div>
 		<div class="block-content collapse in">
 		    <div class="span12">
-		        <?=form_open('admin/admins/add',array("class" => "form-horizontal"));?>
+		        <?=form_open('admin/admins/add',array("class" => "form-horizontal", "id" => "admin_add"));?>
 
 				<div class="control-group">
 						<label class="control-label">Имя:</label>
@@ -33,7 +33,7 @@
 							<label class="control-label">Пароль:</label>
 								<div class="controls">
 									<?=form_input(array('name' => 'password',
-														'type' => 'text',
+														'type' => 'password',
 														'class' => 'span6 m-wrap'));?>
 								<?=form_error("password");?>
 								</div>
@@ -43,7 +43,7 @@
 								<label class="control-label">Повторите пароль:</label>
 									<div class="controls">
 										<?=form_input(array('name' => 'confpass',
-															'type' => 'text',
+															'type' => 'password',
 															'class' => 'span6 m-wrap'));?>
 									<?=form_error("confpass");?>
 									</div>

@@ -6,7 +6,7 @@
 		<div class="block-content collapse in">
 			<?php if(isset($update)) echo "<div class='update green'>Данные фирмы обновлены!!</div>";?>
 		    <div class="span12">
-		        <?=form_open('admin/firm/'.$firm_info["firm_name"],array("class" => "form-horizontal"));?>
+		        <?=form_open('admin/firm/'.$firm_info["firm_name"],array("class" => "form-horizontal","id" => "firm_edit"));?>
 				<?=form_hidden('firm_id', $firm_info["firm_id"]);?>
 
 				<div class="control-group">

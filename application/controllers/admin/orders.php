@@ -16,7 +16,12 @@ class Orders extends MY_Controller{
 		//Опции для пагинатора
 		$per_page =2;
 		$page = intval($current_page);
-		$orders = $this->orders_admin_model->get_orders($per_page,$page);
+		if($page == 0){
+			$offset =0;
+		} else{
+			$offset = ($page-1)*$per_page;
+		}
+		$orders = $this->orders_admin_model->get_orders($per_page,$offset);
 		if (isset($orders["error"])){
 			$orders = array();
 		}else{
@@ -81,6 +86,7 @@ class Orders extends MY_Controller{
 		if(preg_match('/^[0-3]$/',$status)){
 			return true;
 		}else{
+			$this->form_validation->set_message('check_status', 'Неверный формат статуса');
 			return false;
 		}
 	}

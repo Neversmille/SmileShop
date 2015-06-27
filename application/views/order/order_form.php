@@ -8,7 +8,7 @@
             <div class="form form-small">
 								<!-- Sub title -->
 									<!-- Register form (not working)-->
-                                      <form class="form-horizontal" method="POST" action="<?=base_url().'order';?>">
+                                      <form class="form-horizontal" method="POST" action="<?=base_url().'order';?>"  id="order-form">
 
 									<div class="form-group">
 										<label class="control-label col-md-2" for="telephone">Имя: </label>

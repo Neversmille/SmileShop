@@ -5,7 +5,7 @@
         </div>
 		<div class="block-content collapse in">
 		    <div class="span12">
-		        <?=form_open('/admin/admins/editpass/'.$admin_id,array("class" => "form-horizontal"));?>
+		        <?=form_open('/admin/admins/editpass/'.$admin_id,array("class" => "form-horizontal", "id" => "admin-edit-pass"));?>
 				<?=form_hidden('admin_id', $admin_id);?>
 
 				<div class="control-group">

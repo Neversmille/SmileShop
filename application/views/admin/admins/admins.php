@@ -48,7 +48,7 @@
 								<?php foreach($admins as $admin):?>
 									<tr class="gradeX odd">
 						                    <td class=""><?=$admin["admin_id"];?></td>
-						                    <td class=""><a href="/admin/admin/<?=$admin['admin_name'];?>"><?=$admin["admin_name"];?></a></td>
+						                    <td class=""><?=$admin["admin_name"];?></td>
 										<td class=""><?=$admin["admin_email"];?></td>
 										<td class=""><a href="/admin/admins/editinfo/<?=$admin["admin_id"];?>">Изменить данные </a>/<a href="/admin/admins/editpass/<?=$admin["admin_id"];?>"> Изменить пароль</a></td>
 									</tr>

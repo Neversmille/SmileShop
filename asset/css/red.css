@@ -154,3 +154,8 @@ border:1px solid #df4c4d;
 footer{
 	border-top: 4px solid #f25758;
 }
+
+.error {
+	color: #f25758;
+	font-weight: normal;
+}

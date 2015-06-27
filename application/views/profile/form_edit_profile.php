@@ -1,6 +1,6 @@
 <h5 class="title">Персональные данные</h5>
 <div class="form">
-<form class="form-horizontal" method="POST" action="/profile">
+<form class="form-horizontal" method="POST" action="/profile" id="edit-profile">
 	<div class="form-group">
 	<label class="control-label col-md-3" for="name">Имя:</label>
 	<div class="col-md-7">

@@ -1,6 +1,6 @@
 <h5 class="title">Изменить пароль</h5>
 <div class="form">
-<form class="form-horizontal" method="POST" action="/profile/security">
+<form class="form-horizontal" method="POST" action="/profile/security" id="edit-profile-pass">
 	<div class="form-group">
 	<label class="control-label col-md-3" for="oldpass">Старый пароль:</label>
 	<div class="col-md-7">

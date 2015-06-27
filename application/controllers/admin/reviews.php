@@ -12,15 +12,18 @@ class Reviews extends MY_Controller{
     }
 
 	public function index($current_page="null") {
-		$this->output->enable_profiler(TRUE);
 		$this->load->model('admin/reviews_admin_model');
 
 		//Опции для пагинатора
 		$per_page =10;
 		$page = intval($current_page);
+		if($page == 0){
+			$offset =0;
+		} else{
+			$offset = ($page-1)*$per_page;
+		}
 
-
-		$reviews = $this->reviews_admin_model->get_reviews($per_page,$page);
+		$reviews = $this->reviews_admin_model->get_reviews($per_page,$offset);
 		if (isset($reviews["error"])){
 			$reviews = array();
 		}else{

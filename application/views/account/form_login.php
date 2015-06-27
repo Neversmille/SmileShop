@@ -1,5 +1,5 @@
 <div class="form">
-	<form class="form-horizontal" method="POST" action="/account/login">
+	<form class="form-horizontal" method="POST" action="/account/login" id="login">
 		<div class="form-group">
 			<label class="control-label col-md-3" for="email">eMail:</label>
 			<div class="col-md-8">

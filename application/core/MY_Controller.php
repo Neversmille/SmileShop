@@ -19,7 +19,6 @@ class MY_Controller extends CI_Controller{
         $this->data["title"] = "тайтл";
         $this->data["basket_count"] = $this->get_basket_count();
         $this->data["recent_items"] = $this->get_recent_items();
-        $this->output->enable_profiler(TRUE);
     }
 
 

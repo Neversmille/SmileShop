@@ -12,15 +12,19 @@ class Firms extends MY_Controller{
     }
 
 	public function index($current_page="null") {
-		$this->output->enable_profiler(TRUE);
 		$this->load->model('admin/firms_model');
 
 		//Опции для пагинатора
 		$per_page =2;
 		$page = intval($current_page);
 
+		if($page == 0){
+			$offset =0;
+		} else{
+			$offset = ($page-1)*$per_page;
+		}
 
-		$firms = $this->firms_model->get_firms($per_page,$page);
+		$firms = $this->firms_model->get_firms($per_page,$offset);
 		if (isset($firms["error"])){
 			$firms = array();
 		}else{

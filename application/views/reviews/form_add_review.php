@@ -1,6 +1,6 @@
 <div class="form form-small">
     <!-- Review form -->
-    <form class="form-horizontal" method="POST" action="/reviews" enctype="multipart/form-data">
+    <form class="form-horizontal" method="POST" action="/reviews" enctype="multipart/form-data" id="reviews">
          <!-- Review -->
          <div class="form-group">
              <label class="control-label col-md-3" for="name">Имя:</label>

@@ -4,7 +4,7 @@
                 <div class="muted pull-left">Полная информация о отзыве</div>
         </div>
 		<div class="block-content collapse in">
-			<?=form_open('admin/review/'.$review_info["review_id"],array("class" => "form-horizontal"));?>
+			<?=form_open('admin/review/'.$review_info["review_id"],array("class" => "form-horizontal","id" => "review_edit"));?>
 				<?=form_hidden('review_id', $review_info["review_id"]);?>
 				<div class="control-group">
 					<label class="control-label">Статус:</label>
@@ -13,7 +13,7 @@
 									$options = array("0" => "Отображаемый", "1" => "Удален");
 									echo form_dropdown('review_is_delete', $options,$review_info["review_is_delete"]);
 								;?>
-								<?=form_error("product_category_id");?>
+								<?=form_error("review_is_delete");?>
 							</div>
 				</div>
 				<div class="form-actions">
