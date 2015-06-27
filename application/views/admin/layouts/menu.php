@@ -24,7 +24,7 @@
 						</ul>
 					</li>
 					<li>
-                            <a tabindex="-1" href="#">Заказы</a>
+                            <a tabindex="-1" href="/admin/orders">Заказы</a>
                         </li>
 					<li>
 	                        <a tabindex="-1" href="/admin/reviews">Отзывы</a>

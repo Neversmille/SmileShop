@@ -367,6 +367,16 @@ $config = array(
            'label' => 'Пароль',
            'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|min_length[5]|max_length[20]'
        )
+   ),
+   'edit_order' => array(
+       array(
+           'field' => 'order_id',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|max_length[11]|integer'
+       ),
+       array(
+           'field' => 'order_status',
+           'rules' => 'required|xss_clean|prep_for_form|encode_php_tags|trim|max_length[1]|callback_check_status'
+       )
    )
 
 

@@ -80,6 +80,11 @@ $route['admin/reviews/(:any)'] = "admin/reviews/index/$1";
 // $route['admin/slide/add'] = "admin/slide/add";
 $route['admin/slider/add'] = "admin/slider/add";
 $route['admin/slider/edit/(:any)'] = "admin/slider/edit/$1";
+
+
+$route['admin/orders/edit/(:any)'] = "admin/orders/edit/$1";
+$route['admin/orders/(:any)'] = "admin/orders/index/$1";
+
 $route['admin/slider/(:any)'] = "admin/slider/index/$1";
 $route['admin/index/denied'] = "admin/index/denied";
 $route['admin$'] = "admin/index";
