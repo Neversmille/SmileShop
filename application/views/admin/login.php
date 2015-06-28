@@ -29,7 +29,6 @@
     <!--/.fluid-container-->
     <script src="/asset/admin/vendors/jquery-1.9.1.min.js"></script>
     <script src="/asset/admin/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/asset/admin/vendors/easypiechart/jquery.easy-pie-chart.js"></script>
     <script src="/asset/admin/js/scripts.js"></script>
     <!--jQuery Validation-->
     <script src="/asset/admin/js/jquery.validate.js"></script>
