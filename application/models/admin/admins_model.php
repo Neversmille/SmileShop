@@ -9,14 +9,12 @@ class Admins_model extends CI_Model {
 		return $count;
 	}
 
-
 	/*
 	*	Получение списка админов
 	*	@param int $num - количество админов на странице
 	*	@param int $offset - смещение
 	*/
 	public function get_admins($num,$offset){
-
 		$num = intval($num);
 		$offset = intval($offset);
 
@@ -29,7 +27,6 @@ class Admins_model extends CI_Model {
 		}else{
 			return array("data" => $firms);
 		}
-
 	}
 
 	public function check_email($email){
@@ -43,7 +40,6 @@ class Admins_model extends CI_Model {
 		}else{
 			return array("error" => "Данный email занят");
 		}
-
 	}
 
 	/*

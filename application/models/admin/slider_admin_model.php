@@ -6,11 +6,13 @@ class Slider_admin_model extends CI_Model {
 	*/
 	public function get_slides($num,$offset){
 		$num = intval($num);
-		$offset = intval($offset);	
+		$offset = intval($offset);
+
 		$slides = $this->db->order_by('slider_is_active','desc')
 								->order_by('slider_position','asc')
 								->get('slider',$num,$offset)
 								->result_array();
+
 		if(empty($slides)){
 			return array("error" => "не слайдов");
 		}else{
@@ -20,9 +22,11 @@ class Slider_admin_model extends CI_Model {
 
 	public function get_slide_info($id){
 		$id = intval($id);
+
 		$slide_info = $this->db->where('slider_id',$id)
 									->get('slider')
 									->result_array();
+
 		if(empty($slide_info)){
 			return array("error" => "не слайдов");
 		}else{
@@ -36,9 +40,11 @@ class Slider_admin_model extends CI_Model {
 	*/
 	public function get_product_info($id){
 		$id = intval($id);
+
 		$product_info = $this->db->where('product_id',$id)
 										->get('products')
 										->result_array();
+
 		if (empty($product_info)){
 			return array("error" => "нет такого товара");
 		}else{
@@ -85,9 +91,11 @@ class Slider_admin_model extends CI_Model {
     public function update_review($review_id,$review_status){
         $review_id = intval($review_id);
         $review_status = intval($review_status);
+
         $review_update = $this->db->where("review_id",$review_id)
                                                 ->set('review_is_delete',$review_status)
                                                 ->update('reviews');
+												
         if($review_update){
             return array("data" => true);
         }else{

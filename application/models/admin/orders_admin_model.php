@@ -15,7 +15,6 @@ class Orders_admin_model extends CI_Model {
 	*	@param int $offset - смещение
 	*/
 	public function get_orders($num,$offset){
-
 		$num = intval($num);
 		$offset = intval($offset);
 
@@ -28,7 +27,6 @@ class Orders_admin_model extends CI_Model {
 		}else{
 			return array("data" => $orders);
 		}
-
 	}
 
 	/*

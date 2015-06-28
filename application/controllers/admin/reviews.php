@@ -3,7 +3,6 @@
 class Reviews extends MY_Controller{
 
 	public function __construct(){
-
         parent::__construct();
 		$admin = $this->session->userdata('admin');
 		if($admin["allow_reviews"]==0){
@@ -35,7 +34,6 @@ class Reviews extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/reviews/reviews",$this->data,true);
 		$this->data["title"] = "Отзывы";
 		$this->admin_layout();
-
 	}
 
 
@@ -72,7 +70,6 @@ class Reviews extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/reviews/review_info",$this->data,true);
 		$this->data["title"] = "Редактирование отзыва";
 		$this->admin_layout();
-
 	}
 
 	/*

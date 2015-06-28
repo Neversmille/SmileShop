@@ -9,6 +9,7 @@ class Reviews_admin_model extends CI_Model {
     function get_reviews($num,$offset){
         $num = intval($num);
         $offset = intval($offset);
+
         $result = $this->db ->order_by('review_id', 'desc')
                                     ->get('reviews',$num,$offset)
                                     ->result_array();
@@ -21,6 +22,7 @@ class Reviews_admin_model extends CI_Model {
 
     public function get_review_info_by_id($id){
         $id = intval($id);
+
         $review_info = $this->db->where("review_id",$id)
                                             ->get('reviews')
                                             ->result_array();
@@ -40,6 +42,7 @@ class Reviews_admin_model extends CI_Model {
     public function update_review($review_id,$review_status){
         $review_id = intval($review_id);
         $review_status = intval($review_status);
+        
         $review_update = $this->db->where("review_id",$review_id)
                                                 ->set('review_is_delete',$review_status)
                                                 ->update('reviews');

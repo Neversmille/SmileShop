@@ -13,7 +13,7 @@ class Slider extends MY_Controller{
 
 	public function index($current_page="null") {
 		//Опции для пагинатора
-		$per_page =1;
+		$per_page = 5;
 		$page = intval($current_page);
 		if($page == 0){
 			$offset =0;
@@ -32,7 +32,6 @@ class Slider extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/slider/index",$this->data,true);
 		$this->data["title"] = "Отзывы";
 		$this->admin_layout();
-
 	}
 
 	public function add() {
@@ -160,12 +159,7 @@ class Slider extends MY_Controller{
 	*	Загрузка файла
 	*	@return array с информацией о загруженном файле
 	*/
-	/*
-	*	Загрузка файла
-	*	@return array с информацией о загруженном файле
-	*/
 	private function upload_file() {
-
 		//Правила загружаемного файла
 		$config['upload_path'] = 'asset/upload/slider';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -181,7 +175,6 @@ class Slider extends MY_Controller{
 		}else {
 			return array("result" => false, "file_error" => $this->upload->display_errors());
 		}
-
 	}
 
 	/*

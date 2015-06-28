@@ -7,7 +7,7 @@
 			<?php if(isset($add)) echo "<div class='update green'>Товар добавлен!!</div>";?>
 		    <div class="span12">
 				<div class="parse-wrap">
-					<div class="btn-group">
+					<div class="btn-group control-left">
 						<a href="javascript:void(0)" class="parse-link"><button class="btn btn-success product_add">Спарсить c price.ua</button></a>
 					</div>
 				</div>

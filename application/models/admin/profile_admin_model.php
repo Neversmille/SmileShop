@@ -7,6 +7,7 @@ class Profile_admin_model extends CI_Model {
 	*/
 	public function get_admin_data($admin_id){
 		$admin_id = intval($admin_id);
+
 		$admin_data = $this->db->select('admin_email,admin_name')
 										->where('admin_id',$admin_id)
 										->get('admin_users')
@@ -20,6 +21,7 @@ class Profile_admin_model extends CI_Model {
 
 	public function check_admin_pass($admin_id,$pass) {
         $admin_id = intval($admin_id);
+
         $admin_data = $this->db->where("admin_id",$admin_id)
                         				->get('admin_users')
                         				->result_array();
@@ -38,6 +40,7 @@ class Profile_admin_model extends CI_Model {
 
 	public function update_admin_pass($admin_id,$newpass){
 		$admin_id = intval($admin_id);
+
 		$this->load->library('passwordhash');
 		$newpass = $this->passwordhash->HashPassword($newpass);
 		$update = $this->db->where('admin_id', $admin_id)
@@ -53,6 +56,7 @@ class Profile_admin_model extends CI_Model {
 
 	public function update_admin_info($admin_id,$data){
 		$admin_id = intval($admin_id);
+
 		if(!is_array($data)){
 			return array("error" => "неверный тип аргумента");
 		}
@@ -68,6 +72,7 @@ class Profile_admin_model extends CI_Model {
 
 	public function update_admin_session($admin_id){
 		$admin_id = intval($admin_id);
+		
 		$admin_data = $this->get_admin_data($admin_id);
 		if(isset($admin_data["error"])){
 			show_404("произошла непредвиденная ошибка");

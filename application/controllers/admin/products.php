@@ -12,18 +12,18 @@ class Products extends MY_Controller{
     }
 
 	public function index($current_page="null") {
-		$this->load->model('admin/products_model');
+		$this->load->model('admin/products_admin_model');
 		//Опции для пагинатора
-		$per_page = 5;
+		$per_page = 10;
 		$page = intval($current_page);
 
-		$this->products_model->set_pagination($per_page,$page);
+		$this->products_admin_model->set_pagination($per_page,$page);
 		if($page == 0){
 			$offset =0;
 		} else{
 			$offset = ($page-1)*$per_page;
 		}
-		$products= $this->products_model->get_products($per_page,$offset);
+		$products= $this->products_admin_model->get_products($per_page,$offset);
 		if (isset($products["error"])){
 			$products = array();
 		}else{
@@ -35,7 +35,6 @@ class Products extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/products/products",$this->data,true);
 		$this->data["title"] = "Товары";
 		$this->admin_layout();
-
 	}
 
 	/*
@@ -47,7 +46,7 @@ class Products extends MY_Controller{
 			$this->data["add"] = true;
 		}
 
-		$this->load->model('admin/products_model');
+		$this->load->model('admin/products_admin_model');
 
 		//Проверяем отправлен ли запрос на регистрацию
 		if(null!==$this->input->post('add')){
@@ -75,7 +74,7 @@ class Products extends MY_Controller{
 					//Проверяем удалась ли загрузка файла, либо возникла ошибка
 					if ($file["result"]) {
 						$add_data["product_img"] = $file["file_name"];
-						$add_product = $this->products_model->add_product($add_data);
+						$add_product = $this->products_admin_model->add_product($add_data);
 						if (isset($add_product["error"])){
 							show_404("ошибка добавления данных товара");
 						}
@@ -91,7 +90,7 @@ class Products extends MY_Controller{
 						}
 					}
 
-					$add_product = $this->products_model->add_product($add_data);
+					$add_product = $this->products_admin_model->add_product($add_data);
 					if (isset($add_product["error"])){
 						show_404("ошибка добавления комментария");
 					}
@@ -103,16 +102,15 @@ class Products extends MY_Controller{
 		}
 
 		$this->data["add_status"] = false;
-		$this->load->model('product_model');
 
-		$products_category = $this->products_model->get_products_category();
+		$products_category = $this->products_admin_model->get_products_category();
 		if (isset($products_category["error"])){
 			$products_category = array();
 		}else{
 			$products_category = $products_category["data"];
 		}
 
-		$products_firm = $this->products_model->get_products_firm();
+		$products_firm = $this->products_admin_model->get_products_firm();
 		if (isset($products_firm["error"])){
 			$products_firm = array();
 		}else{
@@ -125,7 +123,6 @@ class Products extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/products/product_add_form",$this->data,true);
 		$this->data["title"] = "Добавление товара";
 		$this->admin_layout();
-
 	}
 
 
@@ -133,12 +130,11 @@ class Products extends MY_Controller{
 	*	Страница редактирования товара
 	*/
 	public function product($url = null){
-
 		if(is_null($url)) {
 			show_404("Запрашиваемый товар не найден");
 		}
 
-		$this->load->model('admin/products_model');
+		$this->load->model('admin/products_admin_model');
 
 		//Проверяем отправлен ли запрос на регистрацию
 		if(null!==$this->input->post('update_product')){
@@ -166,7 +162,7 @@ class Products extends MY_Controller{
 					//Проверяем удалась ли загрузка файла, либо возникла ошибка
 					if ($file["result"]) {
 						$update_data["product_img"] = $file["file_name"];
-						$update_product = $this->products_model->update_product($product_id,$update_data);
+						$update_product = $this->products_admin_model->update_product($product_id,$update_data);
 						if (isset($update_product["error"])){
 							show_404("ошибка обновления данных товара");
 						}
@@ -174,7 +170,7 @@ class Products extends MY_Controller{
 						$this->data["file_error"] = $file["file_error"];
 					}
 				}else{
-					$update_product = $this->products_model->update_product($product_id,$update_data);
+					$update_product = $this->products_admin_model->update_product($product_id,$update_data);
 					if (isset($update_product["error"])){
 						show_404("ошибка добавления комментария");
 					}
@@ -193,13 +189,13 @@ class Products extends MY_Controller{
 		}
 		$product_info = $product_info["data"];
 
-		$products_category = $this->products_model->get_products_category();
+		$products_category = $this->products_admin_model->get_products_category();
 		if (isset($products_category["error"])){
 			$products_category = array();
 		}else{
 			$products_category = $products_category["data"];
 		}
-		$products_firm = $this->products_model->get_products_firm();
+		$products_firm = $this->products_admin_model->get_products_firm();
 
 		if (isset($products_firm["error"])){
 			$products_firm = array();
@@ -214,7 +210,6 @@ class Products extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/products/product_edit_form",$this->data,true);
 		$this->data["title"] = "Товары";
 		$this->admin_layout();
-
 	}
 
 	/*
@@ -222,7 +217,6 @@ class Products extends MY_Controller{
 	*	@return array с информацией о загруженном файле
 	*/
 	private function upload_file() {
-
 		//Правила загружаемного файла
 		$config['upload_path'] = 'asset/upload/catalog';
 		$config['allowed_types'] = 'gif|jpg|png';
@@ -238,7 +232,6 @@ class Products extends MY_Controller{
 		}else {
 			return array("result" => false, "file_error" => $this->upload->display_errors());
 		}
-
 	}
 
 
@@ -247,7 +240,7 @@ class Products extends MY_Controller{
 	*	@param string $url
 	*/
 	public function check_unique_url($url){
-		$check = $this->products_model->check_unique_url($url);
+		$check = $this->products_admin_model->check_unique_url($url);
 		if(isset($check["data"])) {
 			return true;
 		}else{
@@ -262,7 +255,6 @@ class Products extends MY_Controller{
 	*	@param string $url
 	*/
 	public function check_price($price){
-
 		if(preg_match("/^[0-9]{0,6}(.[0-9]{0,2})$/",$price)){
 			return true;
 		}else{
@@ -276,7 +268,7 @@ class Products extends MY_Controller{
 	*	@param string $url
 	*/
 	public function check_unique_edit_url($url){
-		$check = $this->products_model->check_unique_edit_url($this->edit_id,$url);
+		$check = $this->products_admin_model->check_unique_edit_url($this->edit_id,$url);
 		if(isset($check["data"])) {
 			return true;
 		}else{
@@ -288,20 +280,19 @@ class Products extends MY_Controller{
 
 
 	private function file_upload_by_url($img_url){
-	$handle = fopen($img_url, 'rb');
-	$img = new Imagick();
-	$img->readImageFile($handle);
-	$format =$img->getImageFormat();
-	$format = strtolower($format);
-	var_dump($format);
-	if ($format=='gif' || $format=='jpg' || $format=='jpeg' || $format=='bmp'){
-		$name = md5(time().rand(1,100));
-		$img->writeImage('asset/upload/catalog/'.$name.'.'.$format);
-		return array("data" => $name.'.'.$format);
-	}
+		$handle = fopen($img_url, 'rb');
+		$img = new Imagick();
+		$img->readImageFile($handle);
+		$format =$img->getImageFormat();
+		$format = strtolower($format);
+		var_dump($format);
+		if ($format=='gif' || $format=='jpg' || $format=='jpeg' || $format=='bmp'){
+			$name = md5(time().rand(1,100));
+			$img->writeImage('asset/upload/catalog/'.$name.'.'.$format);
+			return array("data" => $name.'.'.$format);
+		}
 
-	return array("error" => "неверный формат файла");
-
+		return array("error" => "неверный формат файла");
 	}
 
 }

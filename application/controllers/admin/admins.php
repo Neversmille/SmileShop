@@ -14,9 +14,8 @@ class Admins extends MY_Controller{
 	}
 
 	public function index($current_page="null") {
-
 		//Опции для пагинатора
-		$per_page =1;
+		$per_page = 5;
 		$page = intval($current_page);
 
 		//Параметр смещения для запроса
@@ -130,7 +129,6 @@ class Admins extends MY_Controller{
 	*	Изменения пароля администратора
 	*/
 	public function editpass($id){
-
 		$id = intval($id);
 
 		if(null!==$this->input->post('edit_pass')){
@@ -154,7 +152,6 @@ class Admins extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/admins/admin_edit_pass_form",$this->data,true);
 		$this->data["title"] = "Редактирование учетной записи администратора";
 		$this->admin_layout();
-
 	}
 
 
@@ -165,7 +162,6 @@ class Admins extends MY_Controller{
 	*	@param string $email
 	*/
 	public function unique_email($email){
-
 		$check = $this->admins_model->check_email($email);
 		if(isset($check["data"])) {
 			return true;
@@ -180,7 +176,6 @@ class Admins extends MY_Controller{
 	*	@param int $value
 	*/
 	public function check_is_active($value){
-
 		$value = intval($value);
 		if($value===1||$value===0){
 			return true;

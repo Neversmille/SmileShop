@@ -128,6 +128,28 @@ $(document).ready(function(){
 
 	});
 
+	$("#admin-login").validate({
+
+		rules:{
+
+			email:{
+				required: true,
+				minlength: 5,
+				maxlength: 40,
+				email: true
+			},
+
+			password:{
+				required: true,
+				minlength: 5,
+				maxlength: 20
+			}
+		}
+
+	});
+
+
+
 	$("#firm_edit").validate({
 
 		rules:{
@@ -489,6 +511,8 @@ $(document).ready(function(){
 		}
 
 	});
+
+
 
 
 });

@@ -1,19 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Products_model extends CI_Model {
+class Products_admin_model extends CI_Model {
 
 	/*
 	*	Получение списка категорий товаров
 	*/
 	public function get_products_category(){
-
 		$categories = $this->db->get('categories')
-									->result_array();
+								->result_array();
+
 		if(empty($categories)) {
 			return array("error" => "нет категорий");
 		}else{
 			return array("data" => $categories);
 		}
-
 	}
 
 	public function get_products_count(){
@@ -27,37 +26,33 @@ class Products_model extends CI_Model {
 	*	@param int $offset - смещение
 	*/
 	public function get_products($num,$offset){
-
 		$num = intval($num);
 		$offset = intval($offset);
-		
+
 		$products = $this->db->join('categories', 'product_category_id = category_id', 'left')
-										->order_by('product_id','desc')
-										->get('products',$num,$offset)
-										->result_array();
+									->order_by('product_id','desc')
+									->get('products',$num,$offset)
+									->result_array();
 
 		if(empty($products)){
 			return array("error" => "нет товара");
 		}else{
 			return array("data" => $products);
 		}
-
 	}
 
 	/*
 	*	Получение списка фирм
 	*/
 	public function get_products_firm(){
-
 		$firms = $this->db->get('firms')
-								->result_array();
+		->result_array();
 
 		if(empty($firms)){
 			return array("error" => "нет фирм");
 		}else{
 			return array("data" => $firms);
 		}
-
 	}
 
 	/*
@@ -67,14 +62,18 @@ class Products_model extends CI_Model {
 	*/
 	public function update_product($product_id,$update_data){
 		$product_id = intval($product_id);
+		if(!is_array($update_data)){
+			return array("error" => "неверный тип аргумента");
+		}
+
 		$update = $this->db->where('product_id', $product_id)
 								->update('products', $update_data);
+
 		if($update){
 			return array("data" => "товар обновлен");
 		}else{
 			return array("error" => "ошибка обновления товара");
 		}
-
 	}
 
 	/*
@@ -91,7 +90,6 @@ class Products_model extends CI_Model {
 		}else{
 			return array("error" => "ошибка добавления товара");
 		}
-
 	}
 
 	/*
@@ -111,7 +109,6 @@ class Products_model extends CI_Model {
 		}else{
 			return array("error" => "url занят");
 		}
-
 	}
 
 	/*
@@ -139,12 +136,11 @@ class Products_model extends CI_Model {
 				return array("data" => true);
 			}
 		}
-
 	}
 
 	/*
 	*    Формирование и инициализация массива опций пагинатора
-	*    @param int $per_page - колчество комментариев на странице
+	*    @param int $per_page
 	*    @param int $page - текущий номер страницы
 	*/
 	function set_pagination($per_page,$page){
@@ -176,6 +172,5 @@ class Products_model extends CI_Model {
 		$config['total_rows'] = $this->get_products_count();
 		$this->pagination->initialize($config);
 	}
-
 
 }

@@ -1,7 +1,6 @@
 /** Home Page **/
 html {
 	min-height: 100%;
-	margin-bottom: 30px;
 	position: relative;
 }
 
@@ -258,7 +257,7 @@ body {
 	bottom: 0;
 }
 
-.parse-wrap {
+.control-left {
 	margin-left: 180px;
 }
 
@@ -291,4 +290,8 @@ font-weight: 700;
 
 .hidden {
 	display: none;
+}
+
+.controls {
+	 margin-left: 180px;
 }

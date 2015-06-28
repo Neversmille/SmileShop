@@ -14,7 +14,7 @@ class Orders extends MY_Controller{
 	public function index($current_page="null") {
 		$this->load->model('admin/orders_admin_model');
 		//Опции для пагинатора
-		$per_page =2;
+		$per_page = 10;
 		$page = intval($current_page);
 		if($page == 0){
 			$offset =0;
@@ -34,7 +34,6 @@ class Orders extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/orders/index",$this->data,true);
 		$this->data["title"] = "Заказы";
 		$this->admin_layout();
-
 	}
 
 	/*
@@ -78,7 +77,6 @@ class Orders extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/orders/order_edit_form",$this->data,true);
 		$this->data["title"] = "Редактирование фирмы";
 		$this->admin_layout();
-
 	}
 
 	function check_status($status){

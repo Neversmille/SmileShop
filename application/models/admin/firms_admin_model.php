@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Firms_model extends CI_Model {
+class Firms_admin_model extends CI_Model {
 
 	/*
 	*	Получение количества фирм
@@ -15,24 +15,22 @@ class Firms_model extends CI_Model {
 	*	@param int $offset - смещение
 	*/
 	public function get_firms($num,$offset){
-
 		$num = intval($num);
 		$offset = intval($offset);
 
 		$firms = $this->db->order_by('firm_id','desc')
-										->get('firms',$num,$offset)
-										->result_array();
+								->get('firms',$num,$offset)
+								->result_array();
 
 		if(empty($firms)){
 			return array("error" => "нет фирм");
 		}else{
 			return array("data" => $firms);
 		}
-
 	}
 
 	/*
-	*	Добавление фиормы
+	*	Добавление фирмы
 	*	@pararm array $add_data
 	*/
 	public function add_firm($add_data){
@@ -90,8 +88,8 @@ class Firms_model extends CI_Model {
 
 	/*
 	*    Формирование и инициализация массива опций пагинатора
-	*    @param int $per_page - колчество комментариев на странице
-	*    @param int $page - текущий номер страницы
+	*    @param int $per_page
+	*    @param int $page
 	*/
 	function set_pagination($per_page,$page){
 		$per_page = intval($per_page);
@@ -133,14 +131,13 @@ class Firms_model extends CI_Model {
 		}
 
 		$name_count = $this->db->where('firm_name',$name)
-									->count_all_results('firms');
+										->count_all_results('firms');
 
 		if($name_count == 0) {
 			return array("data" => true);
 		}else{
 			return array("error" => "name занят");
 		}
-
 	}
 
 
@@ -156,8 +153,8 @@ class Firms_model extends CI_Model {
 		}
 
 		$id_name = $this->db->where("firm_id",$id)
-								->where("firm_name",$name)
-								->count_all_results('firms');
+									->where("firm_name",$name)
+									->count_all_results('firms');
 
 		if ($id_name === 1){
 			return array("data" => true);
@@ -169,7 +166,6 @@ class Firms_model extends CI_Model {
 				return array("data" => true);
 			}
 		}
-
 	}
 
 }

@@ -3,7 +3,6 @@
 class Profile extends MY_Controller{
 
 	public function index() {
-
 		$admin_info = $this->session->userdata('admin');
 		$admin_id = $admin_info["admin_id"];
 		$this->load->model('admin/profile_admin_model');
@@ -16,11 +15,9 @@ class Profile extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/profile/index",$this->data,true);
 		$this->data["title"] = "Профайл администратора";
 		$this->admin_layout();
-
 	}
 
 	public function changepass() {
-
 		$admin_info = $this->session->userdata('admin');
 		$admin_id = $admin_info["admin_id"];
 		$this->load->model('admin/profile_admin_model');
@@ -45,11 +42,9 @@ class Profile extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/profile/changepass",$this->data,true);
 		$this->data["title"] = "Профайл администратора";
 		$this->admin_layout();
-
 	}
 
 	public function changeinfo() {
-
 		$admin_info = $this->session->userdata('admin');
 		$admin_id = $admin_info["admin_id"];
 		$this->load->model('admin/profile_admin_model');
@@ -74,7 +69,6 @@ class Profile extends MY_Controller{
 		$this->data["middle"] = $this->load->view("admin/profile/changeinfo",$this->data,true);
 		$this->data["title"] = "Профайл администратора";
 		$this->admin_layout();
-
 	}
 
 
