@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 		parse = '<div class="control-group">'+
   					'<label class="control-label">Название на price.ua:</label>'+
-  						'<div class="controls">'+
+  						'<div class="controls parse-price-ua">'+
   							'<input type="text" name="product_name" value="" class="span3 m-wrap"><button class="parse btn btn-success product_add">Спарсить</button></div></div>';
 
 		$(".parse-wrap").append(parse);
@@ -23,6 +23,8 @@ function parseEvent() {
 	$(".parse").click(function(){
 		val = $(this).closest(".controls").find('input').val();
 		makeparse(val);
+		loading = "<i class='fa fa-spinner fa-spin loading'></i>";
+		$(".slider-add").append(loading);
 	});
 }
 
@@ -37,7 +39,7 @@ function makeparse(name){
 			console.log("response ajax/parse:" ,data[0].data);
 			data = data[0].data;
 			console.log(data.product_name);
-
+			$(".loading").remove();
 			$(".product_name").val(data.product_name);
 			$(".product_url").val(data.product_url);
 			$(".product_description").val(data.product_descr);

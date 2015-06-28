@@ -31,10 +31,7 @@ function showMoreEvent(){
 		$('.catalog-show-more-icon i').addClass("fa-spin");
 		// Catalog.more(per_page);
 
-		//Эмитация загрузки
-		setTimeout(function(){
-			Catalog.more(per_page);
-		}, 2000);
+		Catalog.more(per_page);
     });
 }
 
@@ -74,7 +71,6 @@ var Catalog = {
 	            url: '/ajax/catalog_show_more',
 	            data: msg,
 	            success: function(data){
-
 				if (data=="false") {
 					$(".catalog-show-more-text").text('произошла ошибка =(');
 					$('.catalog-show-more-icon i').removeClass("fa-spin");
@@ -87,7 +83,7 @@ var Catalog = {
 	              console.log("response /ajax/catalog_show_more" ,data);
 
 				//Url проекта
-				baseurl = "http://codeigniter.loc/";
+				baseurl = "http://st4.wwwomen.com.ua/";
 
 
 				//Формируем строку для вставки в dom дерево
@@ -102,7 +98,7 @@ var Catalog = {
 								'<h5><a href="'+baseurl+'product/'+data.products[i].product_url+'">'+data.products[i].product_name+'</a>'+
 							'</h5>'+
 								'<div class="clearfix">'+
-									'<p class="color capitalize">'+data.products[i].product_firm+'</p>'+
+									'<p class="color capitalize">'+data.products[i].firm_name+'</p>'+
 							'</div>'+
 								'<p class="catalog-descr">'+data.products[i].product_description+'</p>'+
 								'<hr />'+

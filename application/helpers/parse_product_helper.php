@@ -43,7 +43,7 @@ function parse($name){
 		$price = $matches["price"];
 		$price = trim($price);
 		$price = htmlentities($price);
-		$price = str_replace("&nbsp;", '',$price);
+		$price = str_replace(array("&nbsp;","&Acirc;"), '',$price);
 		$url = preg_replace("/[^a-zA-Z0-9_]/","_",$matches["product_name"]);
 
 		$product = array(

@@ -13,7 +13,7 @@
 								<!-- Caption -->
 								<div class="flex-caption">
 									<!-- Title -->
-									<h3><?=$slide['product_name'];?> - <span class="color"><?=$slide['product_price'];?> грн.</span></h3>
+									<h3><?=$slide['product_name'];?>  <span class="color"><?=$slide['product_price'];?> грн.</span></h3>
 									<!-- Para -->
 									<p><?=$slide['slider_description'];?></p>
 									<div class="button">

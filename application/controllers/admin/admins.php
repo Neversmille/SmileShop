@@ -6,7 +6,7 @@ class Admins extends MY_Controller{
 
 		parent::__construct();
 		$admin = $this->session->userdata('admin');
-		if($admin["allow_admins"]==0){
+		if($admin["allow_admins"]!=1){
 			redirect('/admin/index/denied');
 		}
 		$this->load->model('admin/admins_model');

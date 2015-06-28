@@ -9,6 +9,8 @@ function parseEvent() {
 	$(".get-product").click(function(){
 		val = $(this).closest(".get-product-wrap").find('input').val();
 		getproduct(val);
+		loading = "<i class='fa fa-spinner fa-spin loading'></i>";
+		$(".parse-price-ua").append(loading);
 	});
 }
 
@@ -25,6 +27,7 @@ function getproduct(id){
 			$(".product_price").text(data.product_price+" грн");
 			$("form").removeClass("hidden");
 			$("input[name = slider_product_id]").val(data.product_id);
+			$(".loading").remove();
 		},
 		error:  function(xhr, str){
 			console.log('Возникла ошибка: ' + xhr.responseCode);

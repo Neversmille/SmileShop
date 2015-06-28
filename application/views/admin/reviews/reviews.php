@@ -41,7 +41,7 @@
 				        <tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php if(empty($reviews)):?>
 								<tr>
-									Нет фирм
+									<td colspan="4">Нет отзывов</td>
 								</tr>
 							<?php else:?>
 								<?php foreach($reviews as $review):?>

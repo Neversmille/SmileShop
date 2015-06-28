@@ -7,7 +7,7 @@
 		    <div class="span12">
 				<div class="get-product-wrap clearfix">
 						<label class="control-label">ID товара в каталоге:</label>
-					<div class="btn-group">
+					<div class="btn-group slider-add">
 							<input type="text" name="slider_position" value="" class="span2 m-wrap slider_position">
 							<a href="javascript:void(0)" class="get-product-link"><button class="btn btn-success get-product">Получить информацию</button></a>
 					</div>

@@ -24,8 +24,9 @@ class Catalog extends MY_Controller{
 			$products = $this->catalog_model->get_random_hot_products(8);
 			if (isset($products["error"])) {
 				$products = array();
+			}else{
+				$products = $products["data"];
 			}
-			$products = $products["data"];
 			$this->data["products"] = $products;
 			$this->data["hot"] = $this->load->view("catalog/hot",$this->data,true);
 			$this->data["promo_menu"] = $this->load->view("catalog/promo_menu",$this->data,true);

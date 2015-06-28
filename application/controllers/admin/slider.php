@@ -6,7 +6,7 @@ class Slider extends MY_Controller{
 
         parent::__construct();
 		$admin = $this->session->userdata('admin');
-		if($admin["allow_slider"]==0){
+		if($admin["allow_slider"]!=1){
 			redirect('/admin/index/denied');
 		}
     }

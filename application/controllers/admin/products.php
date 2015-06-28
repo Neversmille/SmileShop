@@ -6,7 +6,7 @@ class Products extends MY_Controller{
 
         parent::__construct();
 		$admin = $this->session->userdata('admin');
-		if($admin["allow_products"]===0){
+		if($admin["allow_products"]!=1){
 			redirect('/admin/index/denied');
 		}
     }
@@ -285,7 +285,6 @@ class Products extends MY_Controller{
 		$img->readImageFile($handle);
 		$format =$img->getImageFormat();
 		$format = strtolower($format);
-		var_dump($format);
 		if ($format=='gif' || $format=='jpg' || $format=='jpeg' || $format=='bmp'){
 			$name = md5(time().rand(1,100));
 			$img->writeImage('asset/upload/catalog/'.$name.'.'.$format);

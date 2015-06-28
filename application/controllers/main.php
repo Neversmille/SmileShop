@@ -11,8 +11,9 @@ class Main extends MY_Controller{
 			$products = $this->catalog_model->get_random_hot_products(8);
 			if (isset($products["error"])) {
 				$products = array();
+			}else{
+				$products = $products["data"];
 			}
-			$products = $products["data"];
 
 			$slides = $this->catalog_model->get_main_slides();
 			if(isset($slides["error"])){
@@ -20,7 +21,7 @@ class Main extends MY_Controller{
 			}else{
 				$slides = $slides["data"];
 			}
-			
+
 			$this->data["slides"] = $slides;
 			$this->data["products"] = $products;
 			$this->data["hot"] = $this->load->view("catalog/hot",$this->data,true);

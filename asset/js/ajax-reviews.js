@@ -27,12 +27,9 @@ function showMoreEvent(){
 	$(".reviews-show-more").click(function(){
 		console.log("show-more-click");
 		$('.reviews-show-more-text i').addClass("fa-spin");
-		// Catalog.more(per_page);
-
-		//Эмитация загрузки
-		setTimeout(function(){
+		
 			Reviews.more(per_page);
-		}, 1000);
+
     });
 }
 

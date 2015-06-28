@@ -8,6 +8,7 @@ body {
 	padding-top: 0;
 	padding-bottom: 40px;
 	background-color: #f5f5f5;
+	position: relative;
 }
 
 
@@ -294,4 +295,19 @@ font-weight: 700;
 
 .controls {
 	 margin-left: 180px;
+}
+
+.parse-wrap .loading {
+	margin-left: 9px;
+	font-size: 1.8em;
+  	line-height: 2em;
+}
+
+.slider-add{
+	margin-left: 20px;
+}
+
+.get-product {
+	margin-top: -10px;
+	margin-left: 4px;
 }

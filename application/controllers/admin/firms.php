@@ -6,7 +6,7 @@ class Firms extends MY_Controller{
 
         parent::__construct();
 		$admin = $this->session->userdata('admin');
-		if($admin["allow_firms"]==0){
+		if($admin["allow_firms"]!=1){
 			redirect('/admin/index/denied');
 		}
     }
@@ -117,7 +117,7 @@ class Firms extends MY_Controller{
 	*	callback функция проверки уникальности url
 	*/
 	public function check_unique_name($name){
-		$check = $this->firms_model->check_unique_name($name);
+		$check = $this->firms_admin_model->check_unique_name($name);
 		if(isset($check["data"])) {
 			return true;
 		}else{
