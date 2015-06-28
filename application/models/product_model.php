@@ -17,6 +17,7 @@ class Product_model extends CI_Model {
 										->where('product_url', $url)
 										->get('products')
 										->result_array();
+
 		if (empty($product_info)){
 			return array("error" => "информация по данному продукту не найдена");
 		}else {
@@ -33,14 +34,17 @@ class Product_model extends CI_Model {
 		if(!is_array($product_info)){
 			return array("error" =>"некорректный тип аргумента");
 		}
+
 		$recent_items =  $this->session->userdata('recent_items');
 		if(!$recent_items){
 			$recent_items = array();
 		}
+
 		$recent_items[$product_info["product_id"]] = $product_info;
 		if (count($recent_items)>10) {
 			array_shift($recent_items);
 		}
+		
 		$this->session->set_userdata(array("recent_items"=>$recent_items));
 		return array("data" => true);
 	}

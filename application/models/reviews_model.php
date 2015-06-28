@@ -1,8 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Reviews_model extends CI_Model {
 
-
-
    /*
    *    Получение всех отзывов из базы данных
    *    @param int $num - количество
@@ -11,6 +9,7 @@ class Reviews_model extends CI_Model {
    function get_reviews($num,$offset){
        $num = intval($num);
        $offset = intval($offset);
+
        $result = $this->db->where('review_is_delete',0)
                                     ->order_by('review_id', 'desc')
                                    ->get('reviews',$num,$offset)
@@ -30,6 +29,7 @@ class Reviews_model extends CI_Model {
        if(!is_array($insert)){
            return array("error" => "неверный тип аргументов");
        }
+       
         $this->db->set('review_time', 'NOW()', FALSE);
         if($this->db->insert('reviews', $insert)){
             return array("data" => true);

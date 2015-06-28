@@ -20,11 +20,11 @@
             </div>
             <!-- Login form -->
             <div class="col-md-6">
-            <div class="formy well">
-                <h4 class="title">Авторизация</h4>
-                <?=$form;?>
+                <div class="formy well">
+                    <h4 class="title">Авторизация</h4>
+                    <?=$form;?>
+                </div>
             </div>
         </div>
     </div>
-  </div>
 </div>

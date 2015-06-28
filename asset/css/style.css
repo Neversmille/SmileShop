@@ -1752,3 +1752,29 @@ header .hlinks > span.vk {
 .input-group .form-control{
 	z-index: 0
 }
+
+.search-button{
+	position: absolute;
+	right: 52px;
+	top: 0px;
+}
+
+.input-group .form-control.search-input{
+	width: 227px;
+	margin-right: 54px;
+}
+
+.search-page-button{
+	position: absolute;
+	right: 52px;
+	top: 0px;
+}
+
+.search-page-input{
+	width: 100%;
+	margin-right: 54px;
+}
+
+.search-page-wrap{
+	width: 100%;
+}

@@ -65,10 +65,9 @@ class Catalog extends MY_Controller{
 		$category_info = $category_info["data"];
 		$category_id = $category_info["category_id"];
 
-
 		//Устанавливаем количество товаров на странице и получаем общее
 		//количество товаров данной категории
-		$per_page = 2;
+		$per_page = 8;
 		$total_rows = $this->catalog_model->get_products_count_by_category($category_id,$filter);
 		if (isset($total_rows["error"])){
 			show_404("По вашему запросу ничего не найдено");
@@ -105,6 +104,7 @@ class Catalog extends MY_Controller{
 		}else{
 			$this->data["product_firm"] =$category_info["category_name"];
 		}
+
 		$this->data["products"] = $products;
 		$this->data["firm_list"] = $firm_list;
 		$this->data["category"] = $alias;
@@ -118,9 +118,9 @@ class Catalog extends MY_Controller{
 		array_push($this->js, 'ajax-catalog.js');
 		$this->middle = 'catalog/products';
 		$this->layout();
-
 	}
 
+	//Обработка запроса поиска
 	public function find(){
 		if(null!==$this->input->post('search')){
 			$search = $this->input->post('search',TRUE);
@@ -129,6 +129,7 @@ class Catalog extends MY_Controller{
 		}
 	}
 
+	//Страница результатов поиска
 	public function search($search=''){
 		if(!empty($search)){
 			$this->load->helper('security');
@@ -141,7 +142,8 @@ class Catalog extends MY_Controller{
 			}else{
 				$page = null;
 			}
-			$per_page = 5;
+
+			$per_page = 9;
 
 			if($page == 0){
 				$offset =0;
@@ -155,23 +157,21 @@ class Catalog extends MY_Controller{
 				show_404("Неверно заданый поиск");
 			}
 			$products = $products["data"];
+
 			$total_rows = $this->catalog_model->get_search_count($query);
 			if(isset($total_rows["error"])){
 				show_404("Возникла непридвиденная ошибка");
 			}
 			$total_rows = $total_rows["data"];
+
 			$this->catalog_model->set_search_pagination($per_page,$page,$total_rows,$query);
 			$this->data["search_count"] = $total_rows;
 			$this->data["products"] = $products;
 			$this->data["search_text"] = $query;
 		}
 
-
 		$this->middle = 'catalog/search';
 		$this->layout();
-
-
 	}
-
 
 }

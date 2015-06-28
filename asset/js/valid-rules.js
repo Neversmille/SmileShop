@@ -160,6 +160,35 @@ $(document).ready(function(){
 
     });
 
+	$("#search").validate({
+
+        rules:{
+
+            search:{
+                required: true,
+                minlength: 2,
+                maxlength: 40,
+            }
+
+        }
+
+    });
+
+	$("#page-search").validate({
+
+        rules:{
+
+            search:{
+                required: true,
+                minlength: 2,
+                maxlength: 40,
+            }
+
+        }
+
+    });
+
+
 });
 
 jQuery.extend(jQuery.validator.messages, {

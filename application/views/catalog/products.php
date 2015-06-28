@@ -5,15 +5,15 @@
 				<h5 class="title">Фильтры</h5>
 				<?=$firms;?>
 				<br />
-			  </div>
+			</div>
 
-			  <div class="col-md-9 col-sm-9">
+			<div class="col-md-9 col-sm-9">
 
 				<!-- Breadcrumb -->
 				<ul class="breadcrumb" data-product=<?=$product;?>>
-				  <li><a href="<?=base_url();?>">Главная</a></li>
-				  <li><a href="<?=base_url().'catalog';?>">Каталог</a></li>
-				  <li class="active category" data-category="<?=$category_id;?>"><a href="<?=base_url().'catalog/'.$category;?>"><?=$category_name;?></a></li>
+					<li><a href="<?=base_url();?>">Главная</a></li>
+					<li><a href="<?=base_url().'catalog';?>">Каталог</a></li>
+					<li class="active category" data-category="<?=$category_id;?>"><a href="<?=base_url().'catalog/'.$category;?>"><?=$category_name;?></a></li>
 				</ul>
 
 				<!-- Title -->
@@ -53,38 +53,38 @@
 										<h5><a href="<?=base_url().'product/'.$value['product_url'];?>"><?=$value['product_name'];?></a>
 											<?php if ($value['product_hot']):?>
 												<span class="ico">
-												<img src="/asset/img/hot.png" alt="" /></span>
-											<?php endif;?>
-										</h5>
-										<div class="clearfix">
-											<p class="color capitalize"><?php echo $value['firm_name'];?></p>
+													<img src="/asset/img/hot.png" alt="" /></span>
+												<?php endif;?>
+											</h5>
+											<div class="clearfix">
+												<p class="color capitalize"><?php echo $value['firm_name'];?></p>
+											</div>
+											<!-- Para. Note more than 2 lines. -->
+											<p class="catalog-descr"><?php echo $value['product_description'];?></p>
+											<hr />
+											<!-- Price -->
+											<div class="item-price pull-left"><?=$value['product_price'];?> грн</div>
+											<!-- Add to cart -->
+											<div class="button pull-right product-add-to-order">
+												<input class="product-amount" type="hidden" value=1>
+												<a class="itemsAdd product-add" href="javascript:void( 0 )" data-id="<?=$value['product_id'];?>">В корзину</a>
+											</div>
+											<div class="clearfix"></div>
 										</div>
-										<!-- Para. Note more than 2 lines. -->
-										<p class="catalog-descr"><?php echo $value['product_description'];?></p>
-										<hr />
-										<!-- Price -->
-										<div class="item-price pull-left"><?=$value['product_price'];?> грн</div>
-										<!-- Add to cart -->
-										<div class="button pull-right product-add-to-order">
-											<input class="product-amount" type="hidden" value=1>
-											<a class="itemsAdd product-add" href="javascript:void( 0 )" data-id="<?=$value['product_id'];?>">В корзину</a>
-										</div>
-										<div class="clearfix"></div>
 									</div>
 								</div>
+							<?php endforeach;?>
+						<?php endif;?>
+					</div>
+					<div class="row">
+						<div class="col-md-9 col-sm-9">
+							<!-- Pagination -->
+							<div class="paging">
+								<?php echo $this->pagination->create_links(); ?>
 							</div>
-						<?php endforeach;?>
-					<?php endif;?>
-				</div>
-				<div class="row">
-					<div class="col-md-9 col-sm-9">
-						<!-- Pagination -->
-						<div class="paging">
-							<?php echo $this->pagination->create_links(); ?>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-  	</div>
-</div>
+	</div>

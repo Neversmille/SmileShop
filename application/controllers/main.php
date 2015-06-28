@@ -13,12 +13,14 @@ class Main extends MY_Controller{
 				$products = array();
 			}
 			$products = $products["data"];
+
 			$slides = $this->catalog_model->get_main_slides();
 			if(isset($slides["error"])){
 				$slides = array();
 			}else{
 				$slides = $slides["data"];
 			}
+			
 			$this->data["slides"] = $slides;
 			$this->data["products"] = $products;
 			$this->data["hot"] = $this->load->view("catalog/hot",$this->data,true);

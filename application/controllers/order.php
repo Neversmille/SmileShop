@@ -8,9 +8,11 @@ class Order extends MY_Controller{
 			$this->data["client_info"] = $this->session->userdata("account");
 			$client_id = $this->data["client_info"]["client_id"];
 			$client_email = $this->data["client_info"]["client_email"];
+
 			$this->load->library('form_validation');
 			$this->load->model('rules_model');
 			$this->form_validation->set_rules($this->rules_model->order_errors());
+
 			$this->data["order_block"] = $this->load->view("order/order_form",$this->data,true);
 
 			if(null!==$this->input->post('order')){

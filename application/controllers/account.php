@@ -3,26 +3,21 @@
 class Account extends MY_Controller{
 
 	function __construct(){
-
 		parent::__construct();
 		$this->load->library('passwordhash');
 		$this->load->library('form_validation');
 		$this->load->model('account_model');
 		$this->load->model('rules_model');
-
 	}
 
 	public function index(){
-
 		show_404();
-
 	}
 
 	/*
 	*	Регистрация пользователя
 	*/
 	public function register(){
-
 		//Проверяем авторизирован ли пользователь
 		if (!$this->check_login_status()) {
 
@@ -34,6 +29,7 @@ class Account extends MY_Controller{
 
 				//Проверям валидацию
 				if($check){
+
 					//Формируем массив клиентских данных, прошедшых валидацию и фильтры
 					$client_data["client_name"] = $this->input->post('name');
 					$client_data["client_lastname"] = $this->input->post('lastname');
@@ -45,10 +41,14 @@ class Account extends MY_Controller{
 					if (isset($add_client["error"])){
 						show_404("Ошибка регистрации аккаунта");
 					}
+
+					//Авторизируем пользователя после успешной регистрации
 					$client_auth = $this->account_model->client_auth($client_data["client_email"],$this->input->post('password'));
 					if (isset($client_auth["error"])){
 						show_404("Ошибка авторизации");
 					}
+
+					//Отправляем почту с регистрационными данными
 					$this->account_model->send_email($client_data["client_email"],$this->input->post('password'));
 					redirect($this->uri->uri_string());
 				}
@@ -69,7 +69,6 @@ class Account extends MY_Controller{
 	*	Авторизация пользователя
 	*/
 	public function login() {
-
 		//Проверяем авторизован ли пользователь
 		if (!$this->check_login_status()) {
 
@@ -80,12 +79,14 @@ class Account extends MY_Controller{
 
 				//Проверяем успешность валидации
 				if($check){
+
 					//Получаем введенные пользователем данные прошедшие валидацию и фильтры
 					$client_email = $this->input->post('email');
 					$client_password = $this->input->post('password');
 
 					//Пытаемся авторизировать
 					$client_auth = $this->account_model->client_auth($client_email,$client_password);
+
 					if(isset($client_auth["data"])){
 						redirect($this->uri->uri_string());
 					}else{
@@ -102,7 +103,6 @@ class Account extends MY_Controller{
 		$this->data["title"] = "Авторизация";
 		$this->middle = 'account/login';
 		$this->layout();
-
 	}
 
 	/*
@@ -128,6 +128,7 @@ class Account extends MY_Controller{
 
 		//Проверяем существует ли пользователь с таким  id
 		$check_soc_id = $this->account_model->check_soc_id($getToken->user_id);
+
 		if(isset($check_soc_id["data"])){
 			$auth = $this->account_model->soc_client_auth($getToken->user_id);
 			if(isset($auth["error"])){
@@ -165,10 +166,8 @@ class Account extends MY_Controller{
 	*	Logout пользователя
 	*/
 	public function logout(){
-
 		$this->session->unset_userdata("account");
 		redirect(base_url(),'refresh');
-
 	}
 
 	/*

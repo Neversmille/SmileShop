@@ -6,7 +6,6 @@ class Ajax extends MY_Controller{
 	*	@param	string $action - выполняемое действие
 	*/
 	public function index($action) {
-
 		$this->output->set_content_type('application/json');
 
 			$this->load->model('ajax_model');
@@ -47,9 +46,6 @@ class Ajax extends MY_Controller{
 			}else{
 				$this->output->set_output(json_encode(array(false)));
 			}
-
-
-
 	}
 
 }

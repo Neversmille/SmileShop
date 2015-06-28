@@ -7,17 +7,18 @@ class Profile_model extends CI_Model {
     */
     public function get_orders_history($client_id) {
         $client_id = intval($client_id);
-        //Получение массива информации о заказах с client_id указнного клиента
+
+        //Получение массива информации о заказах по client_id
         $orders = $this->db->where('order_client_id',$client_id)
-                        ->order_by('order_id','desc')
-                        ->get('orders')
-                        ->result_array();
+                                    ->order_by('order_id','desc')
+                                    ->get('orders')
+                                    ->result_array();
+
         if (empty($orders)) {
             return array("error" => "по запросу ничего не найдено");
         }else{
             return array("data" => $orders);
         }
-
     }
 
     /*
@@ -31,6 +32,7 @@ class Profile_model extends CI_Model {
         if (empty($orders)){
             return array("error" => "нет заказов");
         }
+        
         //Формирование массива из order_id
         foreach ($orders as $value) {
             $orders_id[] = $value["order_id"];

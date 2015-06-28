@@ -4,7 +4,7 @@ class Order_model extends CI_Model {
     function __construct()
     {
         parent::__construct();
-		$this->load->model('catalog_model');
+        $this->load->model('catalog_model');
     }
 
     /*
@@ -19,6 +19,7 @@ class Order_model extends CI_Model {
         if(!is_array($basket) || !is_string($phone) || !is_string($client_email) || !is_string($text)){
             return array("error" => "неверный тип аргументов");
         }
+
         //Фомируем массив id товаров в корзине
         $products_id = array_keys($basket);
         $products_price = $this->get_all_products_price($products_id);
@@ -33,19 +34,21 @@ class Order_model extends CI_Model {
             $basket[$id]["product_price"] = $value["product_price"];
         }
 
-
+        //Подсчет общей стоимости корзины
         $totalCost = $this->count_total_cost($basket);
         if(isset($totalCost["error"])){
             return array("error" => "ошибка подсчета общей суммы");
         }
         $totalCost = $totalCost["data"];
 
+        //Добавление заказа в БД
         $order_id = $this->order_record($totalCost,$client_id,$text,$phone);
         if (isset($order_id["error"])){
             return array("error" => "ошибка добавления заказа");
         }
         $order_id = $order_id["data"];
 
+        //Добавление товаров к заказу в БД
         $add_order_products = $this->add_order_products($basket,$order_id);
         if (isset($add_order_products["error"])){
             return array("error" => "ошибка добавления товаров в заказ");
@@ -64,6 +67,7 @@ class Order_model extends CI_Model {
         if(!is_array($basket)){
             return array("error" => "аргумент должен быть типа array");
         }
+
         $totalCost = 0;
 
         foreach ($basket as  $value) {
@@ -75,7 +79,6 @@ class Order_model extends CI_Model {
         }else{
             return array("error" => "некорректная общая стоимость");
         }
-
     }
 
     /*
@@ -86,18 +89,18 @@ class Order_model extends CI_Model {
         if(!is_array($products_id)){
             return array("error" => "аргумент должен быть типа array");
         }
-        $prices = $this->db->select('product_id, product_price')
-                            ->where_in('product_id',$products_id)
-                            ->get('products')
-                            ->result_array();
 
-        //Проверяем для всех ли товаров была найдена цена
+        $prices = $this->db->select('product_id, product_price')
+                                    ->where_in('product_id',$products_id)
+                                    ->get('products')
+                                    ->result_array();
+
+        //Проверяем для всех ли товаров была присутствует цена
         if($prices&&(count($prices)==count($products_id))){
             return array("data" => $prices);
         }else {
             return array("error" => "ошибка получения цен");
         }
-
     }
 
     /*
@@ -114,14 +117,15 @@ class Order_model extends CI_Model {
         if (isset($id_check["error"])){
             return array("error" => "нет клиента с таким id");
         }
+
         $this->db->set('order_create_date', 'NOW()', FALSE);
         $data = array("order_price" => $order_price, "order_client_id" => $client_id, "order_text" => $order_text, "order_phone" => $order_phone);
+
         if($this->db->insert('orders',$data)){
             return array("data" => $this->db->insert_id());
         }else {
             return array("error" => "ошибка добавления зака");
         }
-
     }
 
     /*
@@ -130,8 +134,10 @@ class Order_model extends CI_Model {
     */
     public function check_client_id($client_id){
         $client_id = intval($client_id);
+
         $client = $this->db->where('client_id',$client_id)
                                     ->count_all_results('clients');
+
         if($client===1){
             return array("data" => true);
         }else{
@@ -150,10 +156,12 @@ class Order_model extends CI_Model {
             return array("error" => "неверный тип аргумента");
         }
         foreach ($basket as $key => $value) {
-            $array = array("orderItem_order_id" => $order_id,
+            $array = array(
+                                "orderItem_order_id" => $order_id,
                                 "orderItem_product_id" => $key,
-                                 "orderItem_amount" => $value["amount"],
-                                 "orderItem_price" => $value["product_price"]);
+                                "orderItem_amount" => $value["amount"],
+                                "orderItem_price" => $value["product_price"]
+                            );
             $data[] = $array;
         }
 
@@ -162,12 +170,11 @@ class Order_model extends CI_Model {
         }else{
             return array("error" => "ошибка добавления товаров в заказ");
         }
-
     }
 
 
     /*
-    *   Отправка почты с регистрационными данными
+    *   Отправка почты о заказе товаре
     *   @param string $email - пользовательская почта
     *   @param float $totalCost - общая сумма заказа
     */
@@ -185,9 +192,11 @@ class Order_model extends CI_Model {
         $config['charset'] = 'utf-8';
         $config['wordwrap'] = TRUE;
 
+        $to = array($email, "smoliarchuk@te.net.ua");
+
         $this->email->initialize($config);
         $this->email->from('admin@smileshop', 'Администрация');
-        $this->email->to($email);
+        $this->email->to($to);
         $this->email->subject($subject);
         $this->email->message($message);
         if($this->email->send()){
@@ -196,6 +205,5 @@ class Order_model extends CI_Model {
             return array("error" => "ошибка отправки почты");
         }
     }
-
 
 }

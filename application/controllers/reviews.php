@@ -59,17 +59,25 @@ class Reviews extends MY_Controller{
 		}
 
 		//Опции для пагинатора
-		$per_page = 5;
+		$per_page = 10;
 		$page = intval($current_page);
+
+		if($page == 0){
+			$offset =0;
+		} else{
+			$offset = ($page-1)*$per_page;
+		}
+
 
 		//Данные для отображения
 		$this->reviews_model->set_pagination($per_page,$page);
-		$reviews = $this->reviews_model->get_reviews($per_page,$page);
+		$reviews = $this->reviews_model->get_reviews($per_page,$offset);
 		if(isset($reviews["error"])){
 			$reviews = array();
 		}else{
 			$reviews = $reviews["data"];
 		}
+
 		$this->data["client_info"] = $this->session->userdata("account");
 		$this->data["form"] = $this->load->view("reviews/form_add_review",$this->data,true);
 		$this->data["reviews"] = $reviews;
@@ -84,7 +92,6 @@ class Reviews extends MY_Controller{
 	*	@return array с информацией о загруженном файле
 	*/
 	private function upload_file() {
-
 		//Правила загружаемного файла
 		$config['upload_path'] = 'asset/upload/reviews';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -100,7 +107,6 @@ class Reviews extends MY_Controller{
 		}else {
 			return array("result" => false, "file_error" => $this->upload->display_errors());
 		}
-
 	}
 
 }

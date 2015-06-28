@@ -1,19 +1,19 @@
 <div class="form form-small">
     <!-- Review form -->
     <form class="form-horizontal" method="POST" action="/reviews" enctype="multipart/form-data" id="reviews">
-         <!-- Review -->
-         <div class="form-group">
-             <label class="control-label col-md-3" for="name">Имя:</label>
-             <div class="col-md-8">
-                 <input type="text" class="form-control" id="name" name="name" value="<?=set_value('name',$client_info["client_name"]);?>"><?=form_error("name");?>
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="control-label col-md-3" for="text">eMail:</label>
-             <div class="col-md-8">
-                 <input type="text" class="form-control" id="email" name="email" value="<?=set_value('email',$client_info["client_email"]);?>"><?=form_error("email");?>
-             </div>
-         </div>
+        <!-- Review -->
+        <div class="form-group">
+            <label class="control-label col-md-3" for="name">Имя:</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="name" name="name" value="<?=set_value('name',$client_info["client_name"]);?>"><?=form_error("name");?>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3" for="text">eMail:</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="email" name="email" value="<?=set_value('email',$client_info["client_email"]);?>"><?=form_error("email");?>
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-md-3" for="text">Ваш отзыв:</label>
             <div class="col-md-8">

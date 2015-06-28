@@ -16,6 +16,6 @@
                     <a href="<?=base_url().'register';?>">На главную</a>
                 </p>
             </div>
+        </div>
     </div>
-  </div>
 </div>

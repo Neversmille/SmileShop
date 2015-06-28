@@ -26,8 +26,8 @@
 		</div>
 		<div class="form-group">
 			<div class="col-md-9 col-md-offset-3">
-			<button type="submit" class="btn btn-default" name="register">Зарегистрировать</button>
-			<button type="reset" class="btn btn-default">Очистить</button>
+				<button type="submit" class="btn btn-default" name="register">Зарегистрировать</button>
+				<button type="reset" class="btn btn-default">Очистить</button>
 			</div>
 		</div>
 	</form>

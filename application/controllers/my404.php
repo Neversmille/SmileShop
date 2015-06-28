@@ -2,10 +2,7 @@
 
 class my404 extends MY_Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     public function index($error = "Запрашиваемая Вами страница не найдена")
     {
@@ -15,4 +12,3 @@ class my404 extends MY_Controller
         $this->layout();
     }
 }
-?>
