@@ -136,7 +136,7 @@ class Account_model extends CI_Model {
 		}
 
 		$subject = "Интернет магазин SmileShop";
-		$message = "Поздравляем с успешной регистрацией.\rДанные для входа на сайт: login: ${email} pass:${pass}";
+		$message = "Поздравляем с успешной регистрацией.\rДанные для входа на сайт: login: ${email} pass: ${pass}";
 
 		$this->load->library('email');
 		$config['protocol'] = 'sendmail';

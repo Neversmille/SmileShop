@@ -11,13 +11,16 @@
 				<span class="order-cost">на <?=$order["order_price"];?> грн.</span>
 				<span class="order-date">от <?=$order["order_create_date"];?></span>
 				<?php if($order["order_complete"]==0)
-				echo "<span class='order-status'>выполняется</span>";
-				else  echo "<span class='order-status green'>выполнен</span>"; ?>
+				echo "<span class='order-status'>В обработке</span>";
+				else if($order["order_complete"]==1) echo "<span class='order-status green'>Принят</span>";
+				else if($order["order_complete"]==2) echo "<span class='order-status green'>Выполнен</span>";
+				else if($order["order_complete"]==3) echo "<span class='order-status color'>Отменен</span>";?>
+
 			</div>
 			<div class="col-md-12 order-detail">
 				<?php foreach ($orders_history[$order["order_id"]] as $value): ?>
 					<div class="col-md-12 order-detail-item">
-						<span class="col-md-2 order-detail-item-name"><a href="<?=base_url().'product/'.$value['product_url'];?>"><?=$value["product_name"];?></a></span>
+						<span class="col-md-6 order-detail-item-name"><a href="<?=base_url().'product/'.$value['product_url'];?>"><?=$value["product_name"];?></a></span>
 						<span class="col-md-2 order-price"><?=$value["product_price"];?> грн.</span>
 						<span class="col-md-2 order-detail-amount"><?=$value["orderItem_amount"];?> шт.</span>
 						<span class="col-md-2 order-detail-price"><?=$value["product_price"]*$value["orderItem_amount"];?> грн.</span>

@@ -257,7 +257,7 @@ class Catalog_model extends CI_Model {
         if (!is_string($current_url)){
             return array("error" => "аргумент должен быть типа string");
         }
-
+        $current_url = preg_replace("/\/order=[a-z]+\/?/","",$current_url);
         $array = preg_split("/(\/product=\w+$)/",$current_url);
         return array("data" => base_url().$array[0]."/");
     }

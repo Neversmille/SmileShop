@@ -38,7 +38,6 @@
   						</div>
   				</div>
 
-
 				<div class="control-group">
 					<label class="control-label">Описание:</label>
 							<div class="controls">
@@ -71,7 +70,7 @@
 				<div class="form-actions">
 					<?=form_submit(array('name' => 'slide_edit',
 										'class' => 'btn btn-primary',
-										'value' => 'Редактировать'));?>
+										'value' => 'Сохранить'));?>
                     </div>
 
 				<?=form_close();?>

@@ -27,6 +27,12 @@ function getproduct(id){
 			$(".product_price").text(data.product_price+" грн");
 			$("form").removeClass("hidden");
 			$("input[name = slider_product_id]").val(data.product_id);
+			$(".product_name").append('<div class="control-group">'+
+				'<label class="control-label">Цена:</label>'+
+				'<div class="controls col-md-8 checkoutLabel">'+data.product_price+' грн</div>'+
+			'</div>');
+
+
 			$(".loading").remove();
 		},
 		error:  function(xhr, str){

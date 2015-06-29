@@ -35,10 +35,6 @@
     <script src="/asset/admin/js/additional-methods.js"></script>
     <script src=/asset/admin/js/admin-valid-rules.js></script>
     <script>
-    $(function() {
-        // Easy pie charts
-        $('.chart').easyPieChart({animate: 1000});
-    });
     </script>
   </body>
 </html>

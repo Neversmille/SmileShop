@@ -4,7 +4,6 @@
 			<i class="icon-user"></i><?=$admin_info["admin_name"];?><i class="caret"></i>
         </a>
         <ul class="dropdown-menu">
-            <li class="divider"></li>
             <li>
                 <a tabindex="-1" href="/admin/profile">Профайл</a>
                 <a tabindex="-1" href="/admin/logout">Выйти</a>

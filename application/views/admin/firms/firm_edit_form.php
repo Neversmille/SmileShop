@@ -22,7 +22,7 @@
 				<div class="form-actions">
 					<?=form_submit(array('name' => 'update_firm',
 										'class' => 'btn btn-primary',
-										'value' => 'Изменить'));?>
+										'value' => 'Сохранить'));?>
                     </div>
 
 				<?=form_close();?>

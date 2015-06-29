@@ -192,7 +192,7 @@ class Order_model extends CI_Model {
         $config['charset'] = 'utf-8';
         $config['wordwrap'] = TRUE;
 
-        $to = array($email, "smoliarchuk@te.net.ua");
+        $to = array($email, "foreverneversmile@gmail.com");
 
         $this->email->initialize($config);
         $this->email->from('admin@smileshop', 'Администрация');

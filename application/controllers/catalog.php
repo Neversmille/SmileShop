@@ -19,7 +19,6 @@ class Catalog extends MY_Controller{
 	*	Страница /catalog - вывод 8 случайных товаров
 	*/
 	public function all(){
-			$this->output->enable_profiler(TRUE);
 			$this->load->model('catalog_model');
 			$products = $this->catalog_model->get_random_hot_products(8);
 			if (isset($products["error"])) {

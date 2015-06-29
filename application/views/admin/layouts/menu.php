@@ -20,7 +20,6 @@
 							<li>
 								<a href="/admin/firms">Фирмы</a>
 							</li>
-							<li class="divider"></li>
 						</ul>
 					</li>
 					<li>

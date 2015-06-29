@@ -145,7 +145,6 @@ $(document).ready(function(){
             },
 
             text:{
-                required: true,
                 minlength: 5,
                 maxlength: 400
             },

@@ -36,7 +36,7 @@
 							</div>
 				</div>
 
-				<div class="control-group">
+				<div class="control-group product_name">
   					<label class="control-label">Наименование:</label>
   						<div class="controls">
   							<?=form_input(array('name' => 'slider_product_name',

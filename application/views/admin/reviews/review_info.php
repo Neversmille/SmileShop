@@ -19,7 +19,7 @@
 				<div class="form-actions">
 					<?=form_submit(array('name' => 'update_review',
 										'class' => 'btn btn-primary',
-										'value' => 'Изменить'));?>
+										'value' => 'Сохранить'));?>
 					</div>
 
 			<?=form_close();?>
